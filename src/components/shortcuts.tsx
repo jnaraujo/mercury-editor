@@ -1,8 +1,11 @@
 import { SHORTCUTS } from "@/constants/shortcuts";
+import { disableMenu } from "@/helper/browser";
 import { useEffect } from "react";
 
 export default function Shortcuts() {
   useEffect(() => {
+    disableMenu();
+
     const handleKeyDown = (e: KeyboardEvent) => {
       const hasCtrl = e.ctrlKey || e.metaKey;
       const hasShift = e.shiftKey;
