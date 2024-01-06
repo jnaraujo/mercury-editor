@@ -6,7 +6,7 @@ import { TanStackRouterDevtools } from "@tanstack/router-devtools";
 function RootComponent() {
   return (
     <>
-      <div className="min-h-screen bg-zinc-100 text-zinc-900 antialiased dark:bg-zinc-900 dark:text-zinc-100">
+      <div className="min-h-screen bg-zinc-100 text-zinc-900 antialiased dark:bg-zinc-950 dark:text-zinc-100">
         <Outlet />
       </div>
       <ThemeToggle />
