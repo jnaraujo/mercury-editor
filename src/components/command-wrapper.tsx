@@ -10,7 +10,7 @@ import {
   Newspaper,
   SunMoon,
 } from "lucide-react";
-import { useCallback, useEffect } from "react";
+import { useCallback } from "react";
 import {
   CommandDialog,
   CommandEmpty,
@@ -26,18 +26,6 @@ export default function CommandWrapper() {
   const { open, setOpen } = useCommandStore();
   const setTheme = useConfigStore((state) => state.setTheme);
   const navigate = useNavigate();
-
-  useEffect(() => {
-    const down = (e: KeyboardEvent) => {
-      if (e.key === "k" && (e.metaKey || e.ctrlKey)) {
-        e.preventDefault();
-        setOpen((open) => !open);
-      }
-    };
-
-    document.addEventListener("keydown", down);
-    return () => document.removeEventListener("keydown", down);
-  }, [setOpen]);
 
   const runCommand = useCallback(
     (command: () => unknown, close = true) => {

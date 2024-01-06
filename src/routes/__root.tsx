@@ -1,4 +1,5 @@
 import CommandWrapper from "@/components/command-wrapper";
+import Shortcuts from "@/components/shortcuts";
 import ThemeToggle from "@/components/theme-toggle";
 import { Outlet, RootRoute } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/router-devtools";
@@ -11,6 +12,7 @@ function RootComponent() {
       </div>
       <ThemeToggle />
       <CommandWrapper />
+      <Shortcuts />
       <TanStackRouterDevtools position="bottom-right" />
     </>
   );
