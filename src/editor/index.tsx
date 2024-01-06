@@ -1,6 +1,7 @@
 import { EditorContent, useEditor } from "@tiptap/react";
 import BubbleMenu from "./bubble-menu";
 import { extensions } from "./extensions";
+import FloatingMenu from "./floating-menu";
 import { initialContent } from "./initialContent";
 
 export default function Editor() {
@@ -21,6 +22,7 @@ export default function Editor() {
         className="prose prose-violet dark:prose-invert resize-none w-full max-w-full"
       />
 
+      {editor && <FloatingMenu editor={editor} />}
       {editor && <BubbleMenu editor={editor} />}
     </section>
   );

@@ -1,11 +1,11 @@
-import Heading from "@tiptap/extension-heading";
 import Placeholder from "@tiptap/extension-placeholder";
 import StarterKit from "@tiptap/starter-kit";
 
 export const extensions = [
-  StarterKit,
-  Heading.configure({
-    levels: [1, 2],
+  StarterKit.configure({
+    heading: {
+      levels: [1, 2],
+    },
   }),
   Placeholder.configure({
     placeholder: `Clique em "/" para abrir o menu de comandos`,
