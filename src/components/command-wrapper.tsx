@@ -2,7 +2,14 @@ import { useCommandStore } from "@/stores/commandStore";
 import { useConfigStore } from "@/stores/configStore";
 import { useNavigate } from "@tanstack/react-router";
 import { open as openExternalLink } from "@tauri-apps/api/shell";
-import { ExternalLink, FolderOpen, Newspaper, SunMoon } from "lucide-react";
+import { appWindow } from "@tauri-apps/api/window";
+import {
+  ExternalLink,
+  FolderOpen,
+  Fullscreen,
+  Newspaper,
+  SunMoon,
+} from "lucide-react";
 import { useCallback, useEffect } from "react";
 import {
   CommandDialog,
@@ -47,6 +54,7 @@ export default function CommandWrapper() {
       <CommandInput placeholder="Digite um comando ou pesquise por algo" />
       <CommandList>
         <CommandEmpty>No results found.</CommandEmpty>
+
         <CommandGroup heading="Sugestões">
           <CommandItem
             onSelect={() =>
@@ -94,6 +102,17 @@ export default function CommandWrapper() {
           >
             <SunMoon className="mr-2 h-4 w-4 shrink-0" />
             <span>Mudar tema</span>
+          </CommandItem>
+
+          <CommandItem
+            onSelect={() =>
+              runCommand(async () =>
+                appWindow.setFullscreen(!(await appWindow.isFullscreen())),
+              )
+            }
+          >
+            <Fullscreen className="mr-2 h-4 w-4 shrink-0" />
+            <span>Fullscreen</span>
           </CommandItem>
         </CommandGroup>
       </CommandList>

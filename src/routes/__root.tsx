@@ -1,4 +1,4 @@
-import CommandWrapper from "@/components/CommandWrapper";
+import CommandWrapper from "@/components/command-wrapper";
 import ThemeToggle from "@/components/theme-toggle";
 import { Outlet, RootRoute } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/router-devtools";
