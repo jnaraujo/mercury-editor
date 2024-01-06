@@ -1,3 +1,4 @@
+import CommandShortcut from "@/components/command-shortcut";
 import {
   Select,
   SelectContent,
@@ -6,7 +7,13 @@ import {
   SelectLabel,
   SelectTrigger,
 } from "@/components/ui/select";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import * as SelectPrimitive from "@radix-ui/react-select";
+import { TooltipProvider } from "@radix-ui/react-tooltip";
 import { BubbleMenu as TiptapBubbleMenu, type Editor } from "@tiptap/react";
 import { Bold, Italic, RemoveFormatting, Type } from "lucide-react";
 import { useRef } from "react";
@@ -35,6 +42,28 @@ export default function BubbleMenu({ editor }: Props) {
     }
   }
 
+  function getCurrentValue() {
+    if (editor.isActive("heading", { level: 1 })) {
+      return "título";
+    }
+    if (editor.isActive("heading", { level: 2 })) {
+      return "subtítulo";
+    }
+    if (editor.isActive("paragraph")) {
+      return "parágrafo";
+    }
+    if (editor.isActive("bold")) {
+      return "bold";
+    }
+    if (editor.isActive("bulletList")) {
+      return "lista";
+    }
+    if (editor.isActive("blockquote")) {
+      return "citação";
+    }
+    return "";
+  }
+
   return (
     <TiptapBubbleMenu
       editor={editor}
@@ -51,10 +80,21 @@ export default function BubbleMenu({ editor }: Props) {
         ref={containerRef}
       >
         <div className="mx-2">
-          <Select onValueChange={handleSelect}>
-            <SelectTrigger className="h-5 bg-transparent gap-1 border-none px-1">
-              <Type size={14} />
-            </SelectTrigger>
+          <Select onValueChange={handleSelect} defaultValue={getCurrentValue()}>
+            <TooltipProvider delayDuration={200}>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <SelectTrigger className="h-5 bg-transparent gap-1 border-none px-1 focus:ring-offset-0">
+                    <Type size={14} />
+                  </SelectTrigger>
+                </TooltipTrigger>
+
+                <TooltipContent className="text-xs space-y-1">
+                  <b className="font-medium">Transformar em:</b>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+
             <SelectPrimitive.Portal container={containerRef.current}>
               <SelectContent className="w-fit">
                 <SelectGroup>
@@ -72,24 +112,57 @@ export default function BubbleMenu({ editor }: Props) {
         <div className="h-full w-[1px] bg-zinc-200 dark:bg-zinc-700" />
 
         <div className="flex h-full justify-between items-center gap-4 mx-3 ml-3">
-          <button
-            className="w-full flex items-center justify-center"
-            onClick={() => editor.chain().focus().toggleBold().run()}
-          >
-            <Bold size={14} />
-          </button>
-          <button
-            className="w-full flex items-center justify-center"
-            onClick={() => editor.chain().focus().toggleItalic().run()}
-          >
-            <Italic size={14} />
-          </button>
-          <button
-            className="w-full flex items-center justify-center"
-            onClick={() => editor.chain().focus().unsetAllMarks().run()}
-          >
-            <RemoveFormatting size={14} />
-          </button>
+          <TooltipProvider delayDuration={200}>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <button
+                  className="w-full flex items-center justify-center"
+                  onClick={() => {
+                    editor.chain().toggleBold().run();
+                  }}
+                >
+                  <Bold size={14} />
+                </button>
+              </TooltipTrigger>
+              <TooltipContent className="text-xs space-y-1">
+                <b className="font-medium">Negrito</b>
+                <CommandShortcut>Ctrl + B</CommandShortcut>
+              </TooltipContent>
+            </Tooltip>
+
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <button
+                  className="w-full flex items-center justify-center"
+                  onClick={() => {
+                    editor.chain().focus().toggleItalic().run();
+                  }}
+                >
+                  <Italic size={14} />
+                </button>
+              </TooltipTrigger>
+              <TooltipContent className="text-xs space-y-1">
+                <b className="font-medium">Itálico</b>
+                <CommandShortcut>Ctrl + I</CommandShortcut>
+              </TooltipContent>
+            </Tooltip>
+
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <button
+                  className="w-full flex items-center justify-center"
+                  onClick={() => {
+                    editor.chain().focus().unsetAllMarks().run();
+                  }}
+                >
+                  <RemoveFormatting size={14} />
+                </button>
+              </TooltipTrigger>
+              <TooltipContent className="text-xs space-y-1">
+                <b className="font-medium">Remover formatação</b>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
         </div>
       </div>
     </TiptapBubbleMenu>
