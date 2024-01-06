@@ -1,6 +1,9 @@
 import { useCommandStore } from "@/stores/commandStore";
-import { useCallback, useEffect } from "react";
+import { useConfigStore } from "@/stores/configStore";
+import { useNavigate } from "@tanstack/react-router";
 import { open as openExternalLink } from "@tauri-apps/api/shell";
+import { ExternalLink, FolderOpen, Newspaper, SunMoon } from "lucide-react";
+import { useCallback, useEffect } from "react";
 import {
   CommandDialog,
   CommandEmpty,
@@ -11,9 +14,6 @@ import {
   CommandSeparator,
   CommandShortcut,
 } from "./ui/command";
-import { Newspaper, FolderOpen, ExternalLink, SunMoon } from "lucide-react";
-import { useNavigate } from "@tanstack/react-router";
-import { useConfigStore } from "@/stores/configStore";
 
 export default function CommandWrapper() {
   const { open, setOpen } = useCommandStore();

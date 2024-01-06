@@ -1,7 +1,6 @@
 import { lazyFn, lazyRouteComponent } from "@tanstack/react-router";
-
-import { Route as rootRoute } from "./routes/__root";
 import { Route as IndexImport } from "./routes";
+import { Route as rootRoute } from "./routes/__root";
 
 const IndexRoute = IndexImport.update({
   path: "/",

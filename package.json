@@ -27,6 +27,7 @@
   },
   "devDependencies": {
     "@fontsource/inter": "^5.0.16",
+    "@ianvs/prettier-plugin-sort-imports": "^4.1.1",
     "@tanstack/router-cli": "^1.1.7",
     "@tanstack/router-devtools": "^1.1.7",
     "@tauri-apps/cli": "^1.5.8",
