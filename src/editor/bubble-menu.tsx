@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/select";
 import * as SelectPrimitive from "@radix-ui/react-select";
 import { BubbleMenu as TiptapBubbleMenu, type Editor } from "@tiptap/react";
-import { Bold, Heading, Italic } from "lucide-react";
+import { Bold, Italic, RemoveFormatting, Type } from "lucide-react";
 import { useRef } from "react";
 
 interface Props {
@@ -47,13 +47,13 @@ export default function BubbleMenu({ editor }: Props) {
       updateDelay={0}
     >
       <div
-        className="h-8 w-fit overflow-hidden rounded-md border border-zinc-200 bg-zinc-100 shadow-sm dark:border-zinc-700 dark:bg-zinc-900 flex items-center justify-center"
+        className="h-7 w-fit overflow-hidden rounded-md border border-zinc-200 bg-zinc-100 shadow-sm dark:border-zinc-700 dark:bg-zinc-900 flex items-center justify-center"
         ref={containerRef}
       >
         <div className="mx-2">
           <Select onValueChange={handleSelect}>
             <SelectTrigger className="h-5 bg-transparent gap-1 border-none px-1">
-              <Heading className="h-4 w-4" />
+              <Type size={14} />
             </SelectTrigger>
             <SelectPrimitive.Portal container={containerRef.current}>
               <SelectContent className="w-fit">
@@ -76,13 +76,19 @@ export default function BubbleMenu({ editor }: Props) {
             className="w-full flex items-center justify-center"
             onClick={() => editor.chain().focus().toggleBold().run()}
           >
-            <Bold className="h-4 w-4" />
+            <Bold size={14} />
           </button>
           <button
             className="w-full flex items-center justify-center"
             onClick={() => editor.chain().focus().toggleItalic().run()}
           >
-            <Italic className="h-4 w-4" />
+            <Italic size={14} />
+          </button>
+          <button
+            className="w-full flex items-center justify-center"
+            onClick={() => editor.chain().focus().unsetAllMarks().run()}
+          >
+            <RemoveFormatting size={14} />
           </button>
         </div>
       </div>
