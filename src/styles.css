@@ -6,6 +6,11 @@ html {
   scroll-behavior: smooth;
 }
 
+::selection {
+  color: theme("colors.white");
+  background: theme("colors.violet.600 / 75%")
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;
