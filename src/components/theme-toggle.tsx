@@ -23,7 +23,7 @@ export default function ThemeToggle() {
         e.preventDefault();
         setTheme(theme === "light" ? "dark" : "light");
       }}
-      className="fixed bottom-4 left-4 rounded-full bg-zinc-100 p-2 text-zinc-900 dark:bg-zinc-900 dark:text-zinc-100"
+      className="rounded-full bg-zinc-100 p-2 text-zinc-900 dark:bg-zinc-900 dark:text-zinc-100 relative"
     >
       <Moon
         className={cn(
