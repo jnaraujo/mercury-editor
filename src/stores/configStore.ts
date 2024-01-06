@@ -1,9 +1,9 @@
-import { create } from "zustand"
-import { devtools, persist } from "zustand/middleware"
+import { create } from "zustand";
+import { devtools, persist } from "zustand/middleware";
 
 interface ConfigStore {
-  theme: "light" | "dark"
-  setTheme: (theme: "light" | "dark") => void
+  theme: "light" | "dark";
+  setTheme: (theme: "light" | "dark") => void;
 }
 
 export const useConfigStore = create<ConfigStore>()(
@@ -18,4 +18,4 @@ export const useConfigStore = create<ConfigStore>()(
       },
     ),
   ),
-)
+);
