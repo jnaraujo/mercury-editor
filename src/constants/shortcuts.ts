@@ -1,4 +1,5 @@
 import { useCommandStore } from "@/stores/commandStore";
+import { useConfigStore } from "@/stores/configStore";
 import { appWindow } from "@tauri-apps/api/window";
 
 interface Shortcut {
@@ -24,6 +25,15 @@ export const SHORTCUTS: Shortcut[] = [
     key: "K",
     action: () => {
       useCommandStore.getState().setOpen((open) => !open);
+    },
+  },
+  {
+    isCtrl: true,
+    key: "T",
+    action: () => {
+      useConfigStore
+        .getState()
+        .setTheme((theme) => (theme === "dark" ? "light" : "dark"));
     },
   },
 ];

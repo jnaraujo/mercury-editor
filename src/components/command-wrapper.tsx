@@ -72,7 +72,6 @@ export default function CommandWrapper() {
           >
             <ExternalLink className="mr-2 h-4 w-4 shrink-0" />
             <span>Github</span>
-            <CommandShortcut>Ctrl + N</CommandShortcut>
           </CommandItem>
         </CommandGroup>
 
@@ -90,6 +89,7 @@ export default function CommandWrapper() {
           >
             <SunMoon className="mr-2 h-4 w-4 shrink-0" />
             <span>Mudar tema</span>
+            <CommandShortcut>Ctrl + T</CommandShortcut>
           </CommandItem>
 
           <CommandItem
@@ -101,6 +101,7 @@ export default function CommandWrapper() {
           >
             <Fullscreen className="mr-2 h-4 w-4 shrink-0" />
             <span>Fullscreen</span>
+            <CommandShortcut>F11</CommandShortcut>
           </CommandItem>
         </CommandGroup>
       </CommandList>
