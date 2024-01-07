@@ -1,12 +1,13 @@
 import path from "node:path";
 import react from "@vitejs/plugin-react";
 import Unfonts from "unplugin-fonts/vite";
-import { defineConfig } from "vite";
+import { defineConfig, splitVendorChunkPlugin } from "vite";
 
 // https://vitejs.dev/config/
 export default defineConfig(async () => ({
   plugins: [
     react(),
+    splitVendorChunkPlugin(),
     Unfonts({
       fontsource: {
         families: [
@@ -20,6 +21,22 @@ export default defineConfig(async () => ({
       },
     }),
   ],
+
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          if (id.includes("@tanstack")) {
+            return "tanstack";
+          }
+
+          if (id.includes("react") || id.includes("react-dom")) {
+            return "react";
+          }
+        },
+      },
+    },
+  },
 
   resolve: {
     alias: {

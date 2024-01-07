@@ -3,7 +3,15 @@ import SettingsOpen from "@/components/settings-open";
 import Shortcuts from "@/components/shortcuts";
 import ThemeToggle from "@/components/theme-toggle";
 import { Outlet, RootRoute } from "@tanstack/react-router";
-import { TanStackRouterDevtools } from "@tanstack/router-devtools";
+import { lazy, Suspense } from "react";
+
+const TanStackRouterDevtools = lazy(() =>
+  import("@tanstack/router-devtools").then((mod) => ({
+    default: mod.TanStackRouterDevtools,
+  })),
+);
+
+const IS_DEV = import.meta.env.DEV;
 
 function RootComponent() {
   return (
@@ -22,7 +30,12 @@ function RootComponent() {
 
       <CommandWrapper />
       <Shortcuts />
-      <TanStackRouterDevtools position="bottom-right" />
+
+      {IS_DEV && (
+        <Suspense>
+          <TanStackRouterDevtools position="bottom-right" />
+        </Suspense>
+      )}
     </>
   );
 }
