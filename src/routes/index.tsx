@@ -1,6 +1,6 @@
-import { FileRoute, Link } from "@tanstack/react-router";
+import { Link } from "react-router-dom";
 
-function Home() {
+export default function Home() {
   return (
     <main>
       <ul>
@@ -11,7 +11,3 @@ function Home() {
     </main>
   );
 }
-
-export const Route = new FileRoute("/").createRoute({
-  component: Home,
-});

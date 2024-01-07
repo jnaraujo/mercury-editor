@@ -4,8 +4,8 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "concurrently  \"tsr watch\" \"vite\"",
-    "build": "tsc && tsr generate && vite build",
+    "dev": "vite",
+    "build": "tsc && vite build",
     "preview": "vite preview",
     "tauri": "tauri",
     "format": "prettier --write \"src/**/*.{ts,tsx}\""
@@ -15,7 +15,6 @@
     "@radix-ui/react-popover": "^1.0.7",
     "@radix-ui/react-select": "^2.0.0",
     "@radix-ui/react-tooltip": "^1.0.7",
-    "@tanstack/react-router": "^1.1.7",
     "@tauri-apps/api": "^1.5.2",
     "@tiptap/extension-placeholder": "^2.1.13",
     "@tiptap/pm": "^2.1.13",
@@ -27,6 +26,7 @@
     "lucide-react": "^0.306.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-router-dom": "^6.21.1",
     "tailwind-merge": "^2.2.0",
     "tailwindcss-animate": "^1.0.7",
     "zustand": "^4.4.7"
@@ -35,8 +35,6 @@
     "@fontsource/inter": "^5.0.16",
     "@ianvs/prettier-plugin-sort-imports": "^4.1.1",
     "@tailwindcss/typography": "^0.5.10",
-    "@tanstack/router-cli": "^1.1.7",
-    "@tanstack/router-devtools": "^1.1.7",
     "@tauri-apps/cli": "^1.5.8",
     "@types/react": "^18.2.15",
     "@types/react-dom": "^18.2.7",
@@ -44,7 +42,6 @@
     "@typescript-eslint/parser": "^6.17.0",
     "@vitejs/plugin-react": "^4.2.1",
     "autoprefixer": "^10.4.16",
-    "concurrently": "^8.2.2",
     "eslint": "^8.56.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.1.2",

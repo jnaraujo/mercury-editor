@@ -1,6 +1,5 @@
 import { useCommandStore } from "@/stores/commandStore";
 import { useConfigStore } from "@/stores/configStore";
-import { useNavigate } from "@tanstack/react-router";
 import { open as openExternalLink } from "@tauri-apps/api/shell";
 import { appWindow } from "@tauri-apps/api/window";
 import {
@@ -11,6 +10,7 @@ import {
   SunMoon,
 } from "lucide-react";
 import { useCallback } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   CommandDialog,
   CommandEmpty,
@@ -44,15 +44,7 @@ export default function CommandWrapper() {
         <CommandEmpty>No results found.</CommandEmpty>
 
         <CommandGroup heading="Sugestões">
-          <CommandItem
-            onSelect={() =>
-              runCommand(() =>
-                navigate({
-                  to: "/",
-                }),
-              )
-            }
-          >
+          <CommandItem onSelect={() => runCommand(() => navigate("/editor"))}>
             <Newspaper className="mr-2 h-4 w-4 shrink-0" />
             <span>Blog</span>
           </CommandItem>

@@ -26,8 +26,8 @@ export default defineConfig(async () => ({
     rollupOptions: {
       output: {
         manualChunks(id) {
-          if (id.includes("@tanstack")) {
-            return "tanstack";
+          if (id.includes("@remix-run") || id.includes("react-router")) {
+            return "react-router";
           }
 
           if (id.includes("react") || id.includes("react-dom")) {

@@ -2,18 +2,9 @@ import CommandWrapper from "@/components/command-wrapper";
 import SettingsOpen from "@/components/settings-open";
 import Shortcuts from "@/components/shortcuts";
 import ThemeToggle from "@/components/theme-toggle";
-import { Outlet, RootRoute } from "@tanstack/react-router";
-import { lazy, Suspense } from "react";
+import { Outlet } from "react-router-dom";
 
-const TanStackRouterDevtools = lazy(() =>
-  import("@tanstack/router-devtools").then((mod) => ({
-    default: mod.TanStackRouterDevtools,
-  })),
-);
-
-const IS_DEV = import.meta.env.DEV;
-
-function RootComponent() {
+export default function Layout() {
   return (
     <>
       <div className="min-h-screen bg-zinc-100 text-zinc-900 antialiased dark:bg-zinc-950 dark:text-zinc-100">
@@ -30,16 +21,6 @@ function RootComponent() {
 
       <CommandWrapper />
       <Shortcuts />
-
-      {IS_DEV && (
-        <Suspense>
-          <TanStackRouterDevtools position="bottom-right" />
-        </Suspense>
-      )}
     </>
   );
 }
-
-export const Route = new RootRoute({
-  component: RootComponent,
-});
