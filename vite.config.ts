@@ -3,8 +3,9 @@ import react from "@vitejs/plugin-react";
 import Unfonts from "unplugin-fonts/vite";
 import { defineConfig, splitVendorChunkPlugin } from "vite";
 
-// https://vitejs.dev/config/
-export default defineConfig(async () => ({
+const isDev = process.env.TAURI_DEBUG === "true";
+
+export default defineConfig(() => ({
   plugins: [
     react(),
     splitVendorChunkPlugin(),
@@ -21,17 +22,13 @@ export default defineConfig(async () => ({
       },
     }),
   ],
-
   build: {
+    minify: isDev ? false : "terser",
     rollupOptions: {
       output: {
         manualChunks(id) {
           if (id.includes("@remix-run") || id.includes("react-router")) {
             return "react-router";
-          }
-
-          if (id.includes("react") || id.includes("react-dom")) {
-            return "react";
           }
         },
       },

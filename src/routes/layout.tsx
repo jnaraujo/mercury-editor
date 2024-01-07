@@ -1,10 +1,14 @@
-import CommandWrapper from "@/components/command-wrapper";
 import SettingsOpen from "@/components/settings-open";
 import Shortcuts from "@/components/shortcuts";
 import ThemeToggle from "@/components/theme-toggle";
+import { useCommandStore } from "@/stores/commandStore";
+import { lazy, Suspense } from "react";
 import { Outlet } from "react-router-dom";
 
+const CommandWrapper = lazy(() => import("@/components/command-wrapper"));
+
 export default function Layout() {
+  const openCommand = useCommandStore((state) => state.open);
   return (
     <>
       <div className="min-h-screen bg-zinc-100 text-zinc-900 antialiased dark:bg-zinc-950 dark:text-zinc-100">
@@ -19,7 +23,7 @@ export default function Layout() {
         <ThemeToggle />
       </div>
 
-      <CommandWrapper />
+      <Suspense>{openCommand && <CommandWrapper />}</Suspense>
       <Shortcuts />
     </>
   );
