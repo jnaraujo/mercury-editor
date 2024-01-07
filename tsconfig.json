@@ -29,6 +29,5 @@
     }
   },
   "include": ["src"],
-  "exclude": ["./src/routeTree.gen.ts"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

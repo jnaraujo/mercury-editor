@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "concurrently  \"tsr watch\" \"vite\"",
-    "build": "tsc && tsr generate && vite build",
+    "build": "tsr generate && tsc && vite build",
     "preview": "vite preview",
     "tauri": "tauri",
     "format": "prettier --write \"src/**/*.{ts,tsx}\""
