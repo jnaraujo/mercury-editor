@@ -20,6 +20,7 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
 
+
     "baseUrl": ".",
     "paths": {
       "@/*": [
@@ -28,5 +29,6 @@
     }
   },
   "include": ["src"],
+  "exclude": ["./src/routeTree.gen.ts"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
