@@ -16,7 +16,6 @@ import { buttonVariants } from "./ui/button";
 interface Props {
   title: string;
   description: string;
-  tags: string[];
   createdAt: string;
   slug: string;
 
@@ -26,14 +25,13 @@ interface Props {
 export default function Note({
   title,
   description,
-  tags,
   createdAt,
   slug,
   onDelete,
 }: Props) {
   return (
     <article className="p-4 dark:hover:bg-zinc-900 rounded-md transition-colors duration-200 hover:bg-zinc-200 flex justify-between items-center gap-4 group">
-      <Link to={`/editor/${slug}`}>
+      <Link to={`/editor/${slug}`} className="w-full">
         <div className="space-y-0.5">
           <h2 className="dark:text-zinc-200 text-zinc-700 font-medium line-clamp-1">
             {title}
@@ -42,9 +40,7 @@ export default function Note({
           <p className="text-sm dark:text-zinc-300/90 text-zinc-600 line-clamp-2">
             {description}
           </p>
-          <span className="text-xs text-zinc-400">
-            Criado em {createdAt} - {tags.join(", ")}
-          </span>
+          <span className="text-xs text-zinc-400">Criado em {createdAt}</span>
         </div>
       </Link>
 

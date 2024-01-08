@@ -1,12 +1,16 @@
 import { EditorContent, useEditor } from "@tiptap/react";
+import { useEffect } from "react";
 import BubbleMenu from "./bubble-menu";
 import { extensions } from "./extensions";
 import FloatingMenu from "./floating-menu";
-import { initialContent } from "./initialContent";
 
-export default function Editor() {
+interface Props {
+  content: string;
+}
+
+export default function Editor({ content }: Props) {
   const editor = useEditor({
-    content: initialContent,
+    content: content,
     extensions,
     editorProps: {
       attributes: {
@@ -14,6 +18,12 @@ export default function Editor() {
       },
     },
   });
+
+  useEffect(() => {
+    if (content && editor) {
+      editor.commands.setContent(content, true);
+    }
+  }, [content, editor]);
 
   return (
     <section className="flex justify-center">
