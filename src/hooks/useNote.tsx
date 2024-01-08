@@ -41,6 +41,7 @@ export default function useNote() {
         description: "",
         slug: slugify(name),
         createdAt: new Date().toLocaleDateString(),
+        updatedAt: new Date().toLocaleDateString(),
       });
     },
     [addNote],

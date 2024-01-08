@@ -34,7 +34,7 @@ export const Component = function EditorPage() {
         </Link>
 
         <span className="text-zinc-700 text-sm dark:text-zinc-500">
-          Atualizado em 01/01/2021
+          Atualizado em {note.updatedAt}
         </span>
       </header>
 

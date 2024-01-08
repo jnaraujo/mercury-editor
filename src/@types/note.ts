@@ -5,4 +5,5 @@ export interface Note {
   description: string;
   slug: string;
   createdAt: string;
+  updatedAt: string;
 }
