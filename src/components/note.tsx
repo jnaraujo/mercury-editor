@@ -9,13 +9,8 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
 import { Trash } from "lucide-react";
+import { Link } from "react-router-dom";
 import { buttonVariants } from "./ui/button";
 
 interface Props {
@@ -23,6 +18,7 @@ interface Props {
   description: string;
   tags: string[];
   createdAt: string;
+  slug: string;
 
   onDelete?: () => void;
 }
@@ -32,11 +28,12 @@ export default function Note({
   description,
   tags,
   createdAt,
+  slug,
   onDelete,
 }: Props) {
   return (
     <article className="p-4 dark:hover:bg-zinc-900 rounded-md transition-colors duration-200 hover:bg-zinc-200 flex justify-between items-center gap-4 group">
-      <a href="#">
+      <Link to={`/editor/${slug}`}>
         <div className="space-y-0.5">
           <h2 className="dark:text-zinc-200 text-zinc-700 font-medium line-clamp-1">
             {title}
@@ -49,25 +46,19 @@ export default function Note({
             Criado em {createdAt} - {tags.join(", ")}
           </span>
         </div>
-      </a>
+      </Link>
 
       <AlertDialog>
-        <AlertDialogTrigger>
-          <TooltipProvider delayDuration={200}>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <button className="opacity-0 group-hover:opacity-100 flex items-start justify-center w-10 transition-opacity duration-200 outline-none">
-                  <Trash
-                    className="text-zinc-400 hover:text-red-700/80 transition-colors duration-200"
-                    size={20}
-                  />
-                </button>
-              </TooltipTrigger>
-              <TooltipContent>
-                <span className="text-zinc-400 text-xs">Excluir nota</span>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
+        <AlertDialogTrigger asChild>
+          <button
+            className="opacity-0 group-hover:opacity-100 flex items-start justify-center w-10 transition-opacity duration-200 outline-none"
+            aria-label="Apagar nota"
+          >
+            <Trash
+              className="text-zinc-400 hover:text-red-700/80 transition-colors duration-200"
+              size={20}
+            />
+          </button>
         </AlertDialogTrigger>
         <AlertDialogContent>
           <AlertDialogHeader>
