@@ -1,12 +1,11 @@
 import Note from "@/components/note";
-import { Button } from "@/components/ui/button";
-import useNote from "@/hooks/useNote";
+import { useNotes } from "@/hooks/useNotes";
 import { notesStore } from "@/stores/notesStore";
 import { appWindow } from "@tauri-apps/api/window";
 import { useEffect } from "react";
 
 export default function Home() {
-  const { createNote, deleteNote } = useNote();
+  const { deleteNote } = useNotes();
   const notes = notesStore((state) => state.notes);
 
   useEffect(() => {

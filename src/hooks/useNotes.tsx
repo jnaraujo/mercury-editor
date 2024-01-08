@@ -12,7 +12,7 @@ import {
 import { documentDir } from "@tauri-apps/api/path";
 import { useCallback, useEffect, useMemo } from "react";
 
-export default function useNote() {
+export function useNotes() {
   const addNote = notesStore((state) => state.addNote);
   const removeNote = notesStore((state) => state.removeNote);
 
