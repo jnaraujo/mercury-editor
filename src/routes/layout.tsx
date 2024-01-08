@@ -34,7 +34,12 @@ export default function Layout() {
         <ThemeToggle />
       </div>
 
-      <Suspense>{openCommand && <CommandWrapper />}</Suspense>
+      {openCommand && (
+        <Suspense>
+          <CommandWrapper />
+        </Suspense>
+      )}
+
       <Shortcuts />
     </>
   );
