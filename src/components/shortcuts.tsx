@@ -1,5 +1,5 @@
 import { SHORTCUTS } from "@/constants/shortcuts";
-import { disableMenu } from "@/helper/browser";
+import { disableMenu } from "@/lib/browser";
 import { useEffect } from "react";
 
 export default function Shortcuts() {
