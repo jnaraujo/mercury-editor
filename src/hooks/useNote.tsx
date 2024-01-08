@@ -1,4 +1,5 @@
 import { initialContent } from "@/constants/initialContent";
+import { NoteAlreadyExistsError } from "@/errors/note-already-exists";
 import { createNotesDirIfNotExists } from "@/lib/files";
 import { slugify } from "@/lib/slugify";
 import { notesStore } from "@/stores/notesStore";
@@ -24,7 +25,7 @@ export default function useNote() {
       const path = `notes\\${slugify(name)}.md`;
 
       if (await exists(path, { dir: BaseDirectory.Document })) {
-        throw new Error("Note already exists");
+        throw new NoteAlreadyExistsError();
       }
 
       await writeTextFile(`notes\\${slugify(name)}.md`, initialContent, {
