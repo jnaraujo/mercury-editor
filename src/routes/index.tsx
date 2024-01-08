@@ -35,17 +35,22 @@ export default function Home() {
     appWindow.setTitle(`Mercury`);
   }, []);
   return (
-    <main className="container max-w-screen-md py-8">
-      <section className="space-y-4">
-        <header className="flex justify-between items-center">
-          <h1 className="text-zinc-700 text-sm dark:text-zinc-400">
-            {">"} Notas recentes
-          </h1>
+    <div className="container max-w-screen-md py-6 space-y-4">
+      <header className="flex justify-between items-center h-10">
+        <h1 className="text-zinc-700 text-sm dark:text-zinc-400">
+          {">"} Notas recentes
+        </h1>
 
-          <Button variant="outline">Criar nota</Button>
-        </header>
+        <Button
+          variant="outline"
+          className="bg-transparent hover:bg-zinc-200/50 dark:hover:bg-zinc-800"
+        >
+          Criar nota
+        </Button>
+      </header>
 
-        <div className="space-y-2">
+      <main>
+        <section className="space-y-4">
           {MOCK_NOTES.map((note) => (
             <Note
               key={note.slug}
@@ -56,8 +61,8 @@ export default function Home() {
               slug={note.slug}
             />
           ))}
-        </div>
-      </section>
-    </main>
+        </section>
+      </main>
+    </div>
   );
 }
