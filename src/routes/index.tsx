@@ -6,9 +6,8 @@ import { appWindow } from "@tauri-apps/api/window";
 import { useEffect } from "react";
 
 export default function Home() {
-  const { createNote } = useNote();
+  const { createNote, deleteNote } = useNote();
   const notes = notesStore((state) => state.notes);
-  const removeNote = notesStore((state) => state.removeNote);
 
   useEffect(() => {
     appWindow.setTitle(`Mercury`);
@@ -39,7 +38,7 @@ export default function Home() {
               description={note.description}
               createdAt={note.createdAt}
               slug={note.slug}
-              onDelete={() => removeNote(note.path)}
+              onDelete={() => deleteNote(note.path)}
             />
           ))}
         </section>
