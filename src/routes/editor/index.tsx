@@ -1,4 +1,4 @@
-import Editor from "@/editor";
+import Editor from "@/components/editor";
 import { notesStore } from "@/stores/notesStore";
 import { readTextFile } from "@tauri-apps/api/fs";
 import { appWindow } from "@tauri-apps/api/window";
