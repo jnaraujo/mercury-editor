@@ -37,13 +37,13 @@ export default function Home() {
   return (
     <main className="container max-w-screen-md py-8">
       <section className="space-y-4">
-        <div className="flex justify-between items-center">
+        <header className="flex justify-between items-center">
           <h1 className="text-zinc-700 text-sm dark:text-zinc-400">
             {">"} Notas recentes
           </h1>
 
           <Button variant="outline">Criar nota</Button>
-        </div>
+        </header>
 
         <div className="space-y-2">
           {MOCK_NOTES.map((note) => (
