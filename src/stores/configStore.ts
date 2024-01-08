@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { devtools, persist } from "zustand/middleware";
+import { persist } from "zustand/middleware";
 
 interface ConfigStore {
   theme: "light" | "dark";
@@ -9,22 +9,20 @@ interface ConfigStore {
 }
 
 export const useConfigStore = create<ConfigStore>()(
-  devtools(
-    persist(
-      (set) => ({
-        theme: "dark",
-        setTheme: (theme) => {
-          if (typeof theme === "function") {
-            set((state) => ({ theme: theme(state.theme) }));
-            return;
-          }
+  persist(
+    (set) => ({
+      theme: "dark",
+      setTheme: (theme) => {
+        if (typeof theme === "function") {
+          set((state) => ({ theme: theme(state.theme) }));
+          return;
+        }
 
-          set({ theme });
-        },
-      }),
-      {
-        name: "config",
+        set({ theme });
       },
-    ),
+    }),
+    {
+      name: "config",
+    },
   ),
 );
