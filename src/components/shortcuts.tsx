@@ -16,8 +16,6 @@ export default function Shortcuts() {
       );
 
       if (shortcut) {
-        e.preventDefault();
-
         if (
           (shortcut.isCtrl && !hasCtrl) ||
           (shortcut.isShift && !hasShift) ||
@@ -25,6 +23,8 @@ export default function Shortcuts() {
         ) {
           return;
         }
+
+        e.preventDefault();
         shortcut.action();
       }
     };
