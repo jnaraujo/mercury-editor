@@ -1,3 +1,4 @@
+import CreateNewNoteButton from "@/components/create-new-note-button";
 import Note from "@/components/note";
 import { useNotes } from "@/hooks/useNotes";
 import { notesStore } from "@/stores/notesStore";
@@ -19,13 +20,7 @@ export default function Home() {
           {">"} Notas recentes
         </h1>
 
-        <Button
-          variant="outline"
-          className="bg-transparent hover:bg-zinc-200/50 dark:hover:bg-zinc-800"
-          onClick={() => createNote("Nova nota")}
-        >
-          Criar nota
-        </Button>
+        <CreateNewNoteButton />
       </header>
 
       <main>
