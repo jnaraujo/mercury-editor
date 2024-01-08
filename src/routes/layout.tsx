@@ -16,8 +16,7 @@ export default function Layout() {
   const openCommand = useCommandStore((state) => state.open);
 
   useEffect(() => {
-    console.time("App window setup");
-    setupAppWindow().then(() => console.timeEnd("App window setup"));
+    setupAppWindow().then(() => console.log("App window is ready"));
   }, []);
 
   return (
@@ -30,10 +29,6 @@ export default function Layout() {
         <SettingsOpen />
       </div>
 
-      <div className="fixed top-4 right-4 flex gap-4 w-fit">
-        <ThemeToggle />
-      </div>
-
       {openCommand && (
         <Suspense>
           <CommandWrapper />
@@ -41,6 +36,7 @@ export default function Layout() {
       )}
 
       <Shortcuts />
+      <ThemeToggle />
     </>
   );
 }
