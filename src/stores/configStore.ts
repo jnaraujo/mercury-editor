@@ -1,25 +1,8 @@
-import { createStore } from "@/lib/store";
+import { createZustandStore } from "@/lib/store";
 import { create } from "zustand";
-import {
-  createJSONStorage,
-  persist,
-  type StateStorage,
-} from "zustand/middleware";
+import { createJSONStorage, persist } from "zustand/middleware";
 
-const store = createStore(".config.dat");
-
-const storage: StateStorage = {
-  getItem: async (name: string): Promise<string | null> => {
-    const value = (await store.get(name)) as string | null;
-    return value;
-  },
-  setItem: async (name: string, value: string): Promise<void> => {
-    await store.set(name, value);
-  },
-  removeItem: async (name: string): Promise<void> => {
-    await store.delete(name);
-  },
-};
+const storage = createZustandStore(".config.dat");
 
 interface ConfigStore {
   theme: "light" | "dark";
