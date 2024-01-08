@@ -4,19 +4,13 @@ import {
   CommandGroup,
   CommandInput,
   CommandItem,
+  CommandList,
 } from "@/components/ui/command";
 import * as Popover from "@radix-ui/react-popover";
 import { isNodeSelection, posToDOMRect } from "@tiptap/react";
 import type { Editor } from "@tiptap/react";
-import {
-  Bold,
-  Heading1,
-  Heading2,
-  List,
-  MessageSquare,
-  Type,
-} from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
+import { formattingItems, headingItems, otherItems } from "./constants";
 
 interface Props {
   editor: Editor;
@@ -71,81 +65,60 @@ export default function FloatingMenu({ editor }: Props) {
         >
           <Command>
             <CommandInput placeholder="Procure por algo" />
-            <CommandEmpty>Nenhum resultado encontrado.</CommandEmpty>
+            <CommandList>
+              <CommandEmpty>Nenhum resultado encontrado.</CommandEmpty>
 
-            <CommandGroup>
-              <CommandItem
-                value="título"
-                onSelect={() =>
-                  runCommand(() => {
-                    editor.chain().focus().toggleHeading({ level: 1 }).run();
-                  })
-                }
-              >
-                <Heading1 size={16} className="mr-2" />
-                <span>Título</span>
-              </CommandItem>
+              <CommandGroup>
+                {headingItems.map(({ title, onSelect, icon: Icon }) => (
+                  <CommandItem
+                    value={title}
+                    onSelect={() =>
+                      runCommand(() => {
+                        onSelect(editor);
+                      })
+                    }
+                    key={title}
+                  >
+                    <Icon size={16} className="mr-2" />
+                    {title}
+                  </CommandItem>
+                ))}
+              </CommandGroup>
 
-              <CommandItem
-                value="subtítulo"
-                onSelect={() =>
-                  runCommand(() => {
-                    editor.chain().focus().toggleHeading({ level: 2 }).run();
-                  })
-                }
-              >
-                <Heading2 size={16} className="mr-2" />
-                Subtítulo
-              </CommandItem>
+              <CommandGroup>
+                {formattingItems.map(({ title, onSelect, icon: Icon }) => (
+                  <CommandItem
+                    value={title}
+                    onSelect={() =>
+                      runCommand(() => {
+                        onSelect(editor);
+                      })
+                    }
+                    key={title}
+                  >
+                    <Icon size={16} className="mr-2" />
+                    {title}
+                  </CommandItem>
+                ))}
+              </CommandGroup>
 
-              <CommandItem
-                value="parágrafo"
-                onSelect={() =>
-                  runCommand(() => {
-                    editor.chain().focus().setParagraph().run();
-                  })
-                }
-              >
-                <Type size={16} className="mr-2" />
-                Parágrafo
-              </CommandItem>
-
-              <CommandItem
-                value="bold"
-                onSelect={() =>
-                  runCommand(() => {
-                    editor.chain().focus().toggleBold().run();
-                  })
-                }
-              >
-                <Bold size={16} className="mr-2" />
-                Bold
-              </CommandItem>
-
-              <CommandItem
-                value="lista"
-                onSelect={() =>
-                  runCommand(() => {
-                    editor.chain().focus().toggleBulletList().run();
-                  })
-                }
-              >
-                <List size={16} className="mr-2" />
-                Lista
-              </CommandItem>
-
-              <CommandItem
-                value="citação"
-                onSelect={() =>
-                  runCommand(() => {
-                    editor.chain().focus().toggleBlockquote().run();
-                  })
-                }
-              >
-                <MessageSquare size={16} className="mr-2" />
-                Citação
-              </CommandItem>
-            </CommandGroup>
+              <CommandGroup>
+                {otherItems.map(({ title, onSelect, icon: Icon }) => (
+                  <CommandItem
+                    value={title}
+                    onSelect={() =>
+                      runCommand(() => {
+                        onSelect(editor);
+                      })
+                    }
+                    key={title}
+                  >
+                    <Icon size={16} className="mr-2" />
+                    {title}
+                  </CommandItem>
+                ))}
+              </CommandGroup>
+            </CommandList>
           </Command>
         </Popover.Content>
       </Popover.Portal>
