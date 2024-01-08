@@ -20,6 +20,8 @@ export default function Editor() {
       <EditorContent
         editor={editor}
         className="prose prose-violet dark:prose-invert resize-none w-full max-w-full"
+        autoCorrect="false"
+        spellCheck="false"
       />
 
       {editor && <FloatingMenu editor={editor} />}
