@@ -19,11 +19,11 @@ export const Component = function EditorPage() {
   const navigate = useNavigate();
 
   const note = findNote(slug as string);
-
   const wasModified = hash(updatedContent) !== oldContentHash;
 
   useEffect(() => {
     appWindow.setTitle(`${slug} - Mercury`);
+    setInitialContent("");
   }, [slug]);
 
   useEffect(() => {
