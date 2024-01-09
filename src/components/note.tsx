@@ -7,10 +7,16 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-  AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { timeSince } from "@/lib/time";
-import { Trash } from "lucide-react";
+import { MoreVertical } from "lucide-react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { buttonVariants } from "./ui/button";
 
@@ -30,6 +36,8 @@ export default function Note({
   path,
   onDelete,
 }: Props) {
+  const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
+
   return (
     <article className="p-4 dark:hover:bg-zinc-900 rounded-md transition-colors duration-200 hover:bg-zinc-200 flex justify-between items-center gap-4 group">
       <Link
@@ -54,18 +62,43 @@ export default function Note({
         </div>
       </Link>
 
-      <AlertDialog>
-        <AlertDialogTrigger asChild>
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
           <button
-            className="opacity-0 group-hover:opacity-100 flex items-start justify-center w-10 transition-opacity duration-200 outline-none"
+            className="flex items-start justify-center w-10 transition-opacity duration-200 outline-none"
             aria-label="Apagar nota"
           >
-            <Trash
-              className="text-zinc-400 hover:text-red-700/80 transition-colors duration-200"
+            <MoreVertical
+              className="text-zinc-400 hover:text-zinc-500 transition-colors duration-200"
               size={20}
             />
           </button>
-        </AlertDialogTrigger>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent>
+          <DropdownMenuItem className="cursor-pointer">
+            <Link
+              to="/editor"
+              state={{
+                path,
+              }}
+              className="flex w-full"
+            >
+              Editar
+            </Link>
+          </DropdownMenuItem>
+
+          <DropdownMenuItem
+            onSelect={() => {
+              setOpenDeleteDialog(true);
+            }}
+            className="flex cursor-pointer items-center text-destructive focus:text-destructive dark:text-red-600"
+          >
+            Apagar nota
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+
+      <AlertDialog onOpenChange={setOpenDeleteDialog} open={openDeleteDialog}>
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>
