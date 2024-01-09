@@ -19,11 +19,7 @@ export const Component = function EditorPage() {
 
   const note = findNote(slug as string);
 
-  const wasModified = useMemo(() => {
-    if (!note || !initialContent) return false;
-
-    return hash(updatedContent) !== oldContentHash;
-  }, [note, initialContent, updatedContent, oldContentHash]);
+  const wasModified = hash(updatedContent) !== oldContentHash;
 
   useEffect(() => {
     appWindow.setTitle(`${slug} - Mercury`);
