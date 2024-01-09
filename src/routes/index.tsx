@@ -22,7 +22,7 @@ export default function Home() {
     <div className="container max-w-screen-md py-6 space-y-4 h-screen flex flex-col">
       <header className="flex justify-between items-center h-10">
         <h1 className="text-zinc-700 text-sm dark:text-zinc-400">
-          {">"} Notas recentes
+          Notas recentes
         </h1>
 
         <CreateNewNoteButton />
