@@ -28,9 +28,18 @@ export default function Shortcuts() {
         shortcut.action();
       }
     };
+
+    function disableCtrlRightClick(e: MouseEvent) {
+      if (e.ctrlKey && e.button === 0) {
+        e.preventDefault();
+      }
+    }
+
     window.addEventListener("keydown", handleKeyDown);
+    window.addEventListener("click", disableCtrlRightClick);
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
+      window.removeEventListener("click", disableCtrlRightClick);
     };
   }, []);
   return null;
