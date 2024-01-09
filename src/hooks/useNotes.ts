@@ -34,10 +34,12 @@ export function useNotes() {
 
       const fullPath = `${documentDirPath}\\notes\\${slugify(name)}.md`;
 
+      const filename = name.includes(".") ? name : `${name}.md`;
+
       addNote({
         id: randomUUID(),
         path: fullPath,
-        title: name,
+        title: filename,
         description: content.slice(0, 100),
         createdAt: Date.now(),
         updatedAt: Date.now(),
