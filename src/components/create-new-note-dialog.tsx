@@ -29,8 +29,10 @@ export default function CreateNewNoteDialog() {
     const filename = formData.get("filename") as string;
 
     try {
-      await createNote(filename);
-      navigate(`/editor/${filename}`);
+      const path = await createNote(filename);
+      navigate(`/editor`, {
+        state: { path },
+      });
     } catch (error) {
       if (error instanceof NoteAlreadyExistsError) {
         setError("Já existe uma nota com esse nome.");

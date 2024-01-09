@@ -72,9 +72,15 @@ export default function CommandWrapper() {
             })
             .map((note) => (
               <CommandItem
-                key={note.slug}
+                key={note.path}
                 onSelect={() =>
-                  runCommand(() => navigate(`/editor/${note.slug}`))
+                  runCommand(() =>
+                    navigate("/editor", {
+                      state: {
+                        path: note.path,
+                      },
+                    }),
+                  )
                 }
               >
                 <StickyNote className="mr-2 h-4 w-4 shrink-0" />

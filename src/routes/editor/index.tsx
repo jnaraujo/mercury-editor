@@ -6,25 +6,29 @@ import { useNotesStore } from "@/stores/notesStore";
 import { readTextFile } from "@tauri-apps/api/fs";
 import { appWindow } from "@tauri-apps/api/window";
 import { useEffect, useMemo, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 export const Component = function EditorPage() {
   const [initialContent, setInitialContent] = useState("");
   const [updatedContent, setUpdatedContent] = useState("");
   const [oldContentHash, setOldContentHash] = useState<string>("" as string);
   const [focusEditor, setFocusEditor] = useState(false);
-  const { slug } = useParams();
-  const findNote = useNotesStore((state) => state.findNote);
+  const {
+    state: { path },
+  } = useLocation();
+  const findNoteByPath = useNotesStore((state) => state.findNoteByPath);
   const { updateNote } = useNotes();
   const navigate = useNavigate();
 
-  const note = findNote(slug as string);
+  const note = findNoteByPath(path as string);
   const wasModified = hash(updatedContent) !== oldContentHash;
 
+  console.log("path", path);
+
   useEffect(() => {
-    appWindow.setTitle(`${slug} - Mercury`);
+    appWindow.setTitle(`${path} - Mercury`);
     setInitialContent("");
-  }, [slug]);
+  }, [path]);
 
   useEffect(() => {
     if (!note) {

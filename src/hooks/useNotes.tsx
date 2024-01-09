@@ -42,10 +42,11 @@ export function useNotes() {
         path: fullPath,
         title: name,
         description: content.slice(0, 100),
-        slug: slugify(name),
         createdAt: Date.now(),
         updatedAt: Date.now(),
       });
+
+      return fullPath;
     },
     [addNote],
   );

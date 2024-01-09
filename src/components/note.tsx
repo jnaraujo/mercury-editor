@@ -18,7 +18,7 @@ interface Props {
   title: string;
   description: string;
   createdAt: number;
-  slug: string;
+  path: string;
 
   onDelete?: () => void;
 }
@@ -27,12 +27,18 @@ export default function Note({
   title,
   description,
   createdAt,
-  slug,
+  path,
   onDelete,
 }: Props) {
   return (
     <article className="p-4 dark:hover:bg-zinc-900 rounded-md transition-colors duration-200 hover:bg-zinc-200 flex justify-between items-center gap-4 group">
-      <Link to={`/editor/${slug}`} className="w-full">
+      <Link
+        to="/editor"
+        state={{
+          path,
+        }}
+        className="w-full"
+      >
         <div className="space-y-0.5">
           <h2 className="dark:text-zinc-200 text-zinc-700 font-medium line-clamp-1">
             {title}

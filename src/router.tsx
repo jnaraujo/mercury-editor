@@ -12,7 +12,7 @@ export const router = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: "/editor/:slug",
+        path: "/editor",
         lazy: () => import("@/routes/editor"),
       },
       {

@@ -33,11 +33,11 @@ export default function Home() {
           <ScrollArea className="h-[80vh] w-full rounded-md pr-4" type="always">
             {sortedNotes.map((note) => (
               <Note
-                key={note.slug}
+                key={note.path}
                 title={note.title}
                 description={note.description}
                 createdAt={note.createdAt}
-                slug={note.slug}
+                path={note.path}
                 onDelete={() => deleteNote(note.path)}
               />
             ))}
