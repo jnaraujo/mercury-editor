@@ -33,6 +33,7 @@ export default function CreateNewNoteDialog() {
       navigate(`/editor`, {
         state: { path },
       });
+      setOpen(false);
     } catch (error) {
       if (error instanceof NoteAlreadyExistsError) {
         setError("Já existe uma nota com esse nome.");
