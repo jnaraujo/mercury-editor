@@ -35,4 +35,14 @@ export const SHORTCUTS: Shortcut[] = [
         .setTheme((theme) => (theme === "dark" ? "light" : "dark"));
     },
   },
+  {
+    isCtrl: true,
+    key: "N",
+    action: async () => {
+      const { useCreateNewNoteDialogStore } = await import(
+        "@/stores/createNewNoteDialogStore"
+      );
+      useCreateNewNoteDialogStore.getState().setOpen(true);
+    },
+  },
 ];

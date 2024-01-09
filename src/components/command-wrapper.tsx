@@ -56,6 +56,7 @@ export default function CommandWrapper() {
           >
             <FilePlus2 className="mr-2 h-4 w-4 shrink-0" />
             <span>Nova nota</span>
+            <CommandShortcut>Ctrl + N</CommandShortcut>
           </CommandItem>
           <CommandItem onSelect={() => runCommand(() => navigate("/"))}>
             <FolderOpen className="mr-2 h-4 w-4 shrink-0" />
