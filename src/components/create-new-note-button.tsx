@@ -17,7 +17,6 @@ export default function CreateNewNoteButton() {
   const navigate = useNavigate();
 
   const [error, setError] = useState<string | null>(null);
-  const [open, setOpen] = useState(false);
 
   const { createNote } = useNotes();
 
@@ -30,7 +29,6 @@ export default function CreateNewNoteButton() {
 
     try {
       await createNote(filename);
-      setOpen(false);
       navigate(`/editor/${filename}`);
     } catch (error) {
       if (error instanceof NoteAlreadyExistsError) {
@@ -40,7 +38,7 @@ export default function CreateNewNoteButton() {
   }
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog>
       <DialogTrigger asChild>
         <Button
           variant="outline"
