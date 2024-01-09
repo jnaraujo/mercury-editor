@@ -31,7 +31,12 @@ export default function FloatingMenu({ editor }: Props) {
 
   useEffect(() => {
     function handle(event: KeyboardEvent) {
-      if (event.code == "Slash") {
+      if (
+        event.code == "Slash" &&
+        !event.ctrlKey &&
+        !event.metaKey &&
+        !event.shiftKey
+      ) {
         event.preventDefault();
         setOpen((prev) => !prev);
       }
