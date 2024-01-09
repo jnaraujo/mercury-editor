@@ -6,7 +6,7 @@
     "distDir": "../dist"
   },
   "package": {
-    "productName": "Mercury Editor",
+    "productName": "Mercury",
     "version": "../package.json"
   },
   "tauri": {
