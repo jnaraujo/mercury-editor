@@ -10,6 +10,7 @@ import {
 } from "@/lib/files";
 import { useCommandStore } from "@/stores/commandStore";
 import { useNotesStore } from "@/stores/notesStore";
+import { open as openExternalLink } from "@tauri-apps/api/shell";
 import { lazy, Suspense, useEffect } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 
@@ -49,8 +50,23 @@ export default function Layout() {
 
   return (
     <>
-      <div className="min-h-screen bg-zinc-100 text-zinc-900 antialiased dark:bg-zinc-950 dark:text-zinc-100">
+      <div className="flex h-screen flex-col overflow-hidden bg-zinc-100 text-zinc-900 antialiased dark:bg-zinc-950 dark:text-zinc-100">
         <Outlet />
+
+        <footer className="absolute bottom-0 right-0 mx-auto flex w-full shrink-0 items-center justify-end px-4 py-1">
+          <p className="text-sm text-zinc-500 dark:text-zinc-600">
+            <a
+              className="cursor-pointer hover:underline"
+              onClick={() => {
+                openExternalLink(
+                  "https://github.com/jnaraujo/mercury-editor/releases",
+                );
+              }}
+            >
+              v{__APP_VERSION__}
+            </a>
+          </p>
+        </footer>
       </div>
 
       <div className="fixed bottom-4 left-4 flex w-fit gap-4">

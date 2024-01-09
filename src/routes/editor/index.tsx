@@ -78,9 +78,9 @@ export const Component = function EditorPage() {
   }, [note]);
 
   return (
-    <div className="space-y-2">
+    <div className="h-full space-y-2 overflow-auto">
       <header className="sticky top-0 z-20 bg-zinc-100 shadow-sm dark:bg-zinc-950">
-        <div className="container flex h-16 max-w-screen-md items-center justify-between">
+        <nav className="container flex h-16 max-w-screen-md items-center justify-between">
           <Link to="/" className="text-sm text-zinc-500">
             {"<"} Voltar
           </Link>
@@ -89,7 +89,7 @@ export const Component = function EditorPage() {
             {wasModified ? "Modificado" : "Salvo"} {" • "} Atualizado há{" "}
             {timeSinceUpdate}
           </span>
-        </div>
+        </nav>
       </header>
 
       <main className="container flex max-w-screen-md flex-col justify-center">
