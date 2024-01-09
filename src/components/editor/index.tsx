@@ -25,6 +25,12 @@ export default function Editor({ content }: Props) {
     }
   }, [content, editor]);
 
+  useEffect(() => {
+    if (editor) {
+      editor.commands.focus();
+    }
+  }, [editor]);
+
   return (
     <section className="flex justify-center">
       <EditorContent
