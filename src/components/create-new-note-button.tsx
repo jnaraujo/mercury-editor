@@ -8,7 +8,6 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
-import { initialContent } from "@/constants/initialContent";
 import { NoteAlreadyExistsError } from "@/errors/note-already-exists";
 import { useNotes } from "@/hooks/useNotes";
 import { useState } from "react";
@@ -27,7 +26,7 @@ export default function CreateNewNoteButton() {
     const filename = formData.get("filename") as string;
 
     try {
-      await createNote(filename, initialContent);
+      await createNote(filename);
       setOpen(false);
     } catch (error) {
       if (error instanceof NoteAlreadyExistsError) {
