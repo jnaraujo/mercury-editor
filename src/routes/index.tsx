@@ -20,7 +20,7 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="container max-w-screen-md py-6 space-y-4 h-screen flex flex-col">
+    <div className="container max-w-screen-md py-4 space-y-4 h-screen flex flex-col">
       <header className="flex justify-between items-center h-10">
         <h1 className="text-zinc-700 text-sm dark:text-zinc-400">
           Notas recentes
@@ -29,9 +29,9 @@ export default function Home() {
         <CreateNewNoteButton />
       </header>
 
-      <main className="flex-1">
+      <main className="overflow-hidden">
         <section className="space-y-0.5 h-full">
-          <ScrollArea className="h-[80vh] w-full rounded-md pr-4" type="always">
+          <ScrollArea className="w-full h-full rounded-md pr-4" type="always">
             {sortedNotes.map((note) => (
               <Note
                 key={note.path}
@@ -47,6 +47,11 @@ export default function Home() {
           </ScrollArea>
         </section>
       </main>
+      <footer className="flex items-center h-3 justify-end shrink-0">
+        <p className="text-sm text-zinc-500 dark:text-zinc-600">
+          v{__APP_VERSION__}
+        </p>
+      </footer>
     </div>
   );
 }
