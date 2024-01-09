@@ -1,5 +1,6 @@
 import { NoteAlreadyExistsError } from "@/errors/note-already-exists";
 import { NoteNotFoundError } from "@/errors/note-not-found";
+import { randomUUID } from "@/lib/crypto";
 import { createNotesDirIfNotExists } from "@/lib/files";
 import { slugify } from "@/lib/slugify";
 import { useNotesStore } from "@/stores/notesStore";
@@ -39,6 +40,7 @@ export function useNotes() {
       const fullPath = `${documentDirPath}\\notes\\${slugify(name)}.md`;
 
       addNote({
+        id: randomUUID(),
         path: fullPath,
         title: name,
         description: content.slice(0, 100),

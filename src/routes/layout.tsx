@@ -2,6 +2,7 @@ import CreateNewNoteDialog from "@/components/create-new-note-dialog";
 import SettingsOpen from "@/components/settings-open";
 import Shortcuts from "@/components/shortcuts";
 import ThemeToggle from "@/components/theme-toggle";
+import { randomUUID } from "@/lib/crypto";
 import { useCommandStore } from "@/stores/commandStore";
 import { useNotesStore } from "@/stores/notesStore";
 import { WebviewWindow } from "@tauri-apps/api/window";
@@ -36,6 +37,7 @@ export default function Layout() {
 
       if (!findNoteByPath(path)) {
         addNote({
+          id: randomUUID(),
           title: filename,
           path,
           createdAt: Date.now(),

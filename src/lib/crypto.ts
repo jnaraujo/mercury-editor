@@ -10,3 +10,7 @@ export function hash(str: string): string {
 
   return hashHex;
 }
+
+export function randomUUID() {
+  return window.crypto.randomUUID();
+}
