@@ -23,8 +23,6 @@ export const Component = function EditorPage() {
   const note = findNoteByPath(path as string);
   const wasModified = hash(updatedContent) !== oldContentHash;
 
-  console.log("path", path);
-
   useEffect(() => {
     appWindow.setTitle(`${path} - Mercury`);
     setInitialContent("");
