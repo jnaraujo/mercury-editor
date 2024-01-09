@@ -65,24 +65,21 @@ export const Component = function EditorPage() {
   }
 
   return (
-    <div className="container max-w-screen-md py-6 space-y-8">
-      <header className="flex justify-between items-center h-10">
-        <Link to="/" className="text-zinc-500 text-sm">
-          {"<"} Voltar
-        </Link>
+    <div className="space-y-2">
+      <header className="top-0 sticky bg-zinc-100 dark:bg-zinc-950 z-20 shadow-sm">
+        <div className="max-w-screen-md container justify-between flex items-center h-16">
+          <Link to="/" className="text-zinc-500 text-sm">
+            {"<"} Voltar
+          </Link>
 
-        <div className="space-x-2">
           <span className="text-zinc-700 text-sm dark:text-zinc-500">
-            {wasModified ? "Modificado" : "Salvo"}
-          </span>
-          <span>•</span>
-          <span className="text-zinc-700 text-sm dark:text-zinc-500">
-            Atualizado há {timeSinceUpdate}
+            {wasModified ? "Modificado" : "Salvo"} {" • "} Atualizado há{" "}
+            {timeSinceUpdate}
           </span>
         </div>
       </header>
 
-      <main className="flex flex-col justify-center">
+      <main className="flex flex-col justify-center container max-w-screen-md">
         <Editor content={initialContent} onChange={setUpdatedContent} />
       </main>
     </div>
