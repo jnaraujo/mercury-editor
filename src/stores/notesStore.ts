@@ -14,7 +14,7 @@ interface NotesStore {
   updateNote: (note: Note) => void;
 }
 
-export const notesStore = create<NotesStore>()(
+export const useNotesStore = create<NotesStore>()(
   persist(
     (set, get) => ({
       notes: [],

@@ -2,7 +2,7 @@ import Editor from "@/components/editor";
 import { useNotes } from "@/hooks/useNotes";
 import { hash } from "@/lib/crypto";
 import { timeSince } from "@/lib/time";
-import { notesStore } from "@/stores/notesStore";
+import { useNotesStore } from "@/stores/notesStore";
 import { readTextFile } from "@tauri-apps/api/fs";
 import { appWindow } from "@tauri-apps/api/window";
 import { useEffect, useMemo, useState } from "react";
@@ -14,7 +14,7 @@ export const Component = function EditorPage() {
   const [oldContentHash, setOldContentHash] = useState<string>("" as string);
   const [focusEditor, setFocusEditor] = useState(false);
   const { slug } = useParams();
-  const findNote = notesStore((state) => state.findNote);
+  const findNote = useNotesStore((state) => state.findNote);
   const { updateNote } = useNotes();
   const navigate = useNavigate();
 
