@@ -4,6 +4,7 @@ import Note from "@/components/note";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useNotes } from "@/hooks/useNotes";
 import { useNotesStore } from "@/stores/notesStore";
+import { open as openExternalLink } from "@tauri-apps/api/shell";
 import { appWindow } from "@tauri-apps/api/window";
 import { useEffect } from "react";
 
@@ -49,7 +50,16 @@ export default function Home() {
       </main>
       <footer className="flex items-center h-3 justify-end shrink-0">
         <p className="text-sm text-zinc-500 dark:text-zinc-600">
-          v{__APP_VERSION__}
+          <a
+            className="hover:underline cursor-pointer"
+            onClick={() => {
+              openExternalLink(
+                "https://github.com/jnaraujo/mercury-editor/releases",
+              );
+            }}
+          >
+            v{__APP_VERSION__}
+          </a>
         </p>
       </footer>
     </div>
