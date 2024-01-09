@@ -9,6 +9,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { timeSince } from "@/lib/time";
 import { Trash } from "lucide-react";
 import { Link } from "react-router-dom";
 import { buttonVariants } from "./ui/button";
@@ -41,7 +42,8 @@ export default function Note({
             {description}
           </p>
           <span className="text-xs text-zinc-400">
-            Criado em {new Date(createdAt).toLocaleDateString()}
+            Criado em {new Date(createdAt).toLocaleDateString()} • Atualizado há{" "}
+            {timeSince(createdAt)}
           </span>
         </div>
       </Link>

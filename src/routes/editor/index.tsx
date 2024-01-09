@@ -1,4 +1,5 @@
 import Editor from "@/components/editor";
+import { timeSince } from "@/lib/time";
 import { notesStore } from "@/stores/notesStore";
 import { readTextFile } from "@tauri-apps/api/fs";
 import { appWindow } from "@tauri-apps/api/window";
@@ -34,7 +35,7 @@ export const Component = function EditorPage() {
         </Link>
 
         <span className="text-zinc-700 text-sm dark:text-zinc-500">
-          Atualizado em {note.updatedAt}
+          Atualizado há {timeSince(note.updatedAt)}
         </span>
       </header>
 
