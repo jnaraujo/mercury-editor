@@ -1,12 +1,13 @@
 import { useCommandStore } from "@/stores/commandStore";
 import { useConfigStore } from "@/stores/configStore";
+import { useCreateNewNoteDialogStore } from "@/stores/createNewNoteDialogStore";
 import { open as openExternalLink } from "@tauri-apps/api/shell";
 import { appWindow } from "@tauri-apps/api/window";
 import {
   ExternalLink,
+  FilePlus2,
   FolderOpen,
   Fullscreen,
-  Newspaper,
   SunMoon,
 } from "lucide-react";
 import { useCallback } from "react";
@@ -23,6 +24,9 @@ import {
 } from "./ui/command";
 
 export default function CommandWrapper() {
+  const setOpenCreateNewNotaDialog = useCreateNewNoteDialogStore(
+    (state) => state.setOpen,
+  );
   const { open, setOpen } = useCommandStore();
   const setTheme = useConfigStore((state) => state.setTheme);
   const navigate = useNavigate();
@@ -44,26 +48,15 @@ export default function CommandWrapper() {
         <CommandEmpty>No results found.</CommandEmpty>
 
         <CommandGroup heading="Sugestões">
-          <CommandItem onSelect={() => runCommand(() => navigate("/editor"))}>
-            <Newspaper className="mr-2 h-4 w-4 shrink-0" />
-            <span>Blog</span>
-          </CommandItem>
-          <CommandItem>
-            <FolderOpen className="mr-2 h-4 w-4 shrink-0" />
-            <span>Projetos</span>
-          </CommandItem>
-        </CommandGroup>
-
-        <CommandSeparator />
-
-        <CommandGroup heading="Links">
           <CommandItem
-            onSelect={() =>
-              openExternalLink("https://github.com/jnaraujo/mercury-editor")
-            }
+            onSelect={() => runCommand(() => setOpenCreateNewNotaDialog(true))}
           >
-            <ExternalLink className="mr-2 h-4 w-4 shrink-0" />
-            <span>Github</span>
+            <FilePlus2 className="mr-2 h-4 w-4 shrink-0" />
+            <span>Nova nota</span>
+          </CommandItem>
+          <CommandItem onSelect={() => runCommand(() => navigate("/"))}>
+            <FolderOpen className="mr-2 h-4 w-4 shrink-0" />
+            <span>Notas recentes</span>
           </CommandItem>
         </CommandGroup>
 
@@ -94,6 +87,19 @@ export default function CommandWrapper() {
             <Fullscreen className="mr-2 h-4 w-4 shrink-0" />
             <span>Fullscreen</span>
             <CommandShortcut>F11</CommandShortcut>
+          </CommandItem>
+        </CommandGroup>
+
+        <CommandSeparator />
+
+        <CommandGroup heading="Links">
+          <CommandItem
+            onSelect={() =>
+              openExternalLink("https://github.com/jnaraujo/mercury-editor")
+            }
+          >
+            <ExternalLink className="mr-2 h-4 w-4 shrink-0" />
+            <span>Github</span>
           </CommandItem>
         </CommandGroup>
       </CommandList>
