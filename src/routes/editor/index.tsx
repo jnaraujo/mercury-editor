@@ -48,8 +48,13 @@ export const Component = function EditorPage() {
         event.preventDefault();
 
         if (wasModified) {
+          console.time("updateNote");
           updateNote(note.path, updatedContent).then(() => {
+            console.timeEnd("updateNote");
+
+            console.time("hash");
             setOldContentHash(hash(updatedContent));
+            console.timeEnd("hash");
           });
         }
       }
