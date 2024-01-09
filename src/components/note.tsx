@@ -15,6 +15,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { getRelativeTimeString } from "@/lib/time";
+import { useNotesStore } from "@/stores/notesStore";
 import { MoreVertical } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
@@ -37,6 +38,7 @@ export default function Note({
   onDelete,
 }: Props) {
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
+  const removeNote = useNotesStore((state) => state.removeNote);
 
   return (
     <article className="group flex items-center justify-between gap-4 rounded-md p-4 transition-colors duration-200 hover:bg-zinc-200 dark:hover:bg-zinc-900">
@@ -85,6 +87,14 @@ export default function Note({
             >
               Editar
             </Link>
+          </DropdownMenuItem>
+
+          <DropdownMenuItem
+            onSelect={() => {
+              removeNote(path);
+            }}
+          >
+            Remover da lista
           </DropdownMenuItem>
 
           <DropdownMenuItem
