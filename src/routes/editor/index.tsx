@@ -24,9 +24,9 @@ export const Component = function EditorPage() {
   const wasModified = hash(updatedContent) !== oldContentHash;
 
   useEffect(() => {
-    appWindow.setTitle(`${path} - Mercury`);
+    appWindow.setTitle(`${note?.title} - Mercury`);
     setInitialContent("");
-  }, [path]);
+  }, [note]);
 
   useEffect(() => {
     if (!note) {
