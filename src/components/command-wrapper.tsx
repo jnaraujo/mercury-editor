@@ -1,6 +1,7 @@
 import { useCommandStore } from "@/stores/commandStore";
 import { useConfigStore } from "@/stores/configStore";
 import { useCreateNewNoteDialogStore } from "@/stores/createNewNoteDialogStore";
+import { useNotesStore } from "@/stores/notesStore";
 import { open as openExternalLink } from "@tauri-apps/api/shell";
 import { appWindow } from "@tauri-apps/api/window";
 import {
@@ -8,6 +9,7 @@ import {
   FilePlus2,
   FolderOpen,
   Fullscreen,
+  StickyNote,
   SunMoon,
 } from "lucide-react";
 import { useCallback } from "react";
@@ -28,6 +30,7 @@ export default function CommandWrapper() {
     (state) => state.setOpen,
   );
   const { open, setOpen } = useCommandStore();
+  const notes = useNotesStore((state) => state.notes);
   const setTheme = useConfigStore((state) => state.setTheme);
   const navigate = useNavigate();
 
@@ -58,6 +61,26 @@ export default function CommandWrapper() {
             <FolderOpen className="mr-2 h-4 w-4 shrink-0" />
             <span>Notas recentes</span>
           </CommandItem>
+        </CommandGroup>
+
+        <CommandSeparator />
+
+        <CommandGroup heading="Notas recentes">
+          {notes
+            .sort((a, b) => {
+              return b.updatedAt - a.updatedAt;
+            })
+            .map((note) => (
+              <CommandItem
+                key={note.slug}
+                onSelect={() =>
+                  runCommand(() => navigate(`/editor/${note.slug}`))
+                }
+              >
+                <StickyNote className="mr-2 h-4 w-4 shrink-0" />
+                <span>{note.title}</span>
+              </CommandItem>
+            ))}
         </CommandGroup>
 
         <CommandSeparator />
