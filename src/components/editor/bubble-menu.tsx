@@ -118,7 +118,7 @@ export default function BubbleMenu({ editor }: Props) {
                 <button
                   className="w-full flex items-center justify-center"
                   onClick={() => {
-                    editor.chain().toggleBold().run();
+                    editor.chain().focus().toggleBold().run();
                   }}
                 >
                   <Bold size={14} />
