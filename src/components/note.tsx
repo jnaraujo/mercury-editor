@@ -16,7 +16,7 @@ import { buttonVariants } from "./ui/button";
 interface Props {
   title: string;
   description: string;
-  createdAt: string;
+  createdAt: number;
   slug: string;
 
   onDelete?: () => void;
@@ -40,7 +40,9 @@ export default function Note({
           <p className="text-sm dark:text-zinc-300/90 text-zinc-600 line-clamp-2">
             {description}
           </p>
-          <span className="text-xs text-zinc-400">Criado em {createdAt}</span>
+          <span className="text-xs text-zinc-400">
+            Criado em {new Date(createdAt).toLocaleDateString()}
+          </span>
         </div>
       </Link>
 

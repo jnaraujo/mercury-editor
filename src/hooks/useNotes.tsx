@@ -40,8 +40,8 @@ export function useNotes() {
         title: name,
         description: content.slice(0, 100),
         slug: slugify(name),
-        createdAt: new Date().toLocaleDateString(),
-        updatedAt: new Date().toLocaleDateString(),
+        createdAt: Date.now(),
+        updatedAt: Date.now(),
       });
     },
     [addNote],
