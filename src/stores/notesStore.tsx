@@ -10,6 +10,8 @@ interface NotesStore {
   addNote: (note: Note) => void;
   removeNote: (path: string) => void;
   findNote: (slug: string) => Note | undefined;
+  findNoteByPath: (path: string) => Note | undefined;
+  updateNote: (note: Note) => void;
 }
 
 export const notesStore = create<NotesStore>()(
@@ -23,6 +25,13 @@ export const notesStore = create<NotesStore>()(
         })),
       findNote: (slug) => {
         return get().notes.find((n) => n.slug === slug);
+      },
+      findNoteByPath: (path) => {
+        return get().notes.find((n) => n.path === path);
+      },
+      updateNote: (newNote) => {
+        get().removeNote(newNote.path);
+        get().addNote(newNote);
       },
     }),
     {

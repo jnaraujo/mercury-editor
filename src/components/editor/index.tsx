@@ -6,9 +6,10 @@ import FloatingMenu from "./floating-menu";
 
 interface Props {
   content: string;
+  onChange?: (html: string) => void;
 }
 
-export default function Editor({ content }: Props) {
+export default function Editor({ content, onChange }: Props) {
   const editor = useEditor({
     content: content,
     extensions,
@@ -16,6 +17,9 @@ export default function Editor({ content }: Props) {
       attributes: {
         class: "outline-none",
       },
+    },
+    onUpdate: ({ editor }) => {
+      onChange?.(editor.storage.markdown.getMarkdown());
     },
   });
 

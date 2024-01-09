@@ -1,9 +1,11 @@
 import Placeholder from "@tiptap/extension-placeholder";
 import Underline from "@tiptap/extension-underline";
 import StarterKit from "@tiptap/starter-kit";
+import { Markdown } from "tiptap-markdown";
 
 export const extensions = [
   StarterKit,
+  Markdown,
   Underline,
   Placeholder.configure({
     placeholder: `Clique em "/" para abrir o menu de comandos`,

@@ -1,4 +1,5 @@
 import { NoteAlreadyExistsError } from "@/errors/note-already-exists";
+import { NoteNotFoundError } from "@/errors/note-not-found";
 import { createNotesDirIfNotExists } from "@/lib/files";
 import { slugify } from "@/lib/slugify";
 import { notesStore } from "@/stores/notesStore";
@@ -13,7 +14,9 @@ import { useCallback, useEffect, useMemo } from "react";
 
 export function useNotes() {
   const addNote = notesStore((state) => state.addNote);
+  const updateNoteOnStore = notesStore((state) => state.updateNote);
   const removeNote = notesStore((state) => state.removeNote);
+  const findNoteByPath = notesStore((state) => state.findNoteByPath);
 
   useEffect(() => {
     createNotesDirIfNotExists();
@@ -56,5 +59,27 @@ export function useNotes() {
     [removeNote],
   );
 
-  return useMemo(() => ({ createNote, deleteNote }), [createNote, deleteNote]);
+  const updateNote = useCallback(
+    async (path: string, content: string) => {
+      const note = findNoteByPath(path);
+      if (!note) {
+        throw new NoteNotFoundError();
+      }
+
+      await writeTextFile(path, content);
+
+      const updatedNote = {
+        ...note,
+        updatedAt: Date.now(),
+      };
+
+      updateNoteOnStore(updatedNote);
+    },
+    [findNoteByPath, updateNoteOnStore],
+  );
+
+  return useMemo(
+    () => ({ createNote, deleteNote, updateNote }),
+    [createNote, deleteNote, updateNote],
+  );
 }
