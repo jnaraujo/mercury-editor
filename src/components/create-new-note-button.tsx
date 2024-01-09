@@ -10,10 +10,13 @@ import {
 import { Input } from "@/components/ui/input";
 import { NoteAlreadyExistsError } from "@/errors/note-already-exists";
 import { useNotes } from "@/hooks/useNotes";
+import { cn } from "@/lib/utils";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-export default function CreateNewNoteButton() {
+interface Props extends React.HTMLAttributes<HTMLButtonElement> {}
+
+export default function CreateNewNoteButton({ className, ...rest }: Props) {
   const navigate = useNavigate();
 
   const [error, setError] = useState<string | null>(null);
@@ -42,7 +45,11 @@ export default function CreateNewNoteButton() {
       <DialogTrigger asChild>
         <Button
           variant="outline"
-          className="bg-transparent hover:bg-zinc-200/50 dark:hover:bg-zinc-800"
+          className={cn(
+            "bg-transparent hover:bg-zinc-200/50 dark:hover:bg-zinc-800",
+            className,
+          )}
+          {...rest}
         >
           Criar nota
         </Button>
