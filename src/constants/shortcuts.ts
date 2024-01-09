@@ -1,7 +1,3 @@
-import { useCommandStore } from "@/stores/commandStore";
-import { useConfigStore } from "@/stores/configStore";
-import { appWindow } from "@tauri-apps/api/window";
-
 interface Shortcut {
   isCtrl?: boolean;
   isAlt?: boolean;
@@ -14,7 +10,8 @@ interface Shortcut {
 export const SHORTCUTS: Shortcut[] = [
   {
     key: "F11",
-    action: () => {
+    action: async () => {
+      const { appWindow } = await import("@tauri-apps/api/window");
       appWindow.isFullscreen().then((isFullscreen) => {
         appWindow.setFullscreen(!isFullscreen);
       });
@@ -23,14 +20,16 @@ export const SHORTCUTS: Shortcut[] = [
   {
     isCtrl: true,
     key: "K",
-    action: () => {
+    action: async () => {
+      const { useCommandStore } = await import("@/stores/commandStore");
       useCommandStore.getState().setOpen((open) => !open);
     },
   },
   {
     isCtrl: true,
     key: "T",
-    action: () => {
+    action: async () => {
+      const { useConfigStore } = await import("@/stores/configStore");
       useConfigStore
         .getState()
         .setTheme((theme) => (theme === "dark" ? "light" : "dark"));
