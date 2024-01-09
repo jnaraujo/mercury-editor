@@ -12,6 +12,7 @@ export const Component = function EditorPage() {
   const [initialContent, setInitialContent] = useState("");
   const [updatedContent, setUpdatedContent] = useState("");
   const [oldContentHash, setOldContentHash] = useState<string>("" as string);
+  const [focusEditor, setFocusEditor] = useState(false);
   const { slug } = useParams();
   const findNote = notesStore((state) => state.findNote);
   const { updateNote } = useNotes();
@@ -36,6 +37,10 @@ export const Component = function EditorPage() {
       setInitialContent(value);
       setUpdatedContent(value);
       setOldContentHash(hash(value));
+
+      if (value === "") {
+        setFocusEditor(true);
+      }
     });
   }, [initialContent, note]);
 
@@ -85,7 +90,11 @@ export const Component = function EditorPage() {
       </header>
 
       <main className="flex flex-col justify-center container max-w-screen-md">
-        <Editor content={initialContent} onChange={setUpdatedContent} />
+        <Editor
+          content={initialContent}
+          onChange={setUpdatedContent}
+          focus={focusEditor}
+        />
       </main>
     </div>
   );

@@ -7,9 +7,10 @@ import FloatingMenu from "./floating-menu";
 interface Props {
   content: string;
   onChange?: (html: string) => void;
+  focus?: boolean;
 }
 
-export default function Editor({ content, onChange }: Props) {
+export default function Editor({ content, onChange, focus }: Props) {
   const editor = useEditor({
     content: content,
     extensions,
@@ -30,10 +31,10 @@ export default function Editor({ content, onChange }: Props) {
   }, [content, editor]);
 
   useEffect(() => {
-    if (editor) {
+    if (editor && focus) {
       editor.commands.focus();
     }
-  }, [editor]);
+  }, [focus, editor]);
 
   return (
     <section className="flex justify-center">
