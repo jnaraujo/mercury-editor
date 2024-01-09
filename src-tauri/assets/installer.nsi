@@ -10,7 +10,7 @@ ${StrCase}
 ${StrLoc}
 
 !define MANUFACTURER "{{manufacturer}}"
-!define PRODUCTNAME "mercury"
+!define PRODUCTNAME "{{product_name}}"
 !define VERSION "{{version}}"
 !define VERSIONWITHBUILD "{{version_with_build}}"
 !define SHORTDESCRIPTION "{{short_description}}"
