@@ -30,6 +30,12 @@ export default defineConfig(() => ({
           if (id.includes("@remix-run") || id.includes("react-router")) {
             return "react-router";
           }
+          if (id.includes("markdown-it")) {
+            return "markdown-it";
+          }
+          if (id.includes("prosemirror")) {
+            return "prosemirror";
+          }
         },
       },
     },
