@@ -1,3 +1,4 @@
+import CreateNewNoteDialog from "@/components/create-new-note-dialog";
 import SettingsOpen from "@/components/settings-open";
 import Shortcuts from "@/components/shortcuts";
 import ThemeToggle from "@/components/theme-toggle";
@@ -37,6 +38,7 @@ export default function Layout() {
 
       <Shortcuts />
       <ThemeToggle />
+      <CreateNewNoteDialog />
     </>
   );
 }
