@@ -1,5 +1,4 @@
 import { Note } from "@/@types/note";
-import { normalizePath } from "@/lib/files";
 import { createZustandStore } from "@/lib/store";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
@@ -24,11 +23,7 @@ export const useNotesStore = create<NotesStore>()(
           notes: state.notes.filter((n) => n.path !== path),
         })),
       findNoteByPath: (path) => {
-        return get().notes.find((n) => {
-          console.log(normalizePath(n.path), normalizePath(path));
-
-          return normalizePath(n.path) === normalizePath(path);
-        });
+        return get().notes.find((n) => n.path === path);
       },
       updateNote: (newNote) => {
         get().removeNote(newNote.path);
