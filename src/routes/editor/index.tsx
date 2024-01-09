@@ -18,7 +18,11 @@ export const Component = function EditorPage() {
 
   const note = findNote(slug as string);
 
-  const wasModified = oldContentHash !== hash(updatedContent);
+  const wasModified = useMemo(() => {
+    if (!note || !initialContent) return false;
+
+    return hash(updatedContent) !== oldContentHash;
+  }, [note, initialContent, updatedContent, oldContentHash]);
 
   useEffect(() => {
     appWindow.setTitle(`${slug} - Mercury`);
@@ -30,6 +34,7 @@ export const Component = function EditorPage() {
 
     readTextFile(note.path as string).then((value) => {
       setInitialContent(value);
+      setUpdatedContent(value);
       setOldContentHash(hash(value));
     });
   }, [initialContent, note]);
