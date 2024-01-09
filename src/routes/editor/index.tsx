@@ -6,7 +6,7 @@ import { notesStore } from "@/stores/notesStore";
 import { readTextFile } from "@tauri-apps/api/fs";
 import { appWindow } from "@tauri-apps/api/window";
 import { useEffect, useMemo, useState } from "react";
-import { Link, redirect, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
 export const Component = function EditorPage() {
   const [initialContent, setInitialContent] = useState("");
@@ -16,6 +16,7 @@ export const Component = function EditorPage() {
   const { slug } = useParams();
   const findNote = notesStore((state) => state.findNote);
   const { updateNote } = useNotes();
+  const navigate = useNavigate();
 
   const note = findNote(slug as string);
 
@@ -26,7 +27,10 @@ export const Component = function EditorPage() {
   }, [slug]);
 
   useEffect(() => {
-    if (!note) return;
+    if (!note) {
+      return navigate("/");
+    }
+
     if (initialContent) return;
 
     readTextFile(note.path as string).then((value) => {
@@ -38,7 +42,7 @@ export const Component = function EditorPage() {
         setFocusEditor(true);
       }
     });
-  }, [initialContent, note]);
+  }, [initialContent, navigate, note]);
 
   useEffect(() => {
     function handleSave(event: KeyboardEvent) {
@@ -59,9 +63,7 @@ export const Component = function EditorPage() {
         }
       }
     }
-
     window.addEventListener("keydown", handleSave);
-
     return () => {
       window.removeEventListener("keydown", handleSave);
     };
@@ -72,10 +74,6 @@ export const Component = function EditorPage() {
 
     return timeSince(note?.updatedAt as number);
   }, [note]);
-
-  if (!note) {
-    return redirect("/");
-  }
 
   return (
     <div className="space-y-2">
