@@ -11,8 +11,11 @@ import { Input } from "@/components/ui/input";
 import { NoteAlreadyExistsError } from "@/errors/note-already-exists";
 import { useNotes } from "@/hooks/useNotes";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function CreateNewNoteButton() {
+  const navigate = useNavigate();
+
   const [error, setError] = useState<string | null>(null);
   const [open, setOpen] = useState(false);
 
@@ -28,6 +31,7 @@ export default function CreateNewNoteButton() {
     try {
       await createNote(filename);
       setOpen(false);
+      navigate(`/editor/${filename}`);
     } catch (error) {
       if (error instanceof NoteAlreadyExistsError) {
         setError("Já existe uma nota com esse nome.");
