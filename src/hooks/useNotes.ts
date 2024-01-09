@@ -1,7 +1,6 @@
 import { NoteAlreadyExistsError } from "@/errors/note-already-exists";
 import { NoteNotFoundError } from "@/errors/note-not-found";
 import { randomUUID } from "@/lib/crypto";
-import { createNotesDirIfNotExists } from "@/lib/files";
 import { slugify } from "@/lib/slugify";
 import { useNotesStore } from "@/stores/notesStore";
 import {
@@ -11,17 +10,13 @@ import {
   writeTextFile,
 } from "@tauri-apps/api/fs";
 import { documentDir } from "@tauri-apps/api/path";
-import { useCallback, useEffect, useMemo } from "react";
+import { useCallback, useMemo } from "react";
 
 export function useNotes() {
   const addNote = useNotesStore((state) => state.addNote);
   const updateNoteOnStore = useNotesStore((state) => state.updateNote);
   const removeNote = useNotesStore((state) => state.removeNote);
   const findNoteByPath = useNotesStore((state) => state.findNoteByPath);
-
-  useEffect(() => {
-    createNotesDirIfNotExists();
-  }, []);
 
   const createNote = useCallback(
     async (name: string, content: string = "") => {

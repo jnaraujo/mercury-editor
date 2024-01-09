@@ -1,4 +1,4 @@
-import { BaseDirectory, createDir, exists } from "@tauri-apps/api/fs";
+import { BaseDirectory, createDir, exists, readDir } from "@tauri-apps/api/fs";
 
 export async function createNotesDirIfNotExists() {
   const doesPathExists = await exists("notes", {
@@ -10,6 +10,14 @@ export async function createNotesDirIfNotExists() {
       dir: BaseDirectory.Document,
     });
   }
+}
+
+export async function getNotesFromDir() {
+  const files = await readDir("notes", {
+    dir: BaseDirectory.Document,
+  });
+
+  return files;
 }
 
 export function normalizePath(path: string) {

@@ -3,6 +3,7 @@ import SettingsOpen from "@/components/settings-open";
 import Shortcuts from "@/components/shortcuts";
 import ThemeToggle from "@/components/theme-toggle";
 import { randomUUID } from "@/lib/crypto";
+import { createNotesDirIfNotExists, getNotesFromDir } from "@/lib/files";
 import { useCommandStore } from "@/stores/commandStore";
 import { useNotesStore } from "@/stores/notesStore";
 import { WebviewWindow } from "@tauri-apps/api/window";
@@ -21,6 +22,33 @@ export default function Layout() {
   const navigate = useNavigate();
   const addNote = useNotesStore((state) => state.addNote);
   const findNoteByPath = useNotesStore((state) => state.findNoteByPath);
+
+  useEffect(() => {
+    createNotesDirIfNotExists();
+  }, []);
+
+  useEffect(() => {
+    async function handle() {
+      const files = await getNotesFromDir();
+
+      files.forEach((file) => {
+        if (findNoteByPath(file.path)) return;
+
+        console.log("Adding note", file.name);
+
+        addNote({
+          id: randomUUID(),
+          title: file.name || randomUUID(),
+          path: file.path,
+          createdAt: Date.now(),
+          updatedAt: Date.now(),
+          description: "",
+        });
+      });
+    }
+
+    handle();
+  }, [addNote, findNoteByPath]);
 
   useEffect(() => {
     setupAppWindow().then(() => console.log("App window is ready"));
