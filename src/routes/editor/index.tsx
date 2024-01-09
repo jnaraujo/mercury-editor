@@ -67,6 +67,8 @@ export const Component = function EditorPage() {
   }, [updatedContent, wasModified, note, updateNote]);
 
   const timeSinceUpdate = useMemo(() => {
+    if (!note) return null;
+
     return timeSince(note?.updatedAt as number);
   }, [note]);
 
