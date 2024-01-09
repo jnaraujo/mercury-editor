@@ -39,7 +39,7 @@ export default function Note({
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
 
   return (
-    <article className="p-4 dark:hover:bg-zinc-900 rounded-md transition-colors duration-200 hover:bg-zinc-200 flex justify-between items-center gap-4 group">
+    <article className="group flex items-center justify-between gap-4 rounded-md p-4 transition-colors duration-200 hover:bg-zinc-200 dark:hover:bg-zinc-900">
       <Link
         to="/editor"
         state={{
@@ -48,11 +48,11 @@ export default function Note({
         className="w-full"
       >
         <div className="space-y-0.5">
-          <h2 className="dark:text-zinc-200 text-zinc-700 font-medium line-clamp-1">
+          <h2 className="line-clamp-1 font-medium text-zinc-700 dark:text-zinc-200">
             {title}
           </h2>
 
-          <p className="text-sm dark:text-zinc-300/90 text-zinc-600 line-clamp-2">
+          <p className="line-clamp-2 text-sm text-zinc-600 dark:text-zinc-300/90">
             {description}
           </p>
           <span className="text-xs text-zinc-400">
@@ -65,11 +65,11 @@ export default function Note({
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <button
-            className="flex items-start justify-center w-10 transition-opacity duration-200 outline-none"
+            className="flex w-10 items-start justify-center outline-none transition-opacity duration-200"
             aria-label="Apagar nota"
           >
             <MoreVertical
-              className="text-zinc-400 hover:text-zinc-500 transition-colors duration-200"
+              className="text-zinc-400 transition-colors duration-200 hover:text-zinc-500"
               size={20}
             />
           </button>

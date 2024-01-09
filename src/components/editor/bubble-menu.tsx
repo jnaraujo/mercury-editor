@@ -76,7 +76,7 @@ export default function BubbleMenu({ editor }: Props) {
       updateDelay={0}
     >
       <div
-        className="h-7 w-fit overflow-hidden rounded-md border border-zinc-200 bg-zinc-100 shadow-sm dark:border-zinc-700 dark:bg-zinc-900 flex items-center justify-center"
+        className="flex h-7 w-fit items-center justify-center overflow-hidden rounded-md border border-zinc-200 bg-zinc-100 shadow-sm dark:border-zinc-700 dark:bg-zinc-900"
         ref={containerRef}
       >
         <div className="mx-2">
@@ -84,12 +84,12 @@ export default function BubbleMenu({ editor }: Props) {
             <TooltipProvider delayDuration={200}>
               <Tooltip>
                 <TooltipTrigger asChild>
-                  <SelectTrigger className="h-5 bg-transparent gap-1 border-none px-1 focus:ring-offset-0">
+                  <SelectTrigger className="h-5 gap-1 border-none bg-transparent px-1 focus:ring-offset-0">
                     <Type size={14} />
                   </SelectTrigger>
                 </TooltipTrigger>
 
-                <TooltipContent className="text-xs space-y-1">
+                <TooltipContent className="space-y-1 text-xs">
                   <b className="font-medium">Transformar em:</b>
                 </TooltipContent>
               </Tooltip>
@@ -111,12 +111,12 @@ export default function BubbleMenu({ editor }: Props) {
 
         <div className="h-full w-[1px] bg-zinc-200 dark:bg-zinc-700" />
 
-        <div className="flex h-full justify-between items-center gap-4 mx-3 ml-3">
+        <div className="mx-3 ml-3 flex h-full items-center justify-between gap-4">
           <TooltipProvider delayDuration={200}>
             <Tooltip>
               <TooltipTrigger asChild>
                 <button
-                  className="w-full flex items-center justify-center"
+                  className="flex w-full items-center justify-center"
                   onClick={() => {
                     editor.chain().focus().toggleBold().run();
                   }}
@@ -124,7 +124,7 @@ export default function BubbleMenu({ editor }: Props) {
                   <Bold size={14} />
                 </button>
               </TooltipTrigger>
-              <TooltipContent className="text-xs space-y-1">
+              <TooltipContent className="space-y-1 text-xs">
                 <b className="font-medium">Negrito</b>
                 <CommandShortcut>Ctrl + B</CommandShortcut>
               </TooltipContent>
@@ -133,7 +133,7 @@ export default function BubbleMenu({ editor }: Props) {
             <Tooltip>
               <TooltipTrigger asChild>
                 <button
-                  className="w-full flex items-center justify-center"
+                  className="flex w-full items-center justify-center"
                   onClick={() => {
                     editor.chain().focus().toggleItalic().run();
                   }}
@@ -141,7 +141,7 @@ export default function BubbleMenu({ editor }: Props) {
                   <Italic size={14} />
                 </button>
               </TooltipTrigger>
-              <TooltipContent className="text-xs space-y-1">
+              <TooltipContent className="space-y-1 text-xs">
                 <b className="font-medium">Itálico</b>
                 <CommandShortcut>Ctrl + I</CommandShortcut>
               </TooltipContent>
@@ -150,7 +150,7 @@ export default function BubbleMenu({ editor }: Props) {
             <Tooltip>
               <TooltipTrigger asChild>
                 <button
-                  className="w-full flex items-center justify-center"
+                  className="flex w-full items-center justify-center"
                   onClick={() => {
                     editor.chain().focus().unsetAllMarks().run();
                   }}
@@ -158,7 +158,7 @@ export default function BubbleMenu({ editor }: Props) {
                   <RemoveFormatting size={14} />
                 </button>
               </TooltipTrigger>
-              <TooltipContent className="text-xs space-y-1">
+              <TooltipContent className="space-y-1 text-xs">
                 <b className="font-medium">Remover formatação</b>
               </TooltipContent>
             </Tooltip>

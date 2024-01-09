@@ -40,7 +40,7 @@ export default function Editor({ content, onChange, focus }: Props) {
     <section className="flex justify-center">
       <EditorContent
         editor={editor}
-        className="prose prose-violet dark:prose-invert resize-none w-full max-w-full"
+        className="prose prose-violet w-full max-w-full resize-none dark:prose-invert"
         autoCorrect="false"
         spellCheck="false"
       />

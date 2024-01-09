@@ -21,9 +21,9 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="container max-w-screen-md py-4 space-y-4 h-screen flex flex-col">
-      <header className="flex justify-between items-center h-10">
-        <h1 className="text-zinc-700 text-sm dark:text-zinc-400">
+    <div className="container flex h-screen max-w-screen-md flex-col space-y-4 py-4">
+      <header className="flex h-10 items-center justify-between">
+        <h1 className="text-sm text-zinc-700 dark:text-zinc-400">
           Notas recentes
         </h1>
 
@@ -31,8 +31,8 @@ export default function Home() {
       </header>
 
       <main className="overflow-hidden">
-        <section className="space-y-0.5 h-full">
-          <ScrollArea className="w-full h-full rounded-md pr-4" type="always">
+        <section className="h-full space-y-0.5">
+          <ScrollArea className="h-full w-full rounded-md pr-4" type="always">
             {sortedNotes.map((note) => (
               <Note
                 key={note.path}
@@ -48,10 +48,10 @@ export default function Home() {
           </ScrollArea>
         </section>
       </main>
-      <footer className="flex items-center h-3 justify-end shrink-0">
+      <footer className="flex h-3 shrink-0 items-center justify-end">
         <p className="text-sm text-zinc-500 dark:text-zinc-600">
           <a
-            className="hover:underline cursor-pointer"
+            className="cursor-pointer hover:underline"
             onClick={() => {
               openExternalLink(
                 "https://github.com/jnaraujo/mercury-editor/releases",

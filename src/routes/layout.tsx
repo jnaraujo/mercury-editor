@@ -53,7 +53,7 @@ export default function Layout() {
         <Outlet />
       </div>
 
-      <div className="fixed bottom-4 left-4 flex gap-4 w-fit">
+      <div className="fixed bottom-4 left-4 flex w-fit gap-4">
         <SettingsOpen />
       </div>
 

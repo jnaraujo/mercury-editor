@@ -2,12 +2,12 @@ import CreateNewNoteButton from "./create-new-note-button";
 
 export default function EmptyNotes() {
   return (
-    <div className="flex flex-col justify-center items-center gap-2 h-60">
-      <div className="flex flex-col justify-center items-center">
-        <h2 className="text-zinc-700 dark:text-zinc-300 text-lg font-medium">
+    <div className="flex h-60 flex-col items-center justify-center gap-2">
+      <div className="flex flex-col items-center justify-center">
+        <h2 className="text-lg font-medium text-zinc-700 dark:text-zinc-300">
           Nenhuma nota encontrada
         </h2>
-        <p className="text-zinc-600 dark:text-zinc-400 text-sm">
+        <p className="text-sm text-zinc-600 dark:text-zinc-400">
           Crie uma nota para começar
         </p>
       </div>

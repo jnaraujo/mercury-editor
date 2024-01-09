@@ -58,7 +58,7 @@ export default function CreateNewNoteDialog() {
               autoComplete="off"
             />
 
-            {error && <span className="text-red-500 text-sm">{error}</span>}
+            {error && <span className="text-sm text-red-500">{error}</span>}
           </div>
 
           <DialogFooter>

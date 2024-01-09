@@ -79,20 +79,20 @@ export const Component = function EditorPage() {
 
   return (
     <div className="space-y-2">
-      <header className="top-0 sticky bg-zinc-100 dark:bg-zinc-950 z-20 shadow-sm">
-        <div className="max-w-screen-md container justify-between flex items-center h-16">
-          <Link to="/" className="text-zinc-500 text-sm">
+      <header className="sticky top-0 z-20 bg-zinc-100 shadow-sm dark:bg-zinc-950">
+        <div className="container flex h-16 max-w-screen-md items-center justify-between">
+          <Link to="/" className="text-sm text-zinc-500">
             {"<"} Voltar
           </Link>
 
-          <span className="text-zinc-700 text-sm dark:text-zinc-500">
+          <span className="text-sm text-zinc-700 dark:text-zinc-500">
             {wasModified ? "Modificado" : "Salvo"} {" • "} Atualizado há{" "}
             {timeSinceUpdate}
           </span>
         </div>
       </header>
 
-      <main className="flex flex-col justify-center container max-w-screen-md">
+      <main className="container flex max-w-screen-md flex-col justify-center">
         <Editor
           content={initialContent}
           onChange={setUpdatedContent}
