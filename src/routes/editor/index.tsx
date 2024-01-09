@@ -1,11 +1,11 @@
 import Editor from "@/components/editor";
 import { useNotes } from "@/hooks/useNotes";
 import { hash } from "@/lib/crypto";
-import { timeSince } from "@/lib/time";
+import { getRelativeTimeString } from "@/lib/time";
 import { useNotesStore } from "@/stores/notesStore";
 import { readTextFile } from "@tauri-apps/api/fs";
 import { appWindow } from "@tauri-apps/api/window";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
 export const Component = function EditorPage() {
@@ -70,13 +70,6 @@ export const Component = function EditorPage() {
       window.removeEventListener("keydown", handleSave);
     };
   }, [updatedContent, wasModified, note, updateNote]);
-
-  const timeSinceUpdate = useMemo(() => {
-    if (!note) return null;
-
-    return timeSince(note?.updatedAt as number);
-  }, [note]);
-
   return (
     <div className="h-full space-y-2 overflow-auto">
       <header className="sticky top-0 z-20 bg-zinc-100 shadow-sm dark:bg-zinc-950">
@@ -86,8 +79,8 @@ export const Component = function EditorPage() {
           </Link>
 
           <span className="text-sm text-zinc-700 dark:text-zinc-500">
-            {wasModified ? "Modificado" : "Salvo"} {" • "} Atualizado há{" "}
-            {timeSinceUpdate}
+            {wasModified ? "Modificado" : "Salvo"} {" • "} Atualizado{" "}
+            {getRelativeTimeString(new Date(note?.updatedAt as number))}
           </span>
         </nav>
       </header>

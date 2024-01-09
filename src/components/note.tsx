@@ -14,7 +14,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { timeSince } from "@/lib/time";
+import { getRelativeTimeString } from "@/lib/time";
 import { MoreVertical } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
@@ -56,8 +56,8 @@ export default function Note({
             {description}
           </p>
           <span className="text-xs text-zinc-400">
-            Criado em {new Date(createdAt).toLocaleDateString()} • Atualizado há{" "}
-            {timeSince(createdAt)}
+            Criado em {new Date(createdAt).toLocaleDateString()} • Atualizado{" "}
+            {getRelativeTimeString(new Date(createdAt))}
           </span>
         </div>
       </Link>
