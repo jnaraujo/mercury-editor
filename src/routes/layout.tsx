@@ -2,6 +2,7 @@ import CreateNewNoteDialog from "@/components/create-new-note-dialog";
 import SettingsOpen from "@/components/settings-open";
 import Shortcuts from "@/components/shortcuts";
 import ThemeToggle from "@/components/theme-toggle";
+import { onStartupWithFilePath, setupAppWindow } from "@/lib/application";
 import { randomUUID } from "@/lib/crypto";
 import {
   addNotesFromDirIfNotExists,
@@ -9,16 +10,10 @@ import {
 } from "@/lib/files";
 import { useCommandStore } from "@/stores/commandStore";
 import { useNotesStore } from "@/stores/notesStore";
-import { WebviewWindow } from "@tauri-apps/api/window";
 import { lazy, Suspense, useEffect } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 
 const CommandWrapper = lazy(() => import("@/components/command-wrapper"));
-
-async function setupAppWindow() {
-  const appWindow = (await import("@tauri-apps/api/window")).appWindow;
-  appWindow.show();
-}
 
 export default function Layout() {
   const openCommand = useCommandStore((state) => state.open);
@@ -34,16 +29,7 @@ export default function Layout() {
   useEffect(() => {
     setupAppWindow().then(() => console.log("App window is ready"));
 
-    const webview = new WebviewWindow("main");
-
-    webview.emit("startup", "");
-
-    const unlisten = webview.listen("file_path", async (event) => {
-      const path = (event.payload as any).message as string;
-      if (!path) return;
-
-      const filename = path.replace(/^.*[\\/]/, "");
-
+    onStartupWithFilePath().then(({ filename, path }) => {
       if (!findNoteByPath(path)) {
         addNote({
           id: randomUUID(),
@@ -59,10 +45,6 @@ export default function Layout() {
         state: { path },
       });
     });
-
-    return () => {
-      unlisten.then((unlisten) => unlisten());
-    };
   }, [addNote, findNoteByPath, navigate]);
 
   return (
