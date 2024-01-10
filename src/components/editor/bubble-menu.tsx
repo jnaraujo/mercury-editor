@@ -183,7 +183,6 @@ export default function BubbleMenu({ editor }: Props) {
               </TooltipTrigger>
               <TooltipContent className="space-y-1 text-xs">
                 <b className="font-medium">Remover formatação</b>
-                <CommandShortcut>Ctrl + Shift + R</CommandShortcut>
               </TooltipContent>
             </Tooltip>
           </TooltipProvider>
