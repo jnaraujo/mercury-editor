@@ -1,4 +1,3 @@
-import { cn } from "@/lib/utils";
 import { EditorContent, useEditor } from "@tiptap/react";
 import { useEffect } from "react";
 import BubbleMenu from "./bubble-menu";
@@ -42,10 +41,7 @@ export default function Editor({ content, onChange, focus }: Props) {
     <section className="flex justify-center">
       <EditorContent
         editor={editor}
-        className={cn(
-          "prose prose-violet w-full max-w-full resize-none dark:prose-invert",
-          styles.editor,
-        )}
+        className={`${styles.editor} prose prose-violet w-full max-w-full resize-none dark:prose-invert`}
         autoCorrect="false"
         spellCheck="false"
       />
