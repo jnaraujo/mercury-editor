@@ -75,3 +75,19 @@ export function normalizePath(path: string) {
 export function filenameFromPath(path: string) {
   return path.replace(/^.*[\\/]/, "");
 }
+
+export async function requestNotesFromDisk() {
+  const selected = await open({
+    multiple: true,
+    filters: [
+      {
+        name: "Texto",
+        extensions: ["txt", "md"],
+      },
+    ],
+  });
+
+  if (!selected || typeof selected === "string") return [];
+
+  return selected;
+}

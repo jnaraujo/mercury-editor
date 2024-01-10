@@ -1,8 +1,7 @@
 import { randomUUID } from "@/lib/crypto";
-import { filenameFromPath } from "@/lib/files";
+import { filenameFromPath, requestNotesFromDisk } from "@/lib/files";
 import { cn } from "@/lib/utils";
 import { useNotesStore } from "@/stores/notesStore";
-import { open } from "@tauri-apps/api/dialog";
 import { Button } from "./ui/button";
 import { useToast } from "./ui/use-toast";
 
@@ -14,17 +13,9 @@ export default function ImportFromDiskButton({ className, ...rest }: Props) {
   const { toast } = useToast();
 
   async function handleOpenFile() {
-    const selected = await open({
-      multiple: true,
-      filters: [
-        {
-          name: "Texto",
-          extensions: ["txt", "md"],
-        },
-      ],
-    });
+    const selected = await requestNotesFromDisk();
 
-    if (!selected || typeof selected === "string") return;
+    if (!selected) return;
 
     const notesAlreadyExists: string[] = [];
 
