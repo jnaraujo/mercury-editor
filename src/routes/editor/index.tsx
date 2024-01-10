@@ -10,6 +10,7 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { buttonVariants } from "@/components/ui/button";
+import { useNotes } from "@/hooks/useNotes";
 import { hash } from "@/lib/crypto";
 import { getRelativeTimeString } from "@/lib/time";
 import { useNotesStore } from "@/stores/notesStore";
@@ -28,8 +29,9 @@ export const Component = function EditorPage() {
   const [focusEditor, setFocusEditor] = useState(false);
   const [oldContentHash, setOldContentHash] = useState("");
   const [updatedContentHash, setUpdatedContentHash] = useState("");
-  const location = useLocation();
   const findNoteByPath = useNotesStore((state) => state.findNoteByPath);
+  const { updateNote } = useNotes();
+  const location = useLocation();
   const navigate = useNavigate();
 
   const note = findNoteByPath(location.state.path as string);
@@ -70,6 +72,28 @@ export const Component = function EditorPage() {
       setOpen(true);
     }
   }, [blocker.state]);
+
+  useEffect(() => {
+    function handleSave(event: KeyboardEvent) {
+      if (!note?.path) return;
+
+      if (event.code === "KeyS" && event.ctrlKey) {
+        event.preventDefault();
+
+        if (wasModified) {
+          updateNote(note.path, updatedContent).then(() => {
+            const updatedContentHash = hash(updatedContent);
+            setUpdatedContentHash(updatedContentHash);
+            setOldContentHash(updatedContentHash);
+          });
+        }
+      }
+    }
+    window.addEventListener("keydown", handleSave);
+    return () => {
+      window.removeEventListener("keydown", handleSave);
+    };
+  }, [updatedContent, wasModified, note?.path, updateNote]);
 
   useEffect(() => {
     const unlisten = TauriWindow.getCurrent().listen(
