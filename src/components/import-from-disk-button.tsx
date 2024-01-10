@@ -56,7 +56,7 @@ export default function ImportFromDiskButton({ className, ...rest }: Props) {
     <Button
       variant="link"
       className={cn(
-        "font-normal dark:text-zinc-400 dark:hover:text-zinc-300",
+        "font-normal dark:text-zinc-300 dark:hover:text-zinc-200",
         className,
       )}
       onClick={handleOpenFile}

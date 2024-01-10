@@ -9,11 +9,7 @@ export default function CreateNewNoteButton({ className, ...rest }: Props) {
 
   return (
     <Button
-      variant="outline"
-      className={cn(
-        "bg-transparent hover:bg-zinc-200/50 dark:hover:bg-zinc-800",
-        className,
-      )}
+      className={cn("h-9", className)}
       onClick={() => setOpen(true)}
       {...rest}
     >
