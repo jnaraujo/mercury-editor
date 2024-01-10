@@ -37,7 +37,7 @@
     },
     "bundle": {
       "active": true,
-      "targets": ["deb", "nsis"],
+      "targets": ["deb", "nsis", "updater"],
       "identifier": "com.jnaraujo.mercury",
       "shortDescription": "An open source markdown editor. Simple and fast.",
       "icon": [
@@ -67,6 +67,14 @@
         "minHeight": 600,
         "visible": false
       }
-    ]
+    ],
+    "updater": {
+      "active": true,
+      "endpoints": [
+        "https://releases.myapp.com/{{target}}/{{arch}}/{{current_version}}"
+      ],
+      "dialog": true,
+      "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IEYyMzg0QUIwNDk1QjNCMDgKUldRSU8xdEpzRW80OHYzY2gxRkZRalRxamgwZTE5N29rbWNZSHBsRklxcGdRZVJVdzJnQXJ4dEIK"
+    }
   }
 }
