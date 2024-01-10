@@ -25,7 +25,7 @@ export default function Editor({ content, onChange, focus }: Props) {
   });
 
   useEffect(() => {
-    if (content && editor) {
+    if (editor) {
       editor.commands.setContent(content, true);
     }
   }, [content, editor]);
