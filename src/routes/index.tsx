@@ -40,6 +40,7 @@ export default function Home() {
             title={note.title}
             description={note.description}
             createdAt={note.createdAt}
+            updatedAt={note.updatedAt}
             path={note.path}
             onDelete={() => deleteNote(note.path)}
           />

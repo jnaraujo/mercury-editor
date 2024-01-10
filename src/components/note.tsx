@@ -25,6 +25,7 @@ interface Props {
   title: string;
   description: string;
   createdAt: number;
+  updatedAt: number;
   path: string;
 
   onDelete?: () => void;
@@ -34,6 +35,7 @@ export default function Note({
   title,
   description,
   createdAt,
+  updatedAt,
   path,
   onDelete,
 }: Props) {
@@ -59,7 +61,7 @@ export default function Note({
           </p>
           <span className="text-xs text-zinc-400">
             Criado em {new Date(createdAt).toLocaleDateString()} • Atualizado{" "}
-            {getRelativeTimeString(new Date(createdAt))}
+            {getRelativeTimeString(new Date(updatedAt))}
           </span>
         </div>
       </Link>
