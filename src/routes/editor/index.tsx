@@ -77,7 +77,7 @@ export const Component = function EditorPage() {
     function handleSave(event: KeyboardEvent) {
       if (!note?.path) return;
 
-      if (event.code === "KeyS" && event.ctrlKey) {
+      if (event.code === "KeyS" && event.ctrlKey && !event.shiftKey) {
         event.preventDefault();
 
         if (wasModified) {
