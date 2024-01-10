@@ -10,6 +10,7 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { buttonVariants } from "@/components/ui/button";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import { useNotes } from "@/hooks/useNotes";
 import { hash } from "@/lib/crypto";
 import { getRelativeTimeString } from "@/lib/time";
@@ -115,7 +116,7 @@ export const Component = function EditorPage() {
   }, [wasModified]);
 
   return (
-    <div className="h-full space-y-2 overflow-auto">
+    <div className="flex h-full flex-col space-y-2">
       <header className="sticky top-0 z-20 bg-zinc-100 shadow-sm dark:bg-zinc-950">
         <nav className="container flex h-16 max-w-screen-md items-center justify-between">
           <Link to="/" className="text-sm text-zinc-500">
@@ -129,12 +130,14 @@ export const Component = function EditorPage() {
         </nav>
       </header>
 
-      <main className="container mb-4 flex max-w-screen-md flex-col justify-center">
-        <Editor
-          content={initialContent}
-          onChange={setUpdatedContent}
-          focus={focusEditor}
-        />
+      <main className="container mb-4 flex h-full max-w-screen-md flex-col justify-center overflow-auto">
+        <ScrollArea className="h-full pr-4">
+          <Editor
+            content={initialContent}
+            onChange={setUpdatedContent}
+            focus={focusEditor}
+          />
+        </ScrollArea>
       </main>
 
       <AlertDialog open={open} onOpenChange={setOpen}>
