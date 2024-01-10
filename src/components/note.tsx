@@ -12,6 +12,7 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { getRelativeTimeString } from "@/lib/time";
@@ -19,12 +20,14 @@ import { useNotesStore } from "@/stores/notesStore";
 import { MoreVertical } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import RenameFileDialog from "./rename-file-dialog";
 import { buttonVariants } from "./ui/button";
 
 interface Props {
   title: string;
   description: string;
   createdAt: number;
+  updatedAt: number;
   path: string;
 
   onDelete?: () => void;
@@ -34,20 +37,22 @@ export default function Note({
   title,
   description,
   createdAt,
+  updatedAt,
   path,
   onDelete,
 }: Props) {
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
+  const [openRenameDialog, setOpenRenameDialog] = useState(false);
   const removeNote = useNotesStore((state) => state.removeNote);
 
   return (
-    <article className="group flex items-center justify-between gap-4 rounded-md p-4 transition-colors duration-200 hover:bg-zinc-200 dark:hover:bg-zinc-900">
+    <article className="group flex items-center justify-between gap-4 rounded-md transition-colors duration-200 hover:bg-zinc-200 dark:hover:bg-zinc-900">
       <Link
         to="/editor"
         state={{
           path,
         }}
-        className="w-full"
+        className="w-full p-4"
       >
         <div className="space-y-0.5">
           <h2 className="line-clamp-1 font-medium text-zinc-700 dark:text-zinc-200">
@@ -59,7 +64,7 @@ export default function Note({
           </p>
           <span className="text-xs text-zinc-400">
             Criado em {new Date(createdAt).toLocaleDateString()} • Atualizado{" "}
-            {getRelativeTimeString(new Date(createdAt))}
+            {getRelativeTimeString(new Date(updatedAt))}
           </span>
         </div>
       </Link>
@@ -76,6 +81,7 @@ export default function Note({
             />
           </button>
         </DropdownMenuTrigger>
+
         <DropdownMenuContent>
           <DropdownMenuItem className="cursor-pointer">
             <Link
@@ -89,6 +95,16 @@ export default function Note({
             </Link>
           </DropdownMenuItem>
 
+          <DropdownMenuSeparator />
+
+          <DropdownMenuItem
+            onSelect={() => {
+              setOpenRenameDialog(true);
+            }}
+          >
+            Renomear
+          </DropdownMenuItem>
+
           <DropdownMenuItem
             onSelect={() => {
               removeNote(path);
@@ -96,6 +112,8 @@ export default function Note({
           >
             Remover da lista
           </DropdownMenuItem>
+
+          <DropdownMenuSeparator />
 
           <DropdownMenuItem
             onSelect={() => {
@@ -130,6 +148,13 @@ export default function Note({
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
+
+      <RenameFileDialog
+        noteName={title}
+        notePath={path}
+        open={openRenameDialog}
+        onOpenChange={setOpenRenameDialog}
+      />
     </article>
   );
 }

@@ -8,6 +8,7 @@ import {
   List,
   ListOrdered,
   MessageSquare,
+  Strikethrough,
   Type,
   Underline,
 } from "lucide-react";
@@ -71,6 +72,13 @@ export const formattingItems: MenuItem[] = [
       editor.chain().focus().toggleUnderline().run();
     },
     icon: Underline,
+  },
+  {
+    title: "Riscado",
+    onSelect: (editor) => {
+      editor.chain().focus().toggleStrike().run();
+    },
+    icon: Strikethrough,
   },
 ];
 

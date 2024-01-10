@@ -4,7 +4,11 @@ import StarterKit from "@tiptap/starter-kit";
 import { Markdown } from "tiptap-markdown";
 
 export const extensions = [
-  StarterKit,
+  StarterKit.configure({
+    history: {
+      depth: 20,
+    },
+  }),
   Markdown,
   Underline,
   Placeholder.configure({

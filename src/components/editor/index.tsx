@@ -1,6 +1,7 @@
 import { EditorContent, useEditor } from "@tiptap/react";
 import { useEffect } from "react";
 import BubbleMenu from "./bubble-menu";
+import styles from "./editor.module.css";
 import { extensions } from "./extensions";
 import FloatingMenu from "./floating-menu";
 
@@ -25,7 +26,7 @@ export default function Editor({ content, onChange, focus }: Props) {
   });
 
   useEffect(() => {
-    if (content && editor) {
+    if (editor) {
       editor.commands.setContent(content, true);
     }
   }, [content, editor]);
@@ -40,7 +41,7 @@ export default function Editor({ content, onChange, focus }: Props) {
     <section className="flex justify-center">
       <EditorContent
         editor={editor}
-        className="prose prose-violet w-full max-w-full resize-none dark:prose-invert"
+        className={`${styles.editor} prose prose-sm prose-violet w-full max-w-full resize-none dark:prose-invert`}
         autoCorrect="false"
         spellCheck="false"
       />

@@ -7,19 +7,25 @@ import {
 } from "@/components/ui/dialog";
 import { NoteAlreadyExistsError } from "@/errors/note-already-exists";
 import { useNotes } from "@/hooks/useNotes";
-import { useCreateNewNoteDialogStore } from "@/stores/createNewNoteDialogStore";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 
-export default function CreateNewNoteDialog() {
-  const open = useCreateNewNoteDialogStore((state) => state.open);
-  const setOpen = useCreateNewNoteDialogStore((state) => state.setOpen);
+interface Props {
+  noteName: string;
+  notePath: string;
+  onOpenChange: (open: boolean) => void;
+  open: boolean;
+}
 
+export default function RenameFileDialog({
+  onOpenChange,
+  open,
+  noteName,
+  notePath,
+}: Props) {
   const [error, setError] = useState<string | null>(null);
-  const navigate = useNavigate();
-  const { createNote } = useNotes();
+  const { renameNote } = useNotes();
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -27,13 +33,9 @@ export default function CreateNewNoteDialog() {
 
     const formData = new FormData(event.currentTarget);
     const filename = formData.get("filename") as string;
-
     try {
-      const path = await createNote(`${filename}.md`);
-      navigate(`/editor`, {
-        state: { path },
-      });
-      setOpen(false);
+      await renameNote(notePath, filename);
+      onOpenChange(false);
     } catch (error) {
       if (error instanceof NoteAlreadyExistsError) {
         setError("Já existe uma nota com esse nome.");
@@ -42,11 +44,11 @@ export default function CreateNewNoteDialog() {
   }
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent>
         <form onSubmit={handleSubmit} className="space-y-4">
           <DialogHeader>
-            <DialogTitle>Qual o nome da nota?</DialogTitle>
+            <DialogTitle>Renomar nota</DialogTitle>
           </DialogHeader>
 
           <div className="flex flex-col gap-2">
@@ -54,15 +56,16 @@ export default function CreateNewNoteDialog() {
               required
               id="name"
               name="filename"
-              placeholder="Ex: minha nova nota"
+              placeholder="Ex: new_name.md"
               autoComplete="off"
+              defaultValue={noteName}
             />
 
             {error && <span className="text-sm text-red-500">{error}</span>}
           </div>
 
           <DialogFooter>
-            <Button type="submit">Criar nota</Button>
+            <Button type="submit">Renomear</Button>
           </DialogFooter>
         </form>
       </DialogContent>

@@ -1,4 +1,5 @@
 import { Note } from "@/@types/note";
+import { normalizePath } from "@/lib/files";
 import { createZustandStore } from "@/lib/store";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
@@ -10,7 +11,7 @@ interface NotesStore {
   addNote: (note: Note) => void;
   removeNote: (path: string) => void;
   findNoteByPath: (path: string) => Note | undefined;
-  updateNote: (note: Note) => void;
+  updateNote: (path: string, note: Note) => void;
   addNotesIfNotExists: (notes: Note[]) => void;
 }
 
@@ -18,17 +19,24 @@ export const useNotesStore = create<NotesStore>()(
   persist(
     (set, get) => ({
       notes: [],
-      addNote: (note) => set((state) => ({ notes: [...state.notes, note] })),
+      addNote: (note) =>
+        set((state) => ({
+          notes: [...state.notes, note],
+        })),
       removeNote: (path) =>
         set((state) => ({
-          notes: state.notes.filter((n) => n.path !== path),
+          notes: state.notes.filter(
+            (n) => normalizePath(n.path) !== normalizePath(path),
+          ),
         })),
       findNoteByPath: (path) => {
-        return get().notes.find((n) => n.path === path);
+        return get().notes.find(
+          (n) => normalizePath(n.path) === normalizePath(path),
+        );
       },
-      updateNote: (newNote) => {
-        get().removeNote(newNote.path);
-        get().addNote(newNote);
+      updateNote: (path, note) => {
+        get().removeNote(path);
+        get().addNote(note);
       },
       addNotesIfNotExists: (notes) => {
         notes.forEach((note) => {

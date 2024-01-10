@@ -1,12 +1,11 @@
 import { NoteAlreadyExistsError } from "@/errors/note-already-exists";
 import { NoteNotFoundError } from "@/errors/note-not-found";
 import { randomUUID } from "@/lib/crypto";
-import { slugify } from "@/lib/slugify";
 import { useNotesStore } from "@/stores/notesStore";
 import {
-  BaseDirectory,
   exists,
   removeFile,
+  renameFile,
   writeTextFile,
 } from "@tauri-apps/api/fs";
 import { documentDir } from "@tauri-apps/api/path";
@@ -20,26 +19,19 @@ export function useNotes() {
 
   const createNote = useCallback(
     async (name: string, content: string = "") => {
-      const path = `notes\\${slugify(name)}.md`;
+      const documentDirPath = await documentDir();
+      const fullPath = `${documentDirPath}\\notes\\${name}`;
 
-      if (await exists(path, { dir: BaseDirectory.Document })) {
+      if ((await exists(fullPath)) || findNoteByPath(fullPath)) {
         throw new NoteAlreadyExistsError();
       }
 
-      await writeTextFile(`notes\\${slugify(name)}.md`, content, {
-        dir: BaseDirectory.Document,
-      });
-
-      const documentDirPath = await documentDir();
-
-      const fullPath = `${documentDirPath}\\notes\\${slugify(name)}.md`;
-
-      const filename = name.includes(".") ? name : `${name}.md`;
+      await writeTextFile(fullPath, content);
 
       addNote({
         id: randomUUID(),
         path: fullPath,
-        title: filename,
+        title: name,
         description: content.slice(0, 100),
         createdAt: Date.now(),
         updatedAt: Date.now(),
@@ -47,7 +39,7 @@ export function useNotes() {
 
       return fullPath;
     },
-    [addNote],
+    [addNote, findNoteByPath],
   );
 
   const deleteNote = useCallback(
@@ -73,13 +65,40 @@ export function useNotes() {
         updatedAt: Date.now(),
       };
 
-      updateNoteOnStore(updatedNote);
+      updateNoteOnStore(updatedNote.path, updatedNote);
+    },
+    [findNoteByPath, updateNoteOnStore],
+  );
+
+  const renameNote = useCallback(
+    async (path: string, newName: string) => {
+      const note = findNoteByPath(path);
+      if (!note) {
+        throw new NoteNotFoundError();
+      }
+
+      const newPath = path.replace(note.title, newName);
+
+      if (newPath === path) return;
+
+      if ((await exists(newPath)) || findNoteByPath(newPath)) {
+        throw new NoteAlreadyExistsError();
+      }
+
+      renameFile(path, newPath);
+
+      updateNoteOnStore(path, {
+        ...note,
+        path: newPath,
+        title: newName,
+        updatedAt: Date.now(),
+      });
     },
     [findNoteByPath, updateNoteOnStore],
   );
 
   return useMemo(
-    () => ({ createNote, deleteNote, updateNote }),
-    [createNote, deleteNote, updateNote],
+    () => ({ createNote, deleteNote, updateNote, renameNote }),
+    [createNote, deleteNote, updateNote, renameNote],
   );
 }

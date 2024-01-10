@@ -15,7 +15,13 @@ import {
 import * as SelectPrimitive from "@radix-ui/react-select";
 import { TooltipProvider } from "@radix-ui/react-tooltip";
 import { BubbleMenu as TiptapBubbleMenu, type Editor } from "@tiptap/react";
-import { Bold, Italic, RemoveFormatting, Type } from "lucide-react";
+import {
+  Bold,
+  Italic,
+  RemoveFormatting,
+  Strikethrough,
+  Type,
+} from "lucide-react";
 import { useRef } from "react";
 
 interface Props {
@@ -144,6 +150,23 @@ export default function BubbleMenu({ editor }: Props) {
               <TooltipContent className="space-y-1 text-xs">
                 <b className="font-medium">Itálico</b>
                 <CommandShortcut>Ctrl + I</CommandShortcut>
+              </TooltipContent>
+            </Tooltip>
+
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <button
+                  className="flex w-full items-center justify-center"
+                  onClick={() => {
+                    editor.chain().focus().toggleStrike().run();
+                  }}
+                >
+                  <Strikethrough size={14} />
+                </button>
+              </TooltipTrigger>
+              <TooltipContent className="space-y-1 text-xs">
+                <b className="font-medium">Riscado</b>
+                <CommandShortcut>Ctrl + Shift + S</CommandShortcut>
               </TooltipContent>
             </Tooltip>
 
