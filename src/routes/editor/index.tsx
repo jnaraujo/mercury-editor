@@ -9,7 +9,7 @@ import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
 export const Component = function EditorPage() {
-  const [initialContent, setInitialContent] = useState<string | null>(null);
+  const [initialContent, setInitialContent] = useState<string>("");
   const [updatedContent, setUpdatedContent] = useState("");
   const [focusEditor, setFocusEditor] = useState(false);
   const {
@@ -25,31 +25,25 @@ export const Component = function EditorPage() {
   const wasModified = oldContentHash !== updatedContentHash;
 
   useEffect(() => {
-    appWindow.setTitle(`${note?.title} - Mercury`);
-    setInitialContent(null);
-  }, [note]);
+    if (!note) {
+      navigate("/");
+    }
+  }, [navigate, note]);
 
   useEffect(() => {
-    if (!note) {
-      return navigate("/");
-    }
+    if (!note?.title || !note?.path) return;
+
+    appWindow.setTitle(`${note.title} - Mercury`);
 
     readTextFile(note.path as string).then((value) => {
-      setFocusEditor(false);
-
-      if (initialContent === null) {
-        setInitialContent(value);
-      }
-      setUpdatedContent(value);
-
+      setInitialContent(value);
       setUpdatedContentHash(hash(value));
       setOldContentHash(hash(value));
-
       if (value === "") {
         setFocusEditor(true);
       }
     });
-  }, [initialContent, navigate, note]);
+  }, [note?.title, note?.path]);
 
   useEffect(() => {
     setUpdatedContentHash(hash(updatedContent));
@@ -57,21 +51,16 @@ export const Component = function EditorPage() {
 
   useEffect(() => {
     function handleSave(event: KeyboardEvent) {
-      if (!note) return;
+      if (!note?.path) return;
 
       if (event.code === "KeyS" && event.ctrlKey) {
         event.preventDefault();
 
         if (wasModified) {
-          console.time("updateNote");
           updateNote(note.path, updatedContent).then(() => {
-            console.timeEnd("updateNote");
-
-            console.time("hash");
             const updatedContentHash = hash(updatedContent);
             setUpdatedContentHash(updatedContentHash);
             setOldContentHash(updatedContentHash);
-            console.timeEnd("hash");
           });
         }
       }
@@ -80,7 +69,11 @@ export const Component = function EditorPage() {
     return () => {
       window.removeEventListener("keydown", handleSave);
     };
-  }, [updatedContent, wasModified, note, updateNote]);
+  }, [updatedContent, wasModified, note?.path, updateNote]);
+
+  useEffect(() => {
+    console.log(initialContent);
+  }, [initialContent]);
   return (
     <div className="h-full space-y-2 overflow-auto">
       <header className="sticky top-0 z-20 bg-zinc-100 shadow-sm dark:bg-zinc-950">
@@ -98,7 +91,7 @@ export const Component = function EditorPage() {
 
       <main className="container mb-4 flex max-w-screen-md flex-col justify-center">
         <Editor
-          content={initialContent || ""}
+          content={initialContent}
           onChange={setUpdatedContent}
           focus={focusEditor}
         />
