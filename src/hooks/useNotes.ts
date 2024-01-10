@@ -2,7 +2,12 @@ import { NoteAlreadyExistsError } from "@/errors/note-already-exists";
 import { NoteNotFoundError } from "@/errors/note-not-found";
 import { randomUUID } from "@/lib/crypto";
 import { useNotesStore } from "@/stores/notesStore";
-import { exists, removeFile, writeTextFile } from "@tauri-apps/api/fs";
+import {
+  exists,
+  removeFile,
+  renameFile,
+  writeTextFile,
+} from "@tauri-apps/api/fs";
 import { documentDir } from "@tauri-apps/api/path";
 import { useCallback, useMemo } from "react";
 
@@ -65,8 +70,35 @@ export function useNotes() {
     [findNoteByPath, updateNoteOnStore],
   );
 
+  const renameNote = useCallback(
+    async (path: string, newName: string) => {
+      const note = findNoteByPath(path);
+      if (!note) {
+        throw new NoteNotFoundError();
+      }
+
+      const newPath = path.replace(note.title, newName);
+
+      if (newPath === path) return;
+
+      if ((await exists(newPath)) || findNoteByPath(newPath)) {
+        throw new NoteAlreadyExistsError();
+      }
+
+      renameFile(path, newPath);
+
+      updateNoteOnStore(path, {
+        ...note,
+        path: newPath,
+        title: newName,
+        updatedAt: Date.now(),
+      });
+    },
+    [findNoteByPath, updateNoteOnStore],
+  );
+
   return useMemo(
-    () => ({ createNote, deleteNote, updateNote }),
-    [createNote, deleteNote, updateNote],
+    () => ({ createNote, deleteNote, updateNote, renameNote }),
+    [createNote, deleteNote, updateNote, renameNote],
   );
 }

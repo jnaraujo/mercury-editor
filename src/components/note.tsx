@@ -19,6 +19,7 @@ import { useNotesStore } from "@/stores/notesStore";
 import { MoreVertical } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import RenameFileDialog from "./rename-file-dialog";
 import { buttonVariants } from "./ui/button";
 
 interface Props {
@@ -40,6 +41,7 @@ export default function Note({
   onDelete,
 }: Props) {
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
+  const [openRenameDialog, setOpenRenameDialog] = useState(false);
   const removeNote = useNotesStore((state) => state.removeNote);
 
   return (
@@ -93,6 +95,14 @@ export default function Note({
 
           <DropdownMenuItem
             onSelect={() => {
+              setOpenRenameDialog(true);
+            }}
+          >
+            Renomear
+          </DropdownMenuItem>
+
+          <DropdownMenuItem
+            onSelect={() => {
               removeNote(path);
             }}
           >
@@ -132,6 +142,13 @@ export default function Note({
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
+
+      <RenameFileDialog
+        noteName={title}
+        notePath={path}
+        open={openRenameDialog}
+        onOpenChange={setOpenRenameDialog}
+      />
     </article>
   );
 }
