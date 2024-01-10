@@ -19,7 +19,8 @@
       "window": {
         "setFullscreen": true,
         "show": true,
-        "setTitle": true
+        "setTitle": true,
+        "close": true
       },
       "fs": {
         "all": true,

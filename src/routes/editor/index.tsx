@@ -1,27 +1,38 @@
 import Editor from "@/components/editor";
-import { useNotes } from "@/hooks/useNotes";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
+import { buttonVariants } from "@/components/ui/button";
 import { hash } from "@/lib/crypto";
 import { getRelativeTimeString } from "@/lib/time";
 import { useNotesStore } from "@/stores/notesStore";
+import { window as TauriWindow } from "@tauri-apps/api";
+import { TauriEvent } from "@tauri-apps/api/event";
 import { readTextFile } from "@tauri-apps/api/fs";
 import { appWindow } from "@tauri-apps/api/window";
 import { useEffect, useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useBlocker, useLocation, useNavigate } from "react-router-dom";
 
 export const Component = function EditorPage() {
+  const [open, setOpen] = useState(false);
+  const [requestCloseWindow, setRequestCloseWindow] = useState(false);
   const [initialContent, setInitialContent] = useState<string>("");
   const [updatedContent, setUpdatedContent] = useState("");
   const [focusEditor, setFocusEditor] = useState(false);
-  const {
-    state: { path },
-  } = useLocation();
-  const findNoteByPath = useNotesStore((state) => state.findNoteByPath);
-  const { updateNote } = useNotes();
-  const navigate = useNavigate();
   const [oldContentHash, setOldContentHash] = useState("");
   const [updatedContentHash, setUpdatedContentHash] = useState("");
+  const location = useLocation();
+  const findNoteByPath = useNotesStore((state) => state.findNoteByPath);
+  const navigate = useNavigate();
 
-  const note = findNoteByPath(path as string);
+  const note = findNoteByPath(location.state.path as string);
   const wasModified = oldContentHash !== updatedContentHash;
 
   useEffect(() => {
@@ -49,27 +60,35 @@ export const Component = function EditorPage() {
     setUpdatedContentHash(hash(updatedContent));
   }, [updatedContent]);
 
+  const blocker = useBlocker(
+    ({ currentLocation, nextLocation }) =>
+      wasModified && currentLocation.pathname !== nextLocation.pathname,
+  );
+
   useEffect(() => {
-    function handleSave(event: KeyboardEvent) {
-      if (!note?.path) return;
-
-      if (event.code === "KeyS" && event.ctrlKey) {
-        event.preventDefault();
-
-        if (wasModified) {
-          updateNote(note.path, updatedContent).then(() => {
-            const updatedContentHash = hash(updatedContent);
-            setUpdatedContentHash(updatedContentHash);
-            setOldContentHash(updatedContentHash);
-          });
-        }
-      }
+    if (blocker.state === "blocked") {
+      setOpen(true);
     }
-    window.addEventListener("keydown", handleSave);
+  }, [blocker.state]);
+
+  useEffect(() => {
+    const unlisten = TauriWindow.getCurrent().listen(
+      TauriEvent.WINDOW_CLOSE_REQUESTED,
+      () => {
+        if (wasModified) {
+          setRequestCloseWindow(true);
+          setOpen(true);
+          return;
+        }
+
+        TauriWindow.getCurrent().close();
+      },
+    );
+
     return () => {
-      window.removeEventListener("keydown", handleSave);
+      unlisten.then((unlisten) => unlisten());
     };
-  }, [updatedContent, wasModified, note?.path, updateNote]);
+  }, [wasModified]);
 
   return (
     <div className="h-full space-y-2 overflow-auto">
@@ -93,6 +112,41 @@ export const Component = function EditorPage() {
           focus={focusEditor}
         />
       </main>
+
+      <AlertDialog open={open} onOpenChange={setOpen}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Tem certeza que deseja sair?</AlertDialogTitle>
+            <AlertDialogDescription>
+              Você tem alterações não salvas. Por favor, salve antes de sair.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel
+              onClick={() => {
+                blocker?.reset?.();
+                setRequestCloseWindow(false);
+              }}
+            >
+              Cancel
+            </AlertDialogCancel>
+            <AlertDialogAction
+              className={buttonVariants({
+                variant: "destructive",
+              })}
+              onClick={() => {
+                blocker?.proceed?.();
+
+                if (requestCloseWindow) {
+                  TauriWindow.getCurrent().close();
+                }
+              }}
+            >
+              Sair sem salvar
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 };
