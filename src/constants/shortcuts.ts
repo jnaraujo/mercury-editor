@@ -1,3 +1,8 @@
+import { useCommandStore } from "@/stores/commandStore";
+import { useConfigStore } from "@/stores/configStore";
+import { useCreateNewNoteDialogStore } from "@/stores/createNewNoteDialogStore";
+import { appWindow } from "@tauri-apps/api/window";
+
 interface Shortcut {
   isCtrl?: boolean;
   isAlt?: boolean;
@@ -10,8 +15,7 @@ interface Shortcut {
 export const SHORTCUTS: Shortcut[] = [
   {
     key: "F11",
-    action: async () => {
-      const { appWindow } = await import("@tauri-apps/api/window");
+    action: () => {
       appWindow.isFullscreen().then((isFullscreen) => {
         appWindow.setFullscreen(!isFullscreen);
       });
@@ -20,16 +24,14 @@ export const SHORTCUTS: Shortcut[] = [
   {
     isCtrl: true,
     key: "K",
-    action: async () => {
-      const { useCommandStore } = await import("@/stores/commandStore");
+    action: () => {
       useCommandStore.getState().setOpen((open) => !open);
     },
   },
   {
     isCtrl: true,
     key: "T",
-    action: async () => {
-      const { useConfigStore } = await import("@/stores/configStore");
+    action: () => {
       useConfigStore
         .getState()
         .setTheme((theme) => (theme === "dark" ? "light" : "dark"));
@@ -38,10 +40,7 @@ export const SHORTCUTS: Shortcut[] = [
   {
     isCtrl: true,
     key: "N",
-    action: async () => {
-      const { useCreateNewNoteDialogStore } = await import(
-        "@/stores/createNewNoteDialogStore"
-      );
+    action: () => {
       useCreateNewNoteDialogStore.getState().setOpen(true);
     },
   },
