@@ -110,8 +110,18 @@ export const Component = function EditorPage() {
       },
     );
 
+    function handleBeforeUnload(event: BeforeUnloadEvent) {
+      if (wasModified) {
+        event.preventDefault();
+        event.returnValue = "";
+      }
+    }
+
+    window.addEventListener("beforeunload", handleBeforeUnload);
+
     return () => {
       unlisten.then((unlisten) => unlisten());
+      window.removeEventListener("beforeunload", handleBeforeUnload);
     };
   }, [wasModified]);
 
