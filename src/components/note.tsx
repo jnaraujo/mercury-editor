@@ -12,6 +12,7 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { getRelativeTimeString } from "@/lib/time";
@@ -80,6 +81,7 @@ export default function Note({
             />
           </button>
         </DropdownMenuTrigger>
+
         <DropdownMenuContent>
           <DropdownMenuItem className="cursor-pointer">
             <Link
@@ -92,6 +94,8 @@ export default function Note({
               Editar
             </Link>
           </DropdownMenuItem>
+
+          <DropdownMenuSeparator />
 
           <DropdownMenuItem
             onSelect={() => {
@@ -108,6 +112,8 @@ export default function Note({
           >
             Remover da lista
           </DropdownMenuItem>
+
+          <DropdownMenuSeparator />
 
           <DropdownMenuItem
             onSelect={() => {
