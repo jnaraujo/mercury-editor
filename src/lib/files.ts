@@ -71,3 +71,7 @@ export function normalizePath(path: string) {
   }
   return normalizedPath;
 }
+
+export function filenameFromPath(path: string) {
+  return path.replace(/^.*[\\/]/, "");
+}

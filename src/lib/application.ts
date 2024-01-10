@@ -1,4 +1,5 @@
 import { WebviewWindow } from "@tauri-apps/api/window";
+import { filenameFromPath } from "./files";
 
 export async function setupAppWindow() {
   const appWindow = (await import("@tauri-apps/api/window")).appWindow;
@@ -18,10 +19,8 @@ export async function onStartupWithFilePath() {
       const path = (event.payload as any).message as string;
       if (!path) return;
 
-      const filename = path.replace(/^.*[\\/]/, "");
-
       resolve({
-        filename,
+        filename: filenameFromPath(path),
         path,
       });
     });
