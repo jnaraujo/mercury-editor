@@ -71,7 +71,7 @@
     "updater": {
       "active": true,
       "endpoints": [
-        "https://releases.myapp.com/{{target}}/{{arch}}/{{current_version}}"
+        "https://gist.githubusercontent.com/jnaraujo/6e0e6bc40119e063ec6916e441451f78/raw/3c67bf85de221245f02a0e629d9ce91049118fdb/mercury-updater.json"
       ],
       "dialog": true,
       "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IEYyMzg0QUIwNDk1QjNCMDgKUldRSU8xdEpzRW80OHYzY2gxRkZRalRxamgwZTE5N29rbWNZSHBsRklxcGdRZVJVdzJnQXJ4dEIK"
