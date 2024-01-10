@@ -71,9 +71,6 @@ export const Component = function EditorPage() {
     };
   }, [updatedContent, wasModified, note?.path, updateNote]);
 
-  useEffect(() => {
-    console.log(initialContent);
-  }, [initialContent]);
   return (
     <div className="h-full space-y-2 overflow-auto">
       <header className="sticky top-0 z-20 bg-zinc-100 shadow-sm dark:bg-zinc-950">
