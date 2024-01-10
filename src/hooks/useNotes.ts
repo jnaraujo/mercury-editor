@@ -60,7 +60,7 @@ export function useNotes() {
         updatedAt: Date.now(),
       };
 
-      updateNoteOnStore(updatedNote);
+      updateNoteOnStore(updatedNote.path, updatedNote);
     },
     [findNoteByPath, updateNoteOnStore],
   );

@@ -11,7 +11,7 @@ interface NotesStore {
   addNote: (note: Note) => void;
   removeNote: (path: string) => void;
   findNoteByPath: (path: string) => Note | undefined;
-  updateNote: (note: Note) => void;
+  updateNote: (path: string, note: Note) => void;
   addNotesIfNotExists: (notes: Note[]) => void;
 }
 
@@ -34,9 +34,9 @@ export const useNotesStore = create<NotesStore>()(
           (n) => normalizePath(n.path) === normalizePath(path),
         );
       },
-      updateNote: (newNote) => {
-        get().removeNote(newNote.path);
-        get().addNote(newNote);
+      updateNote: (path, note) => {
+        get().removeNote(path);
+        get().addNote(note);
       },
       addNotesIfNotExists: (notes) => {
         notes.forEach((note) => {
