@@ -36,7 +36,7 @@ export default function ImportFromDiskButton({ className, ...rest }: Props) {
 
       addNote({
         id: randomUUID(),
-        title: path.split("/").pop() as string,
+        title: filenameFromPath(path),
         path,
         createdAt: Date.now(),
         updatedAt: Date.now(),
