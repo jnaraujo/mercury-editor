@@ -1,14 +1,8 @@
 import { NoteAlreadyExistsError } from "@/errors/note-already-exists";
 import { NoteNotFoundError } from "@/errors/note-not-found";
 import { randomUUID } from "@/lib/crypto";
-import { slugify } from "@/lib/slugify";
 import { useNotesStore } from "@/stores/notesStore";
-import {
-  BaseDirectory,
-  exists,
-  removeFile,
-  writeTextFile,
-} from "@tauri-apps/api/fs";
+import { exists, removeFile, writeTextFile } from "@tauri-apps/api/fs";
 import { documentDir } from "@tauri-apps/api/path";
 import { useCallback, useMemo } from "react";
 
@@ -20,26 +14,19 @@ export function useNotes() {
 
   const createNote = useCallback(
     async (name: string, content: string = "") => {
-      const path = `notes\\${slugify(name)}.md`;
+      const documentDirPath = await documentDir();
+      const fullPath = `${documentDirPath}\\notes\\${name}`;
 
-      if (await exists(path, { dir: BaseDirectory.Document })) {
+      if ((await exists(fullPath)) || findNoteByPath(fullPath)) {
         throw new NoteAlreadyExistsError();
       }
 
-      await writeTextFile(`notes\\${slugify(name)}.md`, content, {
-        dir: BaseDirectory.Document,
-      });
-
-      const documentDirPath = await documentDir();
-
-      const fullPath = `${documentDirPath}\\notes\\${slugify(name)}.md`;
-
-      const filename = name.includes(".") ? name : `${name}.md`;
+      await writeTextFile(fullPath, content);
 
       addNote({
         id: randomUUID(),
         path: fullPath,
-        title: filename,
+        title: name,
         description: content.slice(0, 100),
         createdAt: Date.now(),
         updatedAt: Date.now(),
@@ -47,7 +34,7 @@ export function useNotes() {
 
       return fullPath;
     },
-    [addNote],
+    [addNote, findNoteByPath],
   );
 
   const deleteNote = useCallback(

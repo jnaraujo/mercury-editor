@@ -29,7 +29,7 @@ export default function CreateNewNoteDialog() {
     const filename = formData.get("filename") as string;
 
     try {
-      const path = await createNote(filename);
+      const path = await createNote(`${filename}.md`);
       navigate(`/editor`, {
         state: { path },
       });
