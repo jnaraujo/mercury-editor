@@ -1,5 +1,6 @@
 import CreateNewNoteButton from "@/components/create-new-note-button";
 import EmptyNotes from "@/components/empty-notes";
+import ImportFromDiskButton from "@/components/import-from-disk-button";
 import Note from "@/components/note";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useNotes } from "@/hooks/useNotes";
@@ -26,7 +27,10 @@ export default function Home() {
           Notas recentes
         </h1>
 
-        <CreateNewNoteButton />
+        <div className="space-x-1">
+          <ImportFromDiskButton />
+          <CreateNewNoteButton />
+        </div>
       </header>
 
       <ScrollArea className="w-full rounded-md pr-4" type="always">

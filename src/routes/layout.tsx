@@ -2,6 +2,7 @@ import CreateNewNoteDialog from "@/components/create-new-note-dialog";
 import SettingsOpen from "@/components/settings-open";
 import Shortcuts from "@/components/shortcuts";
 import ThemeToggle from "@/components/theme-toggle";
+import { Toaster } from "@/components/ui/toaster";
 import { onStartupWithFilePath, setupAppWindow } from "@/lib/application";
 import { randomUUID } from "@/lib/crypto";
 import {
@@ -82,6 +83,7 @@ export default function Layout() {
       <Shortcuts />
       <ThemeToggle />
       <CreateNewNoteDialog />
+      <Toaster />
     </>
   );
 }

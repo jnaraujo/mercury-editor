@@ -1,4 +1,5 @@
 import CreateNewNoteButton from "./create-new-note-button";
+import ImportFromDiskButton from "./import-from-disk-button";
 
 export default function EmptyNotes() {
   return (
@@ -12,7 +13,11 @@ export default function EmptyNotes() {
         </p>
       </div>
 
-      <CreateNewNoteButton className="w-44" />
+      <div className="flex flex-col items-center justify-center gap-4">
+        <CreateNewNoteButton className="w-44" />
+        <span className="text-sm text-zinc-600 dark:text-zinc-400">ou</span>
+        <ImportFromDiskButton className="h-1 w-44 underline" />
+      </div>
     </div>
   );
 }
