@@ -96,7 +96,7 @@ export const Component = function EditorPage() {
         </nav>
       </header>
 
-      <main className="container flex max-w-screen-md flex-col justify-center">
+      <main className="container mb-4 flex max-w-screen-md flex-col justify-center">
         <Editor
           content={initialContent || ""}
           onChange={setUpdatedContent}
