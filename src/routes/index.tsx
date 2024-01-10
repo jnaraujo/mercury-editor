@@ -33,7 +33,7 @@ export default function Home() {
         </div>
       </header>
 
-      <ScrollArea className="w-full rounded-md pr-4" type="always">
+      <ScrollArea className="w-full rounded-md px-3" type="always">
         {sortedNotes.map((note) => (
           <Note
             key={note.path}
