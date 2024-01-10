@@ -41,7 +41,7 @@ export async function addNotesFromDirIfNotExists() {
 
 export function normalizePath(path: string) {
   // remove multiple slashes
-  path = path.replace(/\/+/g, "/");
+  path = path.replace(/\\+/g, "\\");
   // remove leading slash, will be added further
   if (path.startsWith("/")) path = path.substring(1);
   // remove trailing slash
