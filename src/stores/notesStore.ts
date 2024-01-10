@@ -19,19 +19,15 @@ export const useNotesStore = create<NotesStore>()(
   persist(
     (set, get) => ({
       notes: [],
-      addNote: ({ path, ...note }) =>
+      addNote: (note) =>
         set((state) => ({
-          notes: [
-            ...state.notes,
-            {
-              path: normalizePath(path),
-              ...note,
-            },
-          ],
+          notes: [...state.notes, note],
         })),
       removeNote: (path) =>
         set((state) => ({
-          notes: state.notes.filter((n) => n.path !== path),
+          notes: state.notes.filter(
+            (n) => normalizePath(n.path) !== normalizePath(path),
+          ),
         })),
       findNoteByPath: (path) => {
         return get().notes.find(
