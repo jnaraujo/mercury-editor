@@ -43,13 +43,13 @@ export default function Note({
   const removeNote = useNotesStore((state) => state.removeNote);
 
   return (
-    <article className="group flex items-center justify-between gap-4 rounded-md p-4 transition-colors duration-200 hover:bg-zinc-200 dark:hover:bg-zinc-900">
+    <article className="group flex items-center justify-between gap-4 rounded-md transition-colors duration-200 hover:bg-zinc-200 dark:hover:bg-zinc-900">
       <Link
         to="/editor"
         state={{
           path,
         }}
-        className="w-full"
+        className="w-full p-4"
       >
         <div className="space-y-0.5">
           <h2 className="line-clamp-1 font-medium text-zinc-700 dark:text-zinc-200">
