@@ -8,7 +8,9 @@ import { useToast } from "./ui/use-toast";
 interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {}
 
 export default function ImportFromDiskButton({ className, ...rest }: Props) {
-  const addNote = useNotesStore((state) => state.addNote);
+  const addNotesIfNotExists = useNotesStore(
+    (state) => state.addNotesIfNotExists,
+  );
   const findNoteByPath = useNotesStore((state) => state.findNoteByPath);
   const { toast } = useToast();
 
@@ -17,23 +19,20 @@ export default function ImportFromDiskButton({ className, ...rest }: Props) {
 
     if (!selected) return;
 
-    const notesAlreadyExists: string[] = [];
+    const notesAlreadyExists: string[] = selected.filter((path) =>
+      findNoteByPath(path),
+    );
 
-    selected.forEach((path) => {
-      if (findNoteByPath(path)) {
-        notesAlreadyExists.push(path);
-        return;
-      }
-
-      addNote({
+    addNotesIfNotExists(
+      selected.map((path) => ({
         id: randomUUID(),
         title: filenameFromPath(path),
         path,
         createdAt: Date.now(),
         updatedAt: Date.now(),
         description: "",
-      });
-    });
+      })),
+    );
 
     if (notesAlreadyExists.length > 0) {
       const s = notesAlreadyExists.map(filenameFromPath).join(", ");
