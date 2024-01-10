@@ -9,7 +9,10 @@ export default function SettingsOpen() {
       onClick={() => setOpen((open) => !open)}
       aria-label="Abrir menu de configurações"
     >
-      <Settings className="text-zinc-500 hover:animate-rotate dark:text-zinc-400" />
+      <Settings
+        className="text-zinc-500 hover:animate-rotate dark:text-zinc-400"
+        size={22}
+      />
     </button>
   );
 }
