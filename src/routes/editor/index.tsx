@@ -9,9 +9,8 @@ import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
 export const Component = function EditorPage() {
-  const [initialContent, setInitialContent] = useState("");
+  const [initialContent, setInitialContent] = useState<string | null>(null);
   const [updatedContent, setUpdatedContent] = useState("");
-  const [oldContentHash, setOldContentHash] = useState<string>("" as string);
   const [focusEditor, setFocusEditor] = useState(false);
   const {
     state: { path },
@@ -19,13 +18,15 @@ export const Component = function EditorPage() {
   const findNoteByPath = useNotesStore((state) => state.findNoteByPath);
   const { updateNote } = useNotes();
   const navigate = useNavigate();
+  const [oldContentHash, setOldContentHash] = useState("");
+  const [updatedContentHash, setUpdatedContentHash] = useState("");
 
   const note = findNoteByPath(path as string);
-  const wasModified = hash(updatedContent) !== oldContentHash;
+  const wasModified = oldContentHash !== updatedContentHash;
 
   useEffect(() => {
     appWindow.setTitle(`${note?.title} - Mercury`);
-    setInitialContent("");
+    setInitialContent(null);
   }, [note]);
 
   useEffect(() => {
@@ -33,11 +34,15 @@ export const Component = function EditorPage() {
       return navigate("/");
     }
 
-    if (initialContent) return;
-
     readTextFile(note.path as string).then((value) => {
-      setInitialContent(value);
+      setFocusEditor(false);
+
+      if (initialContent === null) {
+        setInitialContent(value);
+      }
       setUpdatedContent(value);
+
+      setUpdatedContentHash(hash(value));
       setOldContentHash(hash(value));
 
       if (value === "") {
@@ -45,6 +50,10 @@ export const Component = function EditorPage() {
       }
     });
   }, [initialContent, navigate, note]);
+
+  useEffect(() => {
+    setUpdatedContentHash(hash(updatedContent));
+  }, [updatedContent]);
 
   useEffect(() => {
     function handleSave(event: KeyboardEvent) {
@@ -59,7 +68,9 @@ export const Component = function EditorPage() {
             console.timeEnd("updateNote");
 
             console.time("hash");
-            setOldContentHash(hash(updatedContent));
+            const updatedContentHash = hash(updatedContent);
+            setUpdatedContentHash(updatedContentHash);
+            setOldContentHash(updatedContentHash);
             console.timeEnd("hash");
           });
         }
@@ -87,7 +98,7 @@ export const Component = function EditorPage() {
 
       <main className="container flex max-w-screen-md flex-col justify-center">
         <Editor
-          content={initialContent}
+          content={initialContent || ""}
           onChange={setUpdatedContent}
           focus={focusEditor}
         />
