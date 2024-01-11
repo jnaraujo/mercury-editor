@@ -39,12 +39,6 @@ export const Component = function EditorPage() {
   const wasModified = oldContentHash !== updatedContentHash;
 
   useEffect(() => {
-    if (!note) {
-      navigate("/");
-    }
-  }, [navigate, note]);
-
-  useEffect(() => {
     if (!note?.title || !note?.path) return;
 
     appWindow.setTitle(`${note.title} - Mercury`);
@@ -124,6 +118,10 @@ export const Component = function EditorPage() {
       window.removeEventListener("beforeunload", handleBeforeUnload);
     };
   }, [wasModified]);
+
+  if (!note) {
+    return navigate("/");
+  }
 
   return (
     <div className="flex h-full flex-col space-y-2 overflow-auto">
