@@ -9,10 +9,7 @@ import {
   sendStartupMessage,
 } from "@/lib/application";
 import { randomUUID } from "@/lib/crypto";
-import {
-  addNotesFromDirIfNotExists,
-  createNotesDirIfNotExists,
-} from "@/lib/files";
+import { createNotesDirIfNotExists } from "@/lib/files";
 import { useCommandStore } from "@/stores/commandStore";
 import { useNotesStore } from "@/stores/notesStore";
 import { open as openExternalLink } from "@tauri-apps/api/shell";
@@ -29,7 +26,6 @@ export default function Layout() {
 
   useEffect(() => {
     createNotesDirIfNotExists();
-    addNotesFromDirIfNotExists();
   }, []);
 
   useEffect(() => {
