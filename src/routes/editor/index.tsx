@@ -36,12 +36,6 @@ export const Component = function EditorPage() {
   const wasModified = oldContentHash !== updatedContentHash;
 
   useEffect(() => {
-    if (!note) {
-      navigate("/");
-    }
-  }, [navigate, note]);
-
-  useEffect(() => {
     if (!note?.title || !note?.path) return;
 
     appWindow.setTitle(`${note.title} - Mercury`);
@@ -122,6 +116,11 @@ export const Component = function EditorPage() {
     };
   }, [wasModified]);
 
+  if (!note) {
+    navigate("/");
+    return null;
+  }
+
   return (
     <div className="flex h-full flex-col space-y-2 overflow-auto">
       <header className="sticky top-0 z-20 bg-zinc-100 shadow-sm dark:bg-zinc-950">
@@ -132,7 +131,7 @@ export const Component = function EditorPage() {
 
           <span className="text-sm text-zinc-700 dark:text-zinc-500">
             {wasModified ? "Modificado" : "Salvo"} {" • "} Atualizado{" "}
-            {getRelativeTimeString(new Date(note?.updatedAt as number))}
+            {getRelativeTimeString(new Date(note.updatedAt as number))}
           </span>
         </nav>
       </header>
