@@ -3,7 +3,7 @@ import SettingsOpen from "@/components/settings-open";
 import Shortcuts from "@/components/shortcuts";
 import ThemeToggle from "@/components/theme-toggle";
 import { Toaster } from "@/components/ui/toaster";
-import { onStartupWithFilePath } from "@/lib/application";
+import { onStartup } from "@/lib/application";
 import { randomUUID } from "@/lib/crypto";
 import {
   addNotesFromDirIfNotExists,
@@ -29,7 +29,9 @@ export default function Layout() {
   }, []);
 
   useEffect(() => {
-    onStartupWithFilePath().then(({ filename, path }) => {
+    onStartup().then(({ filename, path, rust_start_time }) => {
+      if (!path || !filename) return;
+
       if (!findNoteByPath(path)) {
         addNote({
           id: randomUUID(),
