@@ -140,17 +140,15 @@ export const Component = function EditorPage() {
         </nav>
       </header>
 
-      <main className="container mb-4 flex max-w-screen-md flex-col justify-center overflow-auto">
-        <ScrollArea className="pr-4">
-          <div className="max-w-screen-md">
-            <Editor
-              content={initialContent}
-              onChange={setUpdatedContent}
-              focus={focusEditor}
-            />
-          </div>
-        </ScrollArea>
-      </main>
+      <ScrollArea className="mx-auto w-full max-w-screen-md">
+        <main className="container max-w-screen-md">
+          <Editor
+            content={initialContent}
+            onChange={setUpdatedContent}
+            focus={focusEditor}
+          />
+        </main>
+      </ScrollArea>
 
       <AlertDialog open={open} onOpenChange={setOpen}>
         <AlertDialogContent>
