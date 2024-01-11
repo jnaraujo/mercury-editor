@@ -11,6 +11,7 @@ import {
 import { randomUUID } from "@/lib/crypto";
 import { createNotesDirIfNotExists } from "@/lib/files";
 import { addNote, findNoteByPath } from "@/lib/notes";
+import { cn } from "@/lib/utils";
 import { useCommandStore } from "@/stores/commandStore";
 import { open as openExternalLink } from "@tauri-apps/api/shell";
 import { appWindow } from "@tauri-apps/api/window";
@@ -75,7 +76,14 @@ export default function Layout() {
 
   return (
     <>
-      <div className="flex h-screen flex-col overflow-hidden bg-zinc-100 text-zinc-900 antialiased dark:bg-zinc-950 dark:text-zinc-100">
+      <div
+        className={cn(
+          "flex h-screen flex-col overflow-hidden rounded-lg bg-zinc-100 text-zinc-900 antialiased dark:bg-zinc-950 dark:text-zinc-100",
+          {
+            "rounded-none": isFullscreen,
+          },
+        )}
+      >
         <Outlet />
 
         <footer className="mx-auto flex w-full shrink-0 items-center justify-between px-2 py-1">
