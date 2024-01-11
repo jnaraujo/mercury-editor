@@ -12,9 +12,8 @@ import {
 import { buttonVariants } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { hash } from "@/lib/crypto";
-import { updateNoteFile } from "@/lib/notes";
+import { findNoteByPath, updateNoteFile } from "@/lib/notes";
 import { getRelativeTimeString } from "@/lib/time";
-import { useNotesStore } from "@/stores/notesStore";
 import { window as TauriWindow } from "@tauri-apps/api";
 import { TauriEvent } from "@tauri-apps/api/event";
 import { readTextFile } from "@tauri-apps/api/fs";
@@ -30,7 +29,6 @@ export const Component = function EditorPage() {
   const [focusEditor, setFocusEditor] = useState(false);
   const [oldContentHash, setOldContentHash] = useState("");
   const [updatedContentHash, setUpdatedContentHash] = useState("");
-  const findNoteByPath = useNotesStore((state) => state.findNoteByPath);
   const location = useLocation();
   const navigate = useNavigate();
 

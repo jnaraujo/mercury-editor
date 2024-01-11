@@ -10,8 +10,8 @@ import {
 } from "@/lib/application";
 import { randomUUID } from "@/lib/crypto";
 import { createNotesDirIfNotExists } from "@/lib/files";
+import { addNote, findNoteByPath } from "@/lib/notes";
 import { useCommandStore } from "@/stores/commandStore";
-import { useNotesStore } from "@/stores/notesStore";
 import { open as openExternalLink } from "@tauri-apps/api/shell";
 import { lazy, Suspense, useEffect } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
@@ -21,8 +21,6 @@ const CommandWrapper = lazy(() => import("@/components/command-wrapper"));
 export default function Layout() {
   const openCommand = useCommandStore((state) => state.open);
   const navigate = useNavigate();
-  const addNote = useNotesStore((state) => state.addNote);
-  const findNoteByPath = useNotesStore((state) => state.findNoteByPath);
 
   useEffect(() => {
     createNotesDirIfNotExists();
@@ -60,7 +58,7 @@ export default function Layout() {
     setupStartupListeners().then(() => {
       sendStartupMessage(); // should be called after setupStartupListeners
     });
-  }, [addNote, findNoteByPath, navigate]);
+  }, [navigate]);
 
   return (
     <>
