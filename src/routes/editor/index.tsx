@@ -134,7 +134,7 @@ export const Component = function EditorPage() {
 
           <span className="text-sm text-zinc-700 dark:text-zinc-500">
             {wasModified ? "Modificado" : "Salvo"} {" • "} Atualizado{" "}
-            {getRelativeTimeString(new Date(note?.updatedAt as number))}
+            {getRelativeTimeString(new Date(note.updatedAt as number))}
           </span>
         </nav>
       </header>
