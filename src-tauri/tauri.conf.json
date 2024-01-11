@@ -38,7 +38,7 @@
     },
     "bundle": {
       "active": true,
-      "targets": "all",
+      "targets": ["deb", "appimage", "nsis", "app", "dmg", "updater"],
       "identifier": "com.jnaraujo.mercury",
       "shortDescription": "An open source markdown editor. Simple and fast.",
       "icon": [
