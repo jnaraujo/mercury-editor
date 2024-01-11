@@ -21,7 +21,7 @@ struct Payload {
 fn main() {
     let mut file_path = String::new();
     let args: Vec<String> = env::args().collect();
-    println!("Argumentos passados: {:?}", args);
+    info!("Argumentos passados: {:?}", args);
 
     let now = SystemTime::now()
         .duration_since(UNIX_EPOCH)
@@ -42,7 +42,7 @@ fn main() {
 
     tauri::Builder::default()
         .setup(move |app| {
-            println!("Tauri setup");
+            info!("Tauri setup");
 
             let window = app.get_window("main").unwrap();
             let cloned_window = window.clone();
