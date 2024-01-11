@@ -1,7 +1,5 @@
-import { useNotesStore } from "@/stores/notesStore";
 import { open } from "@tauri-apps/api/dialog";
 import { BaseDirectory, createDir, exists, readDir } from "@tauri-apps/api/fs";
-import { randomUUID } from "./crypto";
 
 export async function createNotesDirIfNotExists() {
   const doesPathExists = await exists("notes", {
@@ -21,22 +19,6 @@ export async function getNotesFromDir() {
   });
 
   return files;
-}
-
-export async function addNotesFromDirIfNotExists() {
-  const files = await getNotesFromDir();
-  const addNotesIfNotExists = useNotesStore.getState().addNotesIfNotExists;
-
-  addNotesIfNotExists(
-    files.map((file) => ({
-      id: randomUUID(),
-      title: file.name || randomUUID(),
-      path: file.path,
-      createdAt: Date.now(),
-      updatedAt: Date.now(),
-      description: "",
-    })),
-  );
 }
 
 export function normalizePath(path: string) {
