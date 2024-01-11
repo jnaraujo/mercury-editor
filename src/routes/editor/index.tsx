@@ -11,8 +11,8 @@ import {
 } from "@/components/ui/alert-dialog";
 import { buttonVariants } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { useNotes } from "@/hooks/useNotes";
 import { hash } from "@/lib/crypto";
+import { updateNoteFile } from "@/lib/notes";
 import { getRelativeTimeString } from "@/lib/time";
 import { useNotesStore } from "@/stores/notesStore";
 import { window as TauriWindow } from "@tauri-apps/api";
@@ -31,7 +31,6 @@ export const Component = function EditorPage() {
   const [oldContentHash, setOldContentHash] = useState("");
   const [updatedContentHash, setUpdatedContentHash] = useState("");
   const findNoteByPath = useNotesStore((state) => state.findNoteByPath);
-  const { updateNote } = useNotes();
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -82,7 +81,7 @@ export const Component = function EditorPage() {
         event.preventDefault();
 
         if (wasModified) {
-          updateNote(note.path, updatedContent).then(() => {
+          updateNoteFile(note.path, updatedContent).then(() => {
             const updatedContentHash = hash(updatedContent);
             setUpdatedContentHash(updatedContentHash);
             setOldContentHash(updatedContentHash);
@@ -94,7 +93,7 @@ export const Component = function EditorPage() {
     return () => {
       window.removeEventListener("keydown", handleSave);
     };
-  }, [updatedContent, wasModified, note?.path, updateNote]);
+  }, [updatedContent, wasModified, note?.path]);
 
   useEffect(() => {
     const unlisten = TauriWindow.getCurrent().listen(

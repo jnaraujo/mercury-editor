@@ -6,7 +6,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { NoteAlreadyExistsError } from "@/errors/note-already-exists";
-import { useNotes } from "@/hooks/useNotes";
+import { createNote } from "@/lib/notes";
 import { useCreateNewNoteDialogStore } from "@/stores/createNewNoteDialogStore";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -19,7 +19,6 @@ export default function CreateNewNoteDialog() {
 
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
-  const { createNote } = useNotes();
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
