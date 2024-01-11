@@ -3,7 +3,7 @@ import SettingsOpen from "@/components/settings-open";
 import Shortcuts from "@/components/shortcuts";
 import ThemeToggle from "@/components/theme-toggle";
 import { Toaster } from "@/components/ui/toaster";
-import { onStartupWithFilePath, setupAppWindow } from "@/lib/application";
+import { onStartupWithFilePath } from "@/lib/application";
 import { randomUUID } from "@/lib/crypto";
 import {
   addNotesFromDirIfNotExists,
@@ -29,8 +29,6 @@ export default function Layout() {
   }, []);
 
   useEffect(() => {
-    setupAppWindow().then(() => console.log("App window is ready"));
-
     onStartupWithFilePath().then(({ filename, path }) => {
       if (!findNoteByPath(path)) {
         addNote({
