@@ -142,11 +142,13 @@ export const Component = function EditorPage() {
 
       <main className="container mb-4 flex max-w-screen-md flex-col justify-center overflow-auto">
         <ScrollArea className="pr-4">
-          <Editor
-            content={initialContent}
-            onChange={setUpdatedContent}
-            focus={focusEditor}
-          />
+          <div className="max-w-screen-md">
+            <Editor
+              content={initialContent}
+              onChange={setUpdatedContent}
+              focus={focusEditor}
+            />
+          </div>
         </ScrollArea>
       </main>
 
