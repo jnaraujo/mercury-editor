@@ -54,8 +54,6 @@ fn main() {
 
             cloned_window.listen("startup", move |_| {
                 info!("Startup event received from JS");
-
-                std::thread::sleep(std::time::Duration::from_millis(10)); // Wait for JS to be ready
                 
                 window.emit("startup-time", StartupTimePayload {
                     time: serde_json::Number::from(now as u64)
