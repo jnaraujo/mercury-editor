@@ -32,7 +32,8 @@
         "all": true
       },
       "dialog": {
-        "open": true
+        "open": true,
+        "ask": true
       }
     },
     "bundle": {
