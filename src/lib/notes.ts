@@ -11,8 +11,6 @@ import {
 import { documentDir } from "@tauri-apps/api/path";
 import { randomUUID } from "./crypto";
 
-const documentDirPath = await documentDir();
-
 export function findNoteByPath(path: string) {
   return useNotesStore.getState().findNoteByPath(path);
 }
@@ -35,6 +33,7 @@ export function updateNote(path: string, note: Note) {
 }
 
 export async function createNote(name: string, content: string = "") {
+  const documentDirPath = await documentDir();
   const fullPath = `${documentDirPath}\\notes\\${name}`;
 
   if ((await exists(fullPath)) || findNoteByPath(fullPath)) {
