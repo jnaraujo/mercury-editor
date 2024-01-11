@@ -8,7 +8,6 @@ import { setupAppWindow } from "./lib/application";
 import { router } from "./router";
 
 setupAppWindow().then(() => console.log("App window is ready"));
-
 attachConsole();
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(

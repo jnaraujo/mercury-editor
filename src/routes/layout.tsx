@@ -3,7 +3,11 @@ import SettingsOpen from "@/components/settings-open";
 import Shortcuts from "@/components/shortcuts";
 import ThemeToggle from "@/components/theme-toggle";
 import { Toaster } from "@/components/ui/toaster";
-import { onStartup } from "@/lib/application";
+import {
+  onFilePathEventReceived,
+  onStartupTimeEventReceived,
+  sendStartupMessage,
+} from "@/lib/application";
 import { randomUUID } from "@/lib/crypto";
 import {
   addNotesFromDirIfNotExists,
@@ -29,26 +33,36 @@ export default function Layout() {
   }, []);
 
   useEffect(() => {
-    onStartup().then(({ filename, path, rust_start_time }) => {
-      const timeSinceStartup = Date.now() - rust_start_time;
-      console.log(`App started in ${timeSinceStartup}ms`);
-
-      if (!path || !filename) return;
-
-      if (!findNoteByPath(path)) {
-        addNote({
-          id: randomUUID(),
-          title: filename,
-          path,
-          createdAt: Date.now(),
-          updatedAt: Date.now(),
-          description: "",
-        });
-      }
-
-      navigate("/editor", {
-        state: { path },
+    async function setupStartupListeners() {
+      onStartupTimeEventReceived().then(({ time }) => {
+        const elapsedTime = Date.now() - time;
+        console.log(`Startup time: ${elapsedTime}ms`);
       });
+
+      onFilePathEventReceived().then(({ filename, path }) => {
+        if (!filename || !path) {
+          return;
+        }
+
+        if (!findNoteByPath(path)) {
+          addNote({
+            id: randomUUID(),
+            title: filename,
+            path,
+            createdAt: Date.now(),
+            updatedAt: Date.now(),
+            description: "",
+          });
+        }
+
+        navigate("/editor", {
+          state: { path },
+        });
+      });
+    }
+
+    setupStartupListeners().then(() => {
+      sendStartupMessage(); // should be called after setupStartupListeners
     });
   }, [addNote, findNoteByPath, navigate]);
 

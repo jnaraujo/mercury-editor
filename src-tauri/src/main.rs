@@ -14,9 +14,13 @@ fn greet(name: &str) -> String {
 }
 
 #[derive(Clone, serde::Serialize)]
-struct Payload {
-    file_path: String,
-    rust_start_time: Number
+struct FilePathPayload {
+    path: String
+}
+
+#[derive(Clone, serde::Serialize)]
+struct StartupTimePayload {
+    time: Number
 }
 
 fn main() {
@@ -50,12 +54,13 @@ fn main() {
 
             cloned_window.listen("startup", move |_| {
                 info!("Startup event received from JS");
-
-                std::thread::sleep(std::time::Duration::from_millis(10)); // Wait for JS to be ready
                 
-                window.emit("message", Payload {
-                    file_path: file_path.clone(),
-                    rust_start_time: serde_json::Number::from(now as u64)
+                window.emit("startup-time", StartupTimePayload {
+                    time: serde_json::Number::from(now as u64)
+                }).unwrap();
+
+                window.emit("file-path", FilePathPayload {
+                    path: file_path.clone()
                 }).unwrap();
             });
 
