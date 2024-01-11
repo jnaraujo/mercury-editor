@@ -59,8 +59,13 @@ export async function deleteNoteFile(path: string) {
   return await removeFile(path);
 }
 
-export function deleteNote(path: string) {
-  return useNotesStore.getState().removeNote(path);
+export async function removeNote(path: string) {
+  useNotesStore.getState().removeNote(path);
+}
+
+export async function deleteFileAndNote(path: string) {
+  removeNote(path);
+  await await removeFile(path);
 }
 
 export async function renameNoteFile(oldPath: string, newName: string) {
