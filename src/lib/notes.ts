@@ -19,6 +19,14 @@ export function addNote(note: Note) {
   return useNotesStore.getState().addNote(note);
 }
 
+export function getNotes() {
+  return useNotesStore.getState().notes;
+}
+
+export function addNotesIfNotExists(notes: Note[]) {
+  return useNotesStore.getState().addNotesIfNotExists(notes);
+}
+
 export async function updateNoteFile(path: string, content: string) {
   const note = findNoteByPath(path);
   if (!note) {
