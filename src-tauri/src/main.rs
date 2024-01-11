@@ -2,8 +2,9 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
 use std::{env, fs, path::Path, time::{UNIX_EPOCH, SystemTime}};
-
+use log::info;
 use serde_json::Number;
+use tauri_plugin_log::LogTarget;
 use tauri::Manager;
 
 // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
@@ -21,7 +22,7 @@ struct Payload {
 fn main() {
     let mut file_path = String::new();
     let args: Vec<String> = env::args().collect();
-    println!("Argumentos passados: {:?}", args);
+    info!("Argumentos passados: {:?}", args);
 
     let now = SystemTime::now()
         .duration_since(UNIX_EPOCH)
@@ -42,13 +43,15 @@ fn main() {
 
     tauri::Builder::default()
         .setup(move |app| {
-            println!("Tauri setup");
+            info!("Tauri setup");
 
             let window = app.get_window("main").unwrap();
             let cloned_window = window.clone();
 
             cloned_window.listen("startup", move |_| {
-                println!("Startup event received from JS");
+                info!("Startup event received from JS");
+
+                std::thread::sleep(std::time::Duration::from_millis(10)); // Wait for JS to be ready
                 
                 window.emit("message", Payload {
                     file_path: file_path.clone(),
@@ -59,7 +62,11 @@ fn main() {
             Ok(())
 
         })
-        .plugin(tauri_plugin_store::Builder::default().build())
+        .plugin(tauri_plugin_store::Builder::default().build()).plugin(tauri_plugin_log::Builder::default().targets([
+            LogTarget::LogDir,
+            LogTarget::Stdout,
+            LogTarget::Webview,
+        ]).build())
         .invoke_handler(tauri::generate_handler![greet])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
