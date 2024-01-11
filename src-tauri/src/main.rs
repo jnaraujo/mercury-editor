@@ -49,7 +49,9 @@ fn main() {
             let cloned_window = window.clone();
 
             cloned_window.listen("startup", move |_| {
-                println!("Startup event received from JS");
+                info!("Startup event received from JS");
+
+                std::thread::sleep(std::time::Duration::from_millis(10)); // Wait for JS to be ready
                 
                 window.emit("message", Payload {
                     file_path: file_path.clone(),
