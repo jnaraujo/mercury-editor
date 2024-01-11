@@ -54,7 +54,8 @@ export default function Layout() {
       <div className="flex h-screen flex-col overflow-hidden bg-zinc-100 text-zinc-900 antialiased dark:bg-zinc-950 dark:text-zinc-100">
         <Outlet />
 
-        <footer className="absolute bottom-0 right-0 mx-auto flex w-full shrink-0 items-center justify-end px-4 py-1">
+        <footer className="mx-auto flex w-full shrink-0 items-center justify-between px-2 py-1">
+          <SettingsOpen />
           <p className="text-sm text-zinc-500 dark:text-zinc-600">
             <a
               className="cursor-pointer hover:underline"
@@ -68,10 +69,6 @@ export default function Layout() {
             </a>
           </p>
         </footer>
-      </div>
-
-      <div className="fixed bottom-4 left-4 flex w-fit gap-4">
-        <SettingsOpen />
       </div>
 
       {openCommand && (
