@@ -14,13 +14,18 @@ export async function sendStartupMessage() {
 
 export async function onFilePathEventReceived() {
   return new Promise<{
-    filename: string;
-    path: string;
+    filename?: string;
+    path?: string;
   }>((resolve) => {
     mainWebview.once("file-path", async (event) => {
       const path = (event.payload as any).path as string;
 
-      if (!path) return;
+      if (!path) {
+        resolve({
+          filename: undefined,
+          path: undefined,
+        });
+      }
 
       resolve({
         filename: filenameFromPath(path),

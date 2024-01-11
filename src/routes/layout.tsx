@@ -30,30 +30,39 @@ export default function Layout() {
   useEffect(() => {
     createNotesDirIfNotExists();
     addNotesFromDirIfNotExists();
-
-    sendStartupMessage();
-    onStartupTimeEventReceived().then(({ time }) => {
-      const elapsedTime = Date.now() - time;
-      console.log(`Startup time: ${elapsedTime}ms`);
-    });
   }, []);
 
   useEffect(() => {
-    onFilePathEventReceived().then(({ filename, path }) => {
-      if (!findNoteByPath(path)) {
-        addNote({
-          id: randomUUID(),
-          title: filename,
-          path,
-          createdAt: Date.now(),
-          updatedAt: Date.now(),
-          description: "",
-        });
-      }
-
-      navigate("/editor", {
-        state: { path },
+    async function setupStartupListeners() {
+      onStartupTimeEventReceived().then(({ time }) => {
+        const elapsedTime = Date.now() - time;
+        console.log(`Startup time: ${elapsedTime}ms`);
       });
+
+      onFilePathEventReceived().then(({ filename, path }) => {
+        if (!filename || !path) {
+          return;
+        }
+
+        if (!findNoteByPath(path)) {
+          addNote({
+            id: randomUUID(),
+            title: filename,
+            path,
+            createdAt: Date.now(),
+            updatedAt: Date.now(),
+            description: "",
+          });
+        }
+
+        navigate("/editor", {
+          state: { path },
+        });
+      });
+    }
+
+    setupStartupListeners().then(() => {
+      sendStartupMessage(); // should be called after setupStartupListeners
     });
   }, [addNote, findNoteByPath, navigate]);
 
