@@ -1,17 +1,13 @@
 import { randomUUID } from "@/lib/crypto";
 import { filenameFromPath, requestNotesFromDisk } from "@/lib/files";
+import { addNotesIfNotExists, findNoteByPath } from "@/lib/notes";
 import { cn } from "@/lib/utils";
-import { useNotesStore } from "@/stores/notesStore";
 import { Button } from "./ui/button";
 import { useToast } from "./ui/use-toast";
 
 interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {}
 
 export default function ImportFromDiskButton({ className, ...rest }: Props) {
-  const addNotesIfNotExists = useNotesStore(
-    (state) => state.addNotesIfNotExists,
-  );
-  const findNoteByPath = useNotesStore((state) => state.findNoteByPath);
   const { toast } = useToast();
 
   async function handleOpenFile() {

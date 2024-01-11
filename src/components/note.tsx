@@ -15,8 +15,8 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { removeNote } from "@/lib/notes";
 import { getRelativeTimeString } from "@/lib/time";
-import { useNotesStore } from "@/stores/notesStore";
 import { MoreVertical } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
@@ -43,7 +43,6 @@ export default function Note({
 }: Props) {
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
   const [openRenameDialog, setOpenRenameDialog] = useState(false);
-  const removeNote = useNotesStore((state) => state.removeNote);
 
   return (
     <article className="group flex items-center justify-between gap-4 rounded-md transition-colors duration-200 hover:bg-zinc-200 dark:hover:bg-zinc-900">

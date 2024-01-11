@@ -6,7 +6,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { NoteAlreadyExistsError } from "@/errors/note-already-exists";
-import { useNotes } from "@/hooks/useNotes";
+import { renameNoteFile } from "@/lib/notes";
 import { useState } from "react";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
@@ -25,7 +25,6 @@ export default function RenameFileDialog({
   notePath,
 }: Props) {
   const [error, setError] = useState<string | null>(null);
-  const { renameNote } = useNotes();
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -34,7 +33,7 @@ export default function RenameFileDialog({
     const formData = new FormData(event.currentTarget);
     const filename = formData.get("filename") as string;
     try {
-      await renameNote(notePath, filename);
+      await renameNoteFile(notePath, filename);
       onOpenChange(false);
     } catch (error) {
       if (error instanceof NoteAlreadyExistsError) {

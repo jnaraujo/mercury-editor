@@ -1,7 +1,7 @@
+import { getNotes } from "@/lib/notes";
 import { useCommandStore } from "@/stores/commandStore";
 import { useConfigStore } from "@/stores/configStore";
 import { useCreateNewNoteDialogStore } from "@/stores/createNewNoteDialogStore";
-import { useNotesStore } from "@/stores/notesStore";
 import { open as openExternalLink } from "@tauri-apps/api/shell";
 import { appWindow } from "@tauri-apps/api/window";
 import {
@@ -30,7 +30,7 @@ export default function CommandWrapper() {
     (state) => state.setOpen,
   );
   const { open, setOpen } = useCommandStore();
-  const notes = useNotesStore((state) => state.notes);
+  const notes = getNotes();
   const setTheme = useConfigStore((state) => state.setTheme);
   const navigate = useNavigate();
 

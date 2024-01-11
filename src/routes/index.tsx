@@ -3,14 +3,12 @@ import EmptyNotes from "@/components/empty-notes";
 import ImportFromDiskButton from "@/components/import-from-disk-button";
 import Note from "@/components/note";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { useNotes } from "@/hooks/useNotes";
-import { useNotesStore } from "@/stores/notesStore";
+import { deleteFileAndNote, getNotes } from "@/lib/notes";
 import { appWindow } from "@tauri-apps/api/window";
 import { useEffect } from "react";
 
 export default function Home() {
-  const { deleteNote } = useNotes();
-  const notes = useNotesStore((state) => state.notes);
+  const notes = getNotes();
 
   const sortedNotes = notes.sort((a, b) => {
     return new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime();
@@ -42,7 +40,7 @@ export default function Home() {
             createdAt={note.createdAt}
             updatedAt={note.updatedAt}
             path={note.path}
-            onDelete={() => deleteNote(note.path)}
+            onDelete={() => deleteFileAndNote(note.path)}
           />
         ))}
 
