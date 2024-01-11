@@ -126,7 +126,7 @@ export const Component = function EditorPage() {
   }, [wasModified]);
 
   return (
-    <div className="flex h-full flex-col space-y-2">
+    <div className="flex h-full flex-col space-y-2 overflow-auto">
       <header className="sticky top-0 z-20 bg-zinc-100 shadow-sm dark:bg-zinc-950">
         <nav className="container flex h-16 max-w-screen-md items-center justify-between">
           <Link to="/" className="text-sm text-zinc-500">
@@ -140,8 +140,8 @@ export const Component = function EditorPage() {
         </nav>
       </header>
 
-      <main className="container mb-4 flex h-full max-w-screen-md flex-col justify-center overflow-auto">
-        <ScrollArea className="h-full pr-4">
+      <main className="container mb-4 flex max-w-screen-md flex-col justify-center overflow-auto">
+        <ScrollArea className="pr-4">
           <Editor
             content={initialContent}
             onChange={setUpdatedContent}
