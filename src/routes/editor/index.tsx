@@ -120,7 +120,8 @@ export const Component = function EditorPage() {
   }, [wasModified]);
 
   if (!note) {
-    return navigate("/");
+    navigate("/");
+    return null;
   }
 
   return (
