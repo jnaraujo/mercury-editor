@@ -3,7 +3,11 @@ import SettingsOpen from "@/components/settings-open";
 import Shortcuts from "@/components/shortcuts";
 import ThemeToggle from "@/components/theme-toggle";
 import { Toaster } from "@/components/ui/toaster";
-import { onFilePathEventReceived } from "@/lib/application";
+import {
+  onFilePathEventReceived,
+  onStartupTimeEventReceived,
+  sendStartupMessage,
+} from "@/lib/application";
 import { randomUUID } from "@/lib/crypto";
 import {
   addNotesFromDirIfNotExists,
@@ -26,6 +30,12 @@ export default function Layout() {
   useEffect(() => {
     createNotesDirIfNotExists();
     addNotesFromDirIfNotExists();
+
+    sendStartupMessage();
+    onStartupTimeEventReceived().then(({ time }) => {
+      const elapsedTime = Date.now() - time;
+      console.log(`Startup time: ${elapsedTime}ms`);
+    });
   }, []);
 
   useEffect(() => {

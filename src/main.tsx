@@ -4,20 +4,10 @@ import ReactDOM from "react-dom/client";
 import "./styles.css";
 import { RouterProvider } from "react-router-dom";
 import { attachConsole } from "tauri-plugin-log-api";
-import {
-  onStartupTimeEventReceived,
-  sendStartupMessage,
-  setupAppWindow,
-} from "./lib/application";
+import { setupAppWindow } from "./lib/application";
 import { router } from "./router";
 
-sendStartupMessage();
 setupAppWindow().then(() => console.log("App window is ready"));
-onStartupTimeEventReceived().then(({ time }) => {
-  const elapsedTime = Date.now() - time;
-  console.log(`Startup time: ${elapsedTime}ms`);
-});
-
 attachConsole();
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
