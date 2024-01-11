@@ -13,12 +13,14 @@ import { createNotesDirIfNotExists } from "@/lib/files";
 import { addNote, findNoteByPath } from "@/lib/notes";
 import { useCommandStore } from "@/stores/commandStore";
 import { open as openExternalLink } from "@tauri-apps/api/shell";
-import { lazy, Suspense, useEffect } from "react";
+import { appWindow } from "@tauri-apps/api/window";
+import { lazy, Suspense, useEffect, useState } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 
 const CommandWrapper = lazy(() => import("@/components/command-wrapper"));
 
 export default function Layout() {
+  const [isFullscreen, setIsFullscreen] = useState(false);
   const openCommand = useCommandStore((state) => state.open);
   const navigate = useNavigate();
 
@@ -59,6 +61,17 @@ export default function Layout() {
       sendStartupMessage(); // should be called after setupStartupListeners
     });
   }, [navigate]);
+
+  useEffect(() => {
+    const unlisten = appWindow.onResized((event) => {
+      const screenWidth = window.screen.width;
+      setIsFullscreen(event.payload.width === screenWidth);
+    });
+
+    return () => {
+      unlisten.then((u) => u());
+    };
+  }, []);
 
   return (
     <>
