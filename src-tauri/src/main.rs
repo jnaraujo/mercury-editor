@@ -3,6 +3,7 @@
 
 use std::{env, fs, path::Path, time::{UNIX_EPOCH, SystemTime}};
 use log::info;
+use serde_json::Number;
 use tauri_plugin_log::LogTarget;
 use tauri::Manager;
 
