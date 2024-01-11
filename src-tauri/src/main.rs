@@ -1,8 +1,9 @@
 // Prevents additional console window on Windows in release, DO NOT REMOVE!!
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
-use std::{env, fs, path::Path};
+use std::{env, fs, path::Path, time::{UNIX_EPOCH, SystemTime}};
 
+use serde_json::Number;
 use tauri::Manager;
 
 // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
@@ -13,13 +14,20 @@ fn greet(name: &str) -> String {
 
 #[derive(Clone, serde::Serialize)]
 struct Payload {
-    message: String,
+    file_path: String,
+    rust_start_time: Number
 }
 
 fn main() {
     let mut file_path = String::new();
     let args: Vec<String> = env::args().collect();
     println!("Argumentos passados: {:?}", args);
+
+    let now = SystemTime::now()
+        .duration_since(UNIX_EPOCH)
+        .unwrap()
+        .as_millis();
+
 
     if args.len() == 2 {
         let args_file_path = args[1].clone();
@@ -34,13 +42,18 @@ fn main() {
 
     tauri::Builder::default()
         .setup(move |app| {
+            println!("Tauri setup");
+
             let window = app.get_window("main").unwrap();
             let cloned_window = window.clone();
 
             cloned_window.listen("startup", move |_| {
                 println!("Startup event received from JS");
                 
-                window.emit("file_path", Payload { message: file_path.clone() }).unwrap();
+                window.emit("message", Payload {
+                    file_path: file_path.clone(),
+                    rust_start_time: serde_json::Number::from(now as u64)
+                }).unwrap();
             });
 
             Ok(())

@@ -6,22 +6,28 @@ export async function setupAppWindow() {
   appWindow.show();
 }
 
-export async function onStartupWithFilePath() {
+export async function onStartup() {
   return new Promise<{
-    filename: string;
-    path: string;
+    filename?: string;
+    path?: string;
+    rust_start_time: number;
   }>((resolve) => {
     const webview = new WebviewWindow("main");
 
     webview.emit("startup", "");
 
-    webview.once("file_path", async (event) => {
-      const path = (event.payload as any).message as string;
-      if (!path) return;
+    webview.once("message", async (event) => {
+      const message = event.payload as {
+        file_path: string;
+        rust_start_time: number;
+      };
+
+      if (!message) return;
 
       resolve({
-        filename: filenameFromPath(path),
-        path,
+        filename: filenameFromPath(message.file_path),
+        path: message.file_path,
+        rust_start_time: message.rust_start_time,
       });
     });
   });
