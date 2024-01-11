@@ -66,7 +66,8 @@
         "minWidth": 800,
         "height": 600,
         "minHeight": 600,
-        "visible": false
+        "visible": false,
+        "decorations": false
       }
     ],
     "updater": {
