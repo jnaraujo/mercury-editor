@@ -1,3 +1,4 @@
+import { setFullscreen } from "@/lib/application";
 import { getNotes } from "@/lib/notes";
 import { useCommandStore } from "@/stores/commandStore";
 import { useConfigStore } from "@/stores/configStore";
@@ -110,7 +111,7 @@ export default function CommandWrapper() {
           <CommandItem
             onSelect={() =>
               runCommand(async () =>
-                appWindow.setFullscreen(!(await appWindow.isFullscreen())),
+                setFullscreen(!(await appWindow.isFullscreen())),
               )
             }
           >

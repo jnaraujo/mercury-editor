@@ -4,10 +4,11 @@ import ImportFromDiskButton from "@/components/import-from-disk-button";
 import Note from "@/components/note";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { deleteFileAndNote, getNotes } from "@/lib/notes";
-import { appWindow } from "@tauri-apps/api/window";
+import { useTitleStore } from "@/stores/titleStore";
 import { useEffect } from "react";
 
 export default function Home() {
+  const setTitle = useTitleStore((state) => state.setTitle);
   const notes = getNotes();
 
   const sortedNotes = notes.sort((a, b) => {
@@ -15,8 +16,8 @@ export default function Home() {
   });
 
   useEffect(() => {
-    appWindow.setTitle(`Mercury`);
-  }, []);
+    setTitle(`Mercury`);
+  }, [setTitle]);
 
   return (
     <main className="container flex h-full max-w-screen-md flex-col space-y-4 overflow-auto pt-4">
