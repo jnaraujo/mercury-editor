@@ -1,6 +1,13 @@
 import { FileAlreadyExistsError } from "@/errors/file-already-exists";
 import { open } from "@tauri-apps/api/dialog";
-import { BaseDirectory, createDir, exists, readDir } from "@tauri-apps/api/fs";
+import {
+  BaseDirectory,
+  createDir,
+  exists,
+  readDir,
+  writeTextFile,
+} from "@tauri-apps/api/fs";
+import { documentDir } from "@tauri-apps/api/path";
 
 export async function createNotesDirIfNotExists() {
   const doesPathExists = await exists("notes", {
@@ -84,4 +91,20 @@ export async function renameFile(oldPath: string, newName: string) {
   }
 
   return await renameFile(oldPath, newPath);
+}
+
+export async function writeFile(path: string, content: string) {
+  await writeTextFile(path, content);
+}
+
+export async function createFile(path: string, content: string = "") {
+  if (await exists(path)) {
+    throw new FileAlreadyExistsError();
+  }
+
+  await writeFile(path, content);
+}
+
+export async function getDocumentsDirPath() {
+  return await documentDir();
 }

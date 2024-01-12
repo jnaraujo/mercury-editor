@@ -1,10 +1,7 @@
 import { Note } from "@/@types/note";
-import { NoteAlreadyExistsError } from "@/errors/note-already-exists";
 import { NoteNotFoundError } from "@/errors/note-not-found";
 import { useNotesStore } from "@/stores/notesStore";
-import { exists, removeFile, writeTextFile } from "@tauri-apps/api/fs";
-import { documentDir } from "@tauri-apps/api/path";
-import { randomUUID } from "./crypto";
+import { removeFile, writeTextFile } from "@tauri-apps/api/fs";
 
 export function findNoteByPath(path: string) {
   return useNotesStore.getState().findNoteByPath(path);
@@ -37,28 +34,6 @@ export async function updateNoteFile(path: string, content: string) {
 
 export function updateNote(path: string, note: Note) {
   return useNotesStore.getState().updateNote(path, note);
-}
-
-export async function createNote(name: string, content: string = "") {
-  const documentDirPath = await documentDir();
-  const fullPath = `${documentDirPath}\\notes\\${name}`;
-
-  if ((await exists(fullPath)) || findNoteByPath(fullPath)) {
-    throw new NoteAlreadyExistsError();
-  }
-
-  await writeTextFile(fullPath, content);
-
-  addNote({
-    id: randomUUID(),
-    path: fullPath,
-    title: name,
-    description: content.slice(0, 100),
-    createdAt: Date.now(),
-    updatedAt: Date.now(),
-  });
-
-  return fullPath;
 }
 
 export async function removeNote(path: string) {
