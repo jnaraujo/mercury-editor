@@ -1,15 +1,22 @@
 import { cn } from "@/lib/utils";
+import { useTitleStore } from "@/stores/titleStore";
 import { window as TauriWindow } from "@tauri-apps/api";
 import { TauriEvent } from "@tauri-apps/api/event";
 import { appWindow } from "@tauri-apps/api/window";
 import { Minus, Square, X } from "lucide-react";
+import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 
 interface Props {
   isFullscreen: boolean;
 }
 export default function Titlebar({ isFullscreen }: Props) {
+  const title = useTitleStore((state) => state.title);
   const { pathname } = useLocation();
+
+  useEffect(() => {
+    appWindow.setTitle(title);
+  }, [title]);
 
   return (
     <section
@@ -22,7 +29,7 @@ export default function Titlebar({ isFullscreen }: Props) {
       )}
     >
       <div className="px-4">
-        <span className="text-xs text-zinc-300">Mercury</span>
+        <span className="text-xs text-zinc-300">{title}</span>
       </div>
 
       <div className="flex items-center">
