@@ -14,10 +14,10 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { hash } from "@/lib/crypto";
 import { findNoteByPath, updateNoteFile } from "@/lib/notes";
 import { getRelativeTimeString } from "@/lib/time";
+import { useTitleStore } from "@/stores/titleStore";
 import { window as TauriWindow } from "@tauri-apps/api";
 import { TauriEvent } from "@tauri-apps/api/event";
 import { readTextFile } from "@tauri-apps/api/fs";
-import { appWindow } from "@tauri-apps/api/window";
 import { useEffect, useState } from "react";
 import { Link, useBlocker, useLocation, useNavigate } from "react-router-dom";
 
@@ -29,6 +29,7 @@ export const Component = function EditorPage() {
   const [focusEditor, setFocusEditor] = useState(false);
   const [oldContentHash, setOldContentHash] = useState("");
   const [updatedContentHash, setUpdatedContentHash] = useState("");
+  const setTitle = useTitleStore((state) => state.setTitle);
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -38,7 +39,7 @@ export const Component = function EditorPage() {
   useEffect(() => {
     if (!note?.title || !note?.path) return;
 
-    appWindow.setTitle(`${note.title} - Mercury`);
+    setTitle(`${note.title} - Mercury`);
 
     readTextFile(note.path as string).then((value) => {
       setInitialContent(value);
@@ -48,7 +49,7 @@ export const Component = function EditorPage() {
         setFocusEditor(true);
       }
     });
-  }, [note?.title, note?.path]);
+  }, [note?.title, note?.path, setTitle]);
 
   useEffect(() => {
     setUpdatedContentHash(hash(updatedContent));
