@@ -80,10 +80,7 @@ export async function requestNotesFromDisk() {
 
   return selected;
 }
-export async function renameFile(oldPath: string, newName: string) {
-  const fileName = filenameFromPath(oldPath);
-  const newPath = oldPath.replace(fileName, newName);
-
+export async function renameFile(oldPath: string, newPath: string) {
   if (newPath === oldPath) return;
 
   const fileExists = await exists(newPath);

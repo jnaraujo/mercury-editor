@@ -6,7 +6,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { FileAlreadyExistsError } from "@/errors/file-already-exists";
-import { renameFile } from "@/lib/files";
+import { filenameFromPath, renameFile } from "@/lib/files";
 import { findNoteByPath, updateNote } from "@/lib/notes";
 import { useState } from "react";
 import { Button } from "./ui/button";
@@ -32,7 +32,7 @@ export default function RenameFileDialog({
     setError(null);
 
     const formData = new FormData(event.currentTarget);
-    const filename = formData.get("filename") as string;
+    const newFilename = formData.get("filename") as string;
 
     const note = findNoteByPath(oldPath);
 
@@ -42,11 +42,18 @@ export default function RenameFileDialog({
     }
 
     try {
-      await renameFile(oldPath, filename);
+      const oldFilename = filenameFromPath(oldPath);
+      const newPath = oldPath.replace(oldFilename, newFilename);
+
+      if (findNoteByPath(newPath)) {
+        throw new FileAlreadyExistsError();
+      }
+
+      await renameFile(oldPath, newPath);
       updateNote(oldPath, {
         ...note,
-        title: filename,
-        path: filename,
+        title: newFilename,
+        path: newPath,
       });
 
       onOpenChange(false);
