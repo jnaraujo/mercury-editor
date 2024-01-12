@@ -34,6 +34,7 @@ export default function Titlebar({ isFullscreen }: Props) {
 
       <div className="flex items-center">
         <button
+          tabIndex={-1}
           className="flex h-7 w-12 items-center justify-center transition-colors duration-75 hover:bg-zinc-800"
           onClick={() => {
             appWindow.minimize();
@@ -42,6 +43,7 @@ export default function Titlebar({ isFullscreen }: Props) {
           <Minus className="text-zinc-50" size={16} />
         </button>
         <button
+          tabIndex={-1}
           className="flex h-7 w-12 items-center justify-center transition-colors duration-75 hover:bg-zinc-800"
           onClick={() => {
             appWindow.toggleMaximize();
@@ -50,6 +52,7 @@ export default function Titlebar({ isFullscreen }: Props) {
           <Square className="text-zinc-50" size={12} />
         </button>
         <button
+          tabIndex={-1}
           className="flex h-7 w-12 items-center justify-center transition-colors duration-75 hover:bg-red-700"
           onClick={() => {
             // appWindow.close() do not trigger the WINDOW_CLOSE_REQUESTED event
