@@ -93,7 +93,7 @@ export default function Layout() {
       >
         <Titlebar isFullscreen={isFullscreen} />
 
-        <section className="flex h-full flex-col overflow-auto bg-zinc-100 text-zinc-900 dark:bg-zinc-950 dark:text-zinc-100">
+        <section className="flex h-full select-none flex-col overflow-auto bg-zinc-100 text-zinc-900 dark:bg-zinc-950 dark:text-zinc-100">
           <Outlet />
 
           <footer className="mx-auto flex w-full shrink-0 items-center justify-between px-2 py-1">
