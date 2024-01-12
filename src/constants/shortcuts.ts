@@ -1,3 +1,4 @@
+import { setFullscreen } from "@/lib/application";
 import { useCommandStore } from "@/stores/commandStore";
 import { useConfigStore } from "@/stores/configStore";
 import { useCreateNewNoteDialogStore } from "@/stores/createNewNoteDialogStore";
@@ -17,7 +18,7 @@ export const SHORTCUTS: Shortcut[] = [
     key: "F11",
     action: () => {
       appWindow.isFullscreen().then((isFullscreen) => {
-        appWindow.setFullscreen(!isFullscreen);
+        setFullscreen(!isFullscreen);
       });
     },
   },

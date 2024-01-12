@@ -1,4 +1,4 @@
-import { WebviewWindow } from "@tauri-apps/api/window";
+import { appWindow, WebviewWindow } from "@tauri-apps/api/window";
 import { filenameFromPath } from "./files";
 
 const mainWebview = new WebviewWindow("main");
@@ -46,5 +46,17 @@ export async function onStartupTimeEventReceived() {
         time: time || 0,
       });
     });
+  });
+}
+
+export async function setFullscreen(fullscreen: boolean) {
+  if (!fullscreen) {
+    appWindow.setFullscreen(false);
+    return;
+  }
+
+  // Workaround for not being able to set fullscreen when maximized
+  appWindow.unmaximize().then(() => {
+    appWindow.setFullscreen(true);
   });
 }
