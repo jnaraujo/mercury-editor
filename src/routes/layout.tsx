@@ -2,6 +2,7 @@ import CreateNewNoteDialog from "@/components/create-new-note-dialog";
 import SettingsOpen from "@/components/settings-open";
 import Shortcuts from "@/components/shortcuts";
 import ThemeToggle from "@/components/theme-toggle";
+import Titlebar from "@/components/titlebar";
 import { Toaster } from "@/components/ui/toaster";
 import {
   onFilePathEventReceived,
@@ -90,6 +91,8 @@ export default function Layout() {
           },
         )}
       >
+        <Titlebar isFullscreen={isFullscreen} />
+
         <Outlet />
 
         <footer className="mx-auto flex w-full shrink-0 items-center justify-between px-2 py-1">
