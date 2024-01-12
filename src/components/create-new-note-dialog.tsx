@@ -6,8 +6,11 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { NoteAlreadyExistsError } from "@/errors/note-already-exists";
-import { createNote } from "@/lib/notes";
+import { randomUUID } from "@/lib/crypto";
+import { createFile, getDocumentsDirPath } from "@/lib/files";
+import { addNote } from "@/lib/notes";
 import { useCreateNewNoteDialogStore } from "@/stores/createNewNoteDialogStore";
+import { normalize } from "@tauri-apps/api/path";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "./ui/button";
@@ -28,7 +31,21 @@ export default function CreateNewNoteDialog() {
     const filename = formData.get("filename") as string;
 
     try {
-      const path = await createNote(`${filename}.md`);
+      const path = await normalize(
+        `${await getDocumentsDirPath()}/notes/${filename}.md`,
+      );
+
+      await createFile(path, "");
+
+      addNote({
+        id: randomUUID(),
+        path,
+        title: `${filename}.md`,
+        description: "",
+        createdAt: Date.now(),
+        updatedAt: Date.now(),
+      });
+
       navigate(`/editor`, {
         state: { path },
       });

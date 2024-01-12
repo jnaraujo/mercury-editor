@@ -5,8 +5,9 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { NoteAlreadyExistsError } from "@/errors/note-already-exists";
-import { renameNoteFile } from "@/lib/notes";
+import { FileAlreadyExistsError } from "@/errors/file-already-exists";
+import { filenameFromPath, renameFile } from "@/lib/files";
+import { findNoteByPath, updateNote } from "@/lib/notes";
 import { useState } from "react";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
@@ -22,7 +23,7 @@ export default function RenameFileDialog({
   onOpenChange,
   open,
   noteName,
-  notePath,
+  notePath: oldPath,
 }: Props) {
   const [error, setError] = useState<string | null>(null);
 
@@ -31,12 +32,33 @@ export default function RenameFileDialog({
     setError(null);
 
     const formData = new FormData(event.currentTarget);
-    const filename = formData.get("filename") as string;
+    const newFilename = formData.get("filename") as string;
+
+    const note = findNoteByPath(oldPath);
+
+    if (!note) {
+      setError("Não foi possível encontrar a nota.");
+      return;
+    }
+
     try {
-      await renameNoteFile(notePath, filename);
+      const oldFilename = filenameFromPath(oldPath);
+      const newPath = oldPath.replace(oldFilename, newFilename);
+
+      if (findNoteByPath(newPath)) {
+        throw new FileAlreadyExistsError();
+      }
+
+      await renameFile(oldPath, newPath);
+      updateNote(oldPath, {
+        ...note,
+        title: newFilename,
+        path: newPath,
+      });
+
       onOpenChange(false);
     } catch (error) {
-      if (error instanceof NoteAlreadyExistsError) {
+      if (error instanceof FileAlreadyExistsError) {
         setError("Já existe uma nota com esse nome.");
       }
     }
