@@ -45,13 +45,17 @@ export default function Note({
   const [openRenameDialog, setOpenRenameDialog] = useState(false);
 
   return (
-    <article className="group flex items-center justify-between gap-4 rounded-md transition-colors duration-200 hover:bg-zinc-200 dark:hover:bg-zinc-900">
+    <article
+      className="group flex items-center justify-between gap-4 rounded-md ring-inset ring-zinc-300 transition-colors duration-200 hover:bg-zinc-200 focus:outline-none focus:ring-1 dark:ring-zinc-800 dark:hover:bg-zinc-900"
+      tabIndex={0}
+    >
       <Link
         to="/editor"
         state={{
           path,
         }}
         className="w-full p-4"
+        tabIndex={-1}
       >
         <div className="space-y-0.5">
           <h2 className="line-clamp-1 font-medium text-zinc-700 dark:text-zinc-200">
@@ -71,7 +75,7 @@ export default function Note({
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <button
-            className="flex w-10 items-start justify-center outline-none transition-opacity duration-200"
+            className="mr-1 flex items-start justify-center rounded-md p-2 outline-none ring-zinc-300 transition-opacity duration-200 focus:outline-none focus:ring-1 dark:ring-zinc-800"
             aria-label="Apagar nota"
           >
             <MoreVertical
