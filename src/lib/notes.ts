@@ -2,12 +2,7 @@ import { Note } from "@/@types/note";
 import { NoteAlreadyExistsError } from "@/errors/note-already-exists";
 import { NoteNotFoundError } from "@/errors/note-not-found";
 import { useNotesStore } from "@/stores/notesStore";
-import {
-  exists,
-  removeFile,
-  renameFile,
-  writeTextFile,
-} from "@tauri-apps/api/fs";
+import { exists, removeFile, writeTextFile } from "@tauri-apps/api/fs";
 import { documentDir } from "@tauri-apps/api/path";
 import { randomUUID } from "./crypto";
 
@@ -73,29 +68,4 @@ export async function removeNote(path: string) {
 export async function deleteFileAndNote(path: string) {
   removeNote(path);
   await removeFile(path);
-}
-
-export async function renameNoteFile(oldPath: string, newName: string) {
-  const note = findNoteByPath(oldPath);
-  if (!note) {
-    throw new NoteNotFoundError();
-  }
-
-  const newPath = oldPath.replace(note.title, newName);
-
-  if (newPath === oldPath) return;
-
-  const fileExists = await exists(newPath);
-  if (fileExists || findNoteByPath(newPath)) {
-    throw new NoteAlreadyExistsError();
-  }
-
-  renameFile(oldPath, newPath);
-
-  updateNote(oldPath, {
-    ...note,
-    path: newPath,
-    title: newName,
-    updatedAt: Date.now(),
-  });
 }
