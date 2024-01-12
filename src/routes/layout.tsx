@@ -85,7 +85,7 @@ export default function Layout() {
     <>
       <div
         className={cn(
-          "flex h-screen flex-col overflow-hidden rounded-lg bg-zinc-100 text-zinc-900 antialiased dark:bg-zinc-950 dark:text-zinc-100",
+          "flex h-screen flex-col overflow-hidden rounded-lg antialiased",
           {
             "rounded-none": isFullscreen,
           },
@@ -93,23 +93,25 @@ export default function Layout() {
       >
         <Titlebar isFullscreen={isFullscreen} />
 
-        <Outlet />
+        <section className="flex h-full flex-col bg-zinc-100 text-zinc-900 dark:bg-zinc-950 dark:text-zinc-100">
+          <Outlet />
 
-        <footer className="mx-auto flex w-full shrink-0 items-center justify-between px-2 py-1">
-          <SettingsOpen />
-          <p className="text-sm text-zinc-500 dark:text-zinc-600">
-            <a
-              className="cursor-pointer hover:underline"
-              onClick={() => {
-                openExternalLink(
-                  "https://github.com/jnaraujo/mercury-editor/releases",
-                );
-              }}
-            >
-              v{__APP_VERSION__}
-            </a>
-          </p>
-        </footer>
+          <footer className="mx-auto flex w-full shrink-0 items-center justify-between px-2 py-1">
+            <SettingsOpen />
+            <p className="text-sm text-zinc-500 dark:text-zinc-600">
+              <a
+                className="cursor-pointer hover:underline"
+                onClick={() => {
+                  openExternalLink(
+                    "https://github.com/jnaraujo/mercury-editor/releases",
+                  );
+                }}
+              >
+                v{__APP_VERSION__}
+              </a>
+            </p>
+          </footer>
+        </section>
       </div>
 
       {openCommand && (
