@@ -5,6 +5,7 @@ import {
   createDir,
   exists,
   readDir,
+  renameFile as renameFileFS,
   writeTextFile,
 } from "@tauri-apps/api/fs";
 import { documentDir } from "@tauri-apps/api/path";
@@ -90,7 +91,7 @@ export async function renameFile(oldPath: string, newName: string) {
     throw new FileAlreadyExistsError();
   }
 
-  return await renameFile(oldPath, newPath);
+  return await renameFileFS(oldPath, newPath);
 }
 
 export async function writeFile(path: string, content: string) {
