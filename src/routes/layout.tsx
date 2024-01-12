@@ -66,7 +66,13 @@ export default function Layout() {
   useEffect(() => {
     const unlisten = appWindow.onResized((event) => {
       const screenWidth = window.screen.width;
-      setIsFullscreen(event.payload.width === screenWidth);
+      const screenHeight = window.screen.height;
+
+      const isFullscreen =
+        event.payload.width === screenWidth &&
+        event.payload.height === screenHeight;
+
+      setIsFullscreen(isFullscreen);
     });
 
     return () => {
