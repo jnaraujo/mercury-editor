@@ -7,6 +7,8 @@ import { attachConsole } from "tauri-plugin-log-api";
 import { setupAppWindow } from "./lib/application";
 import { router } from "./router";
 
+export const mainNow = Date.now();
+
 setupAppWindow().then(() => console.log("App window is ready"));
 attachConsole();
 

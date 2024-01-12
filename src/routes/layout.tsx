@@ -13,6 +13,7 @@ import { randomUUID } from "@/lib/crypto";
 import { createNotesDirIfNotExists } from "@/lib/files";
 import { addNote, findNoteByPath } from "@/lib/notes";
 import { cn } from "@/lib/utils";
+import { mainNow } from "@/main";
 import { useCommandStore } from "@/stores/commandStore";
 import { open as openExternalLink } from "@tauri-apps/api/shell";
 import { appWindow } from "@tauri-apps/api/window";
@@ -31,10 +32,11 @@ export default function Layout() {
   }, []);
 
   useEffect(() => {
+    const now = Date.now();
     async function setupStartupListeners() {
       onStartupTimeEventReceived().then(({ time }) => {
-        const elapsedTime = Date.now() - time;
-        console.log(`Startup time: ${elapsedTime}ms`);
+        console.log(`Time to load main: ${mainNow - time}ms`);
+        console.log(`Time to load layout: ${now - time}ms`);
       });
 
       onFilePathEventReceived().then(({ filename, path }) => {
