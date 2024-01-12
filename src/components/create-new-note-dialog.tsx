@@ -10,6 +10,7 @@ import { randomUUID } from "@/lib/crypto";
 import { createFile, getDocumentsDirPath } from "@/lib/files";
 import { addNote } from "@/lib/notes";
 import { useCreateNewNoteDialogStore } from "@/stores/createNewNoteDialogStore";
+import { normalize } from "@tauri-apps/api/path";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "./ui/button";
@@ -30,7 +31,9 @@ export default function CreateNewNoteDialog() {
     const filename = formData.get("filename") as string;
 
     try {
-      const path = `${await getDocumentsDirPath()}/notes/${filename}.md`;
+      const path = await normalize(
+        `${await getDocumentsDirPath()}/notes/${filename}.md`,
+      );
 
       await createFile(path, "");
 
