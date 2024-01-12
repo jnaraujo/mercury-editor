@@ -3,13 +3,13 @@ import EmptyNotes from "@/components/empty-notes";
 import ImportFromDiskButton from "@/components/import-from-disk-button";
 import Note from "@/components/note";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { deleteFileAndNote, getNotes } from "@/lib/notes";
+import { deleteFileAndNote, useNotes } from "@/lib/notes";
 import { useTitleStore } from "@/stores/titleStore";
 import { useEffect } from "react";
 
 export default function Home() {
   const setTitle = useTitleStore((state) => state.setTitle);
-  const notes = getNotes();
+  const notes = useNotes();
 
   const sortedNotes = notes.sort((a, b) => {
     return new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime();

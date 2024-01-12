@@ -1,5 +1,5 @@
 import { setFullscreen } from "@/lib/application";
-import { getNotes } from "@/lib/notes";
+import { useNotes } from "@/lib/notes";
 import { useCommandStore } from "@/stores/commandStore";
 import { useConfigStore } from "@/stores/configStore";
 import { useCreateNewNoteDialogStore } from "@/stores/createNewNoteDialogStore";
@@ -31,7 +31,7 @@ export default function CommandWrapper() {
     (state) => state.setOpen,
   );
   const { open, setOpen } = useCommandStore();
-  const notes = getNotes();
+  const notes = useNotes();
   const setTheme = useConfigStore((state) => state.setTheme);
   const navigate = useNavigate();
 

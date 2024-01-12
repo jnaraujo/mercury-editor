@@ -19,6 +19,10 @@ export function addNote(note: Note) {
   return useNotesStore.getState().addNote(note);
 }
 
+export function useNotes() {
+  return useNotesStore((state) => state.notes);
+}
+
 export function getNotes() {
   return useNotesStore.getState().notes;
 }
