@@ -102,7 +102,7 @@ export async function removeNote(path: string) {
 
 export async function deleteFileAndNote(path: string) {
   removeNote(path);
-  await await removeFile(path);
+  await removeFile(path);
 }
 
 export async function renameNoteFile(oldPath: string, newName: string) {
