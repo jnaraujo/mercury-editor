@@ -1,15 +1,7 @@
 import { Note } from "@/@types/note";
-import { NoteAlreadyExistsError } from "@/errors/note-already-exists";
 import { NoteNotFoundError } from "@/errors/note-not-found";
 import { useNotesStore } from "@/stores/notesStore";
-import {
-  exists,
-  removeFile,
-  renameFile,
-  writeTextFile,
-} from "@tauri-apps/api/fs";
-import { documentDir } from "@tauri-apps/api/path";
-import { randomUUID } from "./crypto";
+import { removeFile, writeTextFile } from "@tauri-apps/api/fs";
 
 export function findNoteByPath(path: string) {
   return useNotesStore.getState().findNoteByPath(path);
@@ -68,34 +60,6 @@ export function updateNote(path: string, note: Note) {
   return useNotesStore.getState().updateNote(path, note);
 }
 
-export async function createNote(name: string, content: string = "") {
-  const documentDirPath = await documentDir();
-  const fullPath = `${documentDirPath}\\notes\\${name}`;
-
-  if ((await exists(fullPath)) || findNoteByPath(fullPath)) {
-    throw new NoteAlreadyExistsError();
-  }
-
-  await writeTextFile(fullPath, content);
-
-  addNote({
-    id: randomUUID(),
-    path: fullPath,
-    title: name,
-    description: content.slice(0, 100),
-    createdAt: Date.now(),
-    updatedAt: Date.now(),
-    isArchived: false,
-    isPinned: false,
-  });
-
-  return fullPath;
-}
-
-export async function deleteNoteFile(path: string) {
-  return await removeFile(path);
-}
-
 export async function removeNote(path: string) {
   useNotesStore.getState().removeNote(path);
 }
@@ -103,29 +67,4 @@ export async function removeNote(path: string) {
 export async function deleteFileAndNote(path: string) {
   removeNote(path);
   await removeFile(path);
-}
-
-export async function renameNoteFile(oldPath: string, newName: string) {
-  const note = findNoteByPath(oldPath);
-  if (!note) {
-    throw new NoteNotFoundError();
-  }
-
-  const newPath = oldPath.replace(note.title, newName);
-
-  if (newPath === oldPath) return;
-
-  const fileExists = await exists(newPath);
-  if (fileExists || findNoteByPath(newPath)) {
-    throw new NoteAlreadyExistsError();
-  }
-
-  renameFile(oldPath, newPath);
-
-  updateNote(oldPath, {
-    ...note,
-    path: newPath,
-    title: newName,
-    updatedAt: Date.now(),
-  });
 }
