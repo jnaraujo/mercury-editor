@@ -68,6 +68,32 @@ export async function createNote(name: string, content: string = "") {
   return fullPath;
 }
 
+export function archiveNote(path: string) {
+  const note = findNoteByPath(path);
+  if (!note) {
+    throw new NoteNotFoundError();
+  }
+
+  updateNote(path, {
+    ...note,
+    isArchived: true,
+    updatedAt: Date.now(),
+  });
+}
+
+export function unarchiveNote(path: string) {
+  const note = findNoteByPath(path);
+  if (!note) {
+    throw new NoteNotFoundError();
+  }
+
+  updateNote(path, {
+    ...note,
+    isArchived: false,
+    updatedAt: Date.now(),
+  });
+}
+
 export async function deleteNoteFile(path: string) {
   return await removeFile(path);
 }
