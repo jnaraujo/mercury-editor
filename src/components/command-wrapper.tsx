@@ -77,10 +77,9 @@ export default function CommandWrapper() {
                 key={note.path}
                 onSelect={() =>
                   runCommand(() =>
-                    navigate("/editor", {
-                      state: {
-                        path: note.path,
-                      },
+                    navigate({
+                      pathname: "/editor",
+                      search: `?path=${note.path}`,
                     }),
                   )
                 }
