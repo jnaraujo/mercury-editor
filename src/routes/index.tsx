@@ -6,12 +6,16 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { deleteFileAndNote, useNotes } from "@/lib/notes";
 import { cn } from "@/lib/utils";
 import { useTitleStore } from "@/stores/titleStore";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 
 export default function Home() {
-  const [filter, setFilter] = useState<"archive" | "lastest">("lastest");
+  const [searchParams, setSearchParams] = useSearchParams({});
   const setTitle = useTitleStore((state) => state.setTitle);
   const notes = useNotes();
+
+  const filter =
+    (searchParams.get("filter") as "lastest" | "archive") ?? "lastest";
 
   useEffect(() => {
     setTitle(`Mercury`);
@@ -29,6 +33,8 @@ export default function Home() {
     return !note.isArchived;
   });
 
+  console.log(filter);
+
   const hasNoArchivedNotes = filter === "archive" && filteredNotes.length === 0;
   const hasNoLastestNotes = filter === "lastest" && filteredNotes.length === 0;
 
@@ -45,7 +51,7 @@ export default function Home() {
 
       <div className="flex gap-4 border-b pb-1 dark:border-zinc-800">
         <button
-          onClick={() => setFilter("lastest")}
+          onClick={() => setSearchParams({ filter: "lastest" })}
           className={cn(
             "rounded-md px-1.5 py-[1px] text-sm text-zinc-700 dark:text-zinc-400",
             {
@@ -56,7 +62,7 @@ export default function Home() {
           Recentes
         </button>
         <button
-          onClick={() => setFilter("archive")}
+          onClick={() => setSearchParams({ filter: "archive" })}
           className={cn(
             "rounded-md px-1.5 py-[1px] text-sm text-zinc-700 dark:text-zinc-400",
             {
