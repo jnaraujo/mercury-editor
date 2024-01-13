@@ -79,7 +79,7 @@ export default function CommandWrapper() {
                   runCommand(() =>
                     navigate({
                       pathname: "/editor",
-                      search: `?path=${note.path}`,
+                      search: `?path=${encodeURIComponent(note.path)}`,
                     }),
                   )
                 }

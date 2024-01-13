@@ -54,7 +54,7 @@ export default function Note({
       <Link
         to={{
           pathname: "/editor",
-          search: `?path=${path}`,
+          search: `?path=${encodeURIComponent(path)}`,
         }}
         className="w-full p-4"
         tabIndex={-1}
@@ -92,7 +92,7 @@ export default function Note({
             <Link
               to={{
                 pathname: "/editor",
-                search: `?path=${path}`,
+                search: `?path=${encodeURIComponent(path)}`,
               }}
               className="flex w-full"
             >

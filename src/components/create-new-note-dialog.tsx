@@ -50,7 +50,7 @@ export default function CreateNewNoteDialog() {
 
       navigate({
         pathname: "/editor",
-        search: `?path=${path}`,
+        search: `?path=${encodeURIComponent(path)}`,
       });
 
       setOpen(false);

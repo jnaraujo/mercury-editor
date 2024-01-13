@@ -59,7 +59,7 @@ export default function Layout() {
 
         navigate({
           pathname: "/editor",
-          search: `?path=${path}`,
+          search: `?path=${encodeURIComponent(path)}`,
         });
       });
     }
