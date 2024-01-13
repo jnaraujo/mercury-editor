@@ -5,4 +5,6 @@ export interface Note {
   description: string;
   createdAt: number;
   updatedAt: number;
+  isArchived: boolean;
+  isPinned: boolean;
 }

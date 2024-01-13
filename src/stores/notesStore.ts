@@ -41,9 +41,22 @@ export const useNotesStore = create<NotesStore>()(
       },
     }),
     {
-      version: 1,
+      version: 2,
       name: "notes-store",
       storage: createJSONStorage(() => storage),
+      migrate: (persistedState: any, version) => {
+        if (version === 1) {
+          persistedState.notes = (persistedState.notes as Note[]).map(
+            (note) => {
+              note.isArchived = false;
+              note.isPinned = false;
+              return note;
+            },
+          );
+        }
+
+        return persistedState;
+      },
     },
   ),
 );
