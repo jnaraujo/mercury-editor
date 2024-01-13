@@ -57,8 +57,9 @@ export default function Layout() {
           });
         }
 
-        navigate("/editor", {
-          state: { path },
+        navigate({
+          pathname: "/editor",
+          search: `?path=${path}`,
         });
       });
     }
