@@ -15,7 +15,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { removeNote } from "@/lib/notes";
+import { archiveNote, unarchiveNote } from "@/lib/notes";
 import { getRelativeTimeString } from "@/lib/time";
 import { MoreVertical } from "lucide-react";
 import { useState } from "react";
@@ -29,6 +29,7 @@ interface Props {
   createdAt: number;
   updatedAt: number;
   path: string;
+  isArchived?: boolean;
 
   onDelete?: () => void;
 }
@@ -39,6 +40,7 @@ export default function Note({
   createdAt,
   updatedAt,
   path,
+  isArchived,
   onDelete,
 }: Props) {
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
@@ -108,13 +110,23 @@ export default function Note({
             Renomear
           </DropdownMenuItem>
 
-          <DropdownMenuItem
-            onSelect={() => {
-              removeNote(path);
-            }}
-          >
-            Remover da lista
-          </DropdownMenuItem>
+          {isArchived ? (
+            <DropdownMenuItem
+              onSelect={() => {
+                unarchiveNote(path);
+              }}
+            >
+              Desarquivar
+            </DropdownMenuItem>
+          ) : (
+            <DropdownMenuItem
+              onSelect={() => {
+                archiveNote(path);
+              }}
+            >
+              Arquivar
+            </DropdownMenuItem>
+          )}
 
           <DropdownMenuSeparator />
 
