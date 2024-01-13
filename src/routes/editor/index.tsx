@@ -126,11 +126,11 @@ export const Component = function EditorPage() {
     <div className="flex h-full flex-col space-y-2 overflow-auto">
       <header className="sticky top-0 z-20 bg-zinc-100 shadow-sm dark:bg-zinc-950">
         <nav className="container flex h-16 max-w-screen-md items-center justify-between">
-          <Link to="/" className="text-sm text-zinc-500">
+          <Link to="/" className="text-sm text-zinc-700 dark:text-zinc-400">
             {"<"} Voltar
           </Link>
 
-          <span className="text-sm text-zinc-700 dark:text-zinc-500">
+          <span className="text-sm text-zinc-700 dark:text-zinc-400">
             {wasModified ? "Modificado" : "Salvo"} {" • "} Atualizado{" "}
             {getRelativeTimeString(new Date(note.updatedAt as number))}
           </span>

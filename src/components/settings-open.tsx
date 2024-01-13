@@ -10,7 +10,6 @@ export default function SettingsOpen({ className, ...rest }: Props) {
   return (
     <button
       onClick={() => setOpen((open) => !open)}
-      aria-label="Abrir menu de configurações"
       className={cn(
         "flex items-center gap-0.5 rounded-md px-2 py-0.5 transition-colors duration-200 hover:bg-zinc-300 dark:hover:bg-zinc-900",
         className,

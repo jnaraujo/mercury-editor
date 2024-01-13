@@ -59,7 +59,7 @@ export default function Layout() {
 
         navigate({
           pathname: "/editor",
-          search: `?path=${path}`,
+          search: `?path=${encodeURIComponent(path)}`,
         });
       });
     }
@@ -103,7 +103,7 @@ export default function Layout() {
 
           <footer className="mx-auto flex w-full shrink-0 items-center justify-between px-2 py-1">
             <SettingsOpen />
-            <p className="text-sm text-zinc-500 dark:text-zinc-600">
+            <p className="text-sm text-zinc-800 dark:text-zinc-400">
               <a
                 className="cursor-pointer hover:underline"
                 onClick={() => {

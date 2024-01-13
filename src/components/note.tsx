@@ -54,7 +54,7 @@ export default function Note({
       <Link
         to={{
           pathname: "/editor",
-          search: `?path=${path}`,
+          search: `?path=${encodeURIComponent(path)}`,
         }}
         className="w-full p-4"
         tabIndex={-1}
@@ -67,7 +67,7 @@ export default function Note({
           <p className="line-clamp-2 text-sm text-zinc-600 dark:text-zinc-300/90">
             {description}
           </p>
-          <span className="text-xs text-zinc-400">
+          <span className="text-xs text-zinc-600 dark:text-zinc-400">
             Criado em {new Date(createdAt).toLocaleDateString()} • Atualizado{" "}
             {getRelativeTimeString(new Date(updatedAt))}
           </span>
@@ -92,7 +92,7 @@ export default function Note({
             <Link
               to={{
                 pathname: "/editor",
-                search: `?path=${path}`,
+                search: `?path=${encodeURIComponent(path)}`,
               }}
               className="flex w-full"
             >

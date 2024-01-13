@@ -34,6 +34,7 @@ export default function Titlebar({ isFullscreen }: Props) {
 
       <div className="flex items-center">
         <button
+          aria-label="Minimizar"
           tabIndex={-1}
           className="flex h-7 w-12 items-center justify-center transition-colors duration-75 hover:bg-zinc-800"
           onClick={() => {
@@ -43,6 +44,7 @@ export default function Titlebar({ isFullscreen }: Props) {
           <Minus className="text-zinc-50" size={16} />
         </button>
         <button
+          aria-label="Maximizar"
           tabIndex={-1}
           className="flex h-7 w-12 items-center justify-center transition-colors duration-75 hover:bg-zinc-800"
           onClick={() => {
@@ -52,6 +54,7 @@ export default function Titlebar({ isFullscreen }: Props) {
           <Square className="text-zinc-50" size={12} />
         </button>
         <button
+          aria-label="Fechar janela"
           tabIndex={-1}
           className="flex h-7 w-12 items-center justify-center transition-colors duration-75 hover:bg-red-700"
           onClick={() => {
