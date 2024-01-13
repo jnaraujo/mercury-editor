@@ -27,6 +27,8 @@ export default function ImportFromDiskButton({ className, ...rest }: Props) {
         createdAt: Date.now(),
         updatedAt: Date.now(),
         description: "",
+        isArchived: false,
+        isPinned: false,
       })),
     );
 

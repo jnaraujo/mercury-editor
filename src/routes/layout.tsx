@@ -52,6 +52,8 @@ export default function Layout() {
             createdAt: Date.now(),
             updatedAt: Date.now(),
             description: "",
+            isArchived: false,
+            isPinned: false,
           });
         }
 
