@@ -52,9 +52,9 @@ export default function Note({
       tabIndex={0}
     >
       <Link
-        to="/editor"
-        state={{
-          path,
+        to={{
+          pathname: "/editor",
+          search: `?path=${path}`,
         }}
         className="w-full p-4"
         tabIndex={-1}
@@ -90,9 +90,9 @@ export default function Note({
         <DropdownMenuContent>
           <DropdownMenuItem className="cursor-pointer">
             <Link
-              to="/editor"
-              state={{
-                path,
+              to={{
+                pathname: "/editor",
+                search: `?path=${path}`,
               }}
               className="flex w-full"
             >

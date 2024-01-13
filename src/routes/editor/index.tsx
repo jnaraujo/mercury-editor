@@ -19,7 +19,7 @@ import { window as TauriWindow } from "@tauri-apps/api";
 import { TauriEvent } from "@tauri-apps/api/event";
 import { readTextFile } from "@tauri-apps/api/fs";
 import { useEffect, useState } from "react";
-import { Link, useBlocker, useLocation, useNavigate } from "react-router-dom";
+import { Link, Navigate, useBlocker, useSearchParams } from "react-router-dom";
 
 export const Component = function EditorPage() {
   const [open, setOpen] = useState(false);
@@ -30,10 +30,11 @@ export const Component = function EditorPage() {
   const [oldContentHash, setOldContentHash] = useState("");
   const [updatedContentHash, setUpdatedContentHash] = useState("");
   const setTitle = useTitleStore((state) => state.setTitle);
-  const location = useLocation();
-  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
 
-  const note = findNoteByPath(location.state.path as string);
+  const notePath = searchParams.get("path");
+
+  const note = findNoteByPath(notePath as string);
   const wasModified = oldContentHash !== updatedContentHash;
 
   useEffect(() => {
@@ -118,8 +119,7 @@ export const Component = function EditorPage() {
   }, [wasModified]);
 
   if (!note) {
-    navigate("/");
-    return null;
+    return <Navigate to="/" />;
   }
 
   return (

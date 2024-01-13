@@ -48,9 +48,11 @@ export default function CreateNewNoteDialog() {
         isPinned: false,
       });
 
-      navigate(`/editor`, {
-        state: { path },
+      navigate({
+        pathname: "/editor",
+        search: `?path=${path}`,
       });
+
       setOpen(false);
     } catch (error) {
       if (error instanceof NoteAlreadyExistsError) {
