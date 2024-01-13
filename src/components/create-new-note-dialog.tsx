@@ -44,6 +44,8 @@ export default function CreateNewNoteDialog() {
         description: "",
         createdAt: Date.now(),
         updatedAt: Date.now(),
+        isArchived: false,
+        isPinned: false,
       });
 
       navigate(`/editor`, {
