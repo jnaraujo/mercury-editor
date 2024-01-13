@@ -61,6 +61,8 @@ export async function createNote(name: string, content: string = "") {
     description: content.slice(0, 100),
     createdAt: Date.now(),
     updatedAt: Date.now(),
+    isArchived: false,
+    isPinned: false,
   });
 
   return fullPath;
