@@ -43,8 +43,8 @@ export default function Home() {
       <header className="flex h-10 items-center justify-between">
         <h1 className="text-sm text-zinc-700 dark:text-zinc-400">Suas notas</h1>
 
-        <div className="space-x-1">
-          <ImportFromDiskButton />
+        <div className="space-x-2">
+          <ImportFromDiskButton className="h-9" />
           <CreateNewNoteButton />
         </div>
       </header>
