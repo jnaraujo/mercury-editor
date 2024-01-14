@@ -52,7 +52,6 @@ export default function Note({
       <div className="relative w-full space-y-0.5 p-4">
         <h2 className="line-clamp-1 font-medium text-zinc-700 dark:text-zinc-200">
           <Link
-            className="rounded-md outline-none ring-zinc-800 focus:ring-2 dark:ring-zinc-600"
             to={{
               pathname: "/editor",
               search: `?path=${encodeURIComponent(path)}`,
