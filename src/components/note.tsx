@@ -19,7 +19,7 @@ import { archiveNote, unarchiveNote } from "@/lib/notes";
 import { getRelativeTimeString } from "@/lib/time";
 import { MoreVertical } from "lucide-react";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import RenameFileDialog from "./rename-file-dialog";
 import { buttonVariants } from "./ui/button";
 
@@ -45,6 +45,7 @@ export default function Note({
 }: Props) {
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
   const [openRenameDialog, setOpenRenameDialog] = useState(false);
+  const navigate = useNavigate();
 
   return (
     <article
@@ -78,7 +79,7 @@ export default function Note({
         <DropdownMenuTrigger asChild>
           <button
             className="mr-4 flex items-start justify-center rounded-md p-2 outline-none ring-zinc-300 transition-opacity duration-200 focus:outline-none focus:ring-1 dark:ring-zinc-800"
-            aria-label="Apagar nota"
+            aria-label="Mais opções"
           >
             <MoreVertical
               className="text-zinc-400 transition-colors duration-200 hover:text-zinc-500"
@@ -88,16 +89,16 @@ export default function Note({
         </DropdownMenuTrigger>
 
         <DropdownMenuContent>
-          <DropdownMenuItem className="cursor-pointer">
-            <Link
-              to={{
+          <DropdownMenuItem
+            className="cursor-pointer"
+            onSelect={() => {
+              navigate({
                 pathname: "/editor",
                 search: `?path=${encodeURIComponent(path)}`,
-              }}
-              className="flex w-full"
-            >
-              Editar
-            </Link>
+              });
+            }}
+          >
+            Editar
           </DropdownMenuItem>
 
           <DropdownMenuSeparator />
