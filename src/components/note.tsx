@@ -78,7 +78,7 @@ export default function Note({
         <DropdownMenuTrigger asChild>
           <button
             className="mr-4 flex items-start justify-center rounded-md p-2 outline-none ring-zinc-300 transition-opacity duration-200 focus:outline-none focus:ring-1 dark:ring-zinc-800"
-            aria-label="Apagar nota"
+            aria-label="Mais opções"
           >
             <MoreVertical
               className="text-zinc-400 transition-colors duration-200 hover:text-zinc-500"
