@@ -48,37 +48,34 @@ export default function Note({
   const navigate = useNavigate();
 
   return (
-    <article
-      className="group flex items-center justify-between gap-4 rounded-md ring-inset ring-zinc-300 transition-colors duration-200 hover:bg-zinc-200 focus:outline-none focus:ring-1 dark:ring-zinc-800 dark:hover:bg-zinc-900"
-      tabIndex={0}
-    >
-      <Link
-        to={{
-          pathname: "/editor",
-          search: `?path=${encodeURIComponent(path)}`,
-        }}
-        className="w-full p-4"
-        tabIndex={-1}
-      >
-        <div className="space-y-0.5">
-          <h2 className="line-clamp-1 font-medium text-zinc-700 dark:text-zinc-200">
+    <article className="group flex items-center justify-between gap-4 rounded-md transition-colors duration-200 hover:bg-zinc-200 dark:hover:bg-zinc-900">
+      <div className="relative w-full space-y-0.5 p-4">
+        <h2 className="line-clamp-1 font-medium text-zinc-700 dark:text-zinc-200">
+          <Link
+            className="rounded-md outline-none ring-zinc-800 focus:ring-2 dark:ring-zinc-600"
+            to={{
+              pathname: "/editor",
+              search: `?path=${encodeURIComponent(path)}`,
+            }}
+          >
+            <span className="absolute inset-0 z-10"></span>
             {title}
-          </h2>
+          </Link>
+        </h2>
 
-          <p className="line-clamp-2 text-sm text-zinc-600 dark:text-zinc-300/90">
-            {description}
-          </p>
-          <span className="text-xs text-zinc-600 dark:text-zinc-400">
-            Criado em {new Date(createdAt).toLocaleDateString()} • Atualizado{" "}
-            {getRelativeTimeString(new Date(updatedAt))}
-          </span>
-        </div>
-      </Link>
+        <p className="line-clamp-2 text-sm text-zinc-600 dark:text-zinc-300/90">
+          {description}
+        </p>
+        <span className="text-xs text-zinc-600 dark:text-zinc-400">
+          Criado em {new Date(createdAt).toLocaleDateString()} • Atualizado{" "}
+          {getRelativeTimeString(new Date(updatedAt))}
+        </span>
+      </div>
 
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <button
-            className="mr-4 flex items-start justify-center rounded-md p-2 outline-none ring-zinc-300 transition-opacity duration-200 focus:outline-none focus:ring-1 dark:ring-zinc-800"
+            className="mr-4 flex items-start justify-center rounded-md p-2  outline-none ring-zinc-800 transition-opacity duration-200 focus:outline-none focus:ring-2 dark:ring-zinc-600"
             aria-label="Mais opções"
           >
             <MoreVertical
