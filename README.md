@@ -1,7 +1,22 @@
-# Tauri + React + Typescript
+<div align="center" >
+  <img src="./public/logo.webp" width="100" height="100" />
+  <h1>Mercury Editor</h1>
+</div>
 
-This template should help get you started developing with Tauri, React and Typescript in Vite.
+<div align="center">
+  <a href="https://github.com/jnaraujo/mercury-editor/releases">
+    <img src="https://img.shields.io/github/v/release/jnaraujo/mercury-editor?label=latest&style=flat-square">
+    <img src="https://img.shields.io/github/downloads/jnaraujo/mercury-editor/total?color=000t&style=flat-square">
+  </a>
 
-## Recommended IDE Setup
+</div>
 
-- [VS Code](https://code.visualstudio.com/) + [Tauri](https://marketplace.visualstudio.com/items?itemName=tauri-apps.tauri-vscode) + [rust-analyzer](https://marketplace.visualstudio.com/items?itemName=rust-lang.rust-analyzer)
+Mercury editor is a simple and easy to use text editor. It has a clean and intuitive interface, and it is also very light.
+
+## 💻 Tech Stack
+
+1.  ReactJS
+2.  TypeScript
+3.  TailwindCSS
+4.  Tauri
+5.  Vite
