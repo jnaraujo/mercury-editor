@@ -1,5 +1,5 @@
 <div align="center" >
-  <img src="./public/logo.webp" width="100" height="100" />
+  <img src="./public/logo.webp" width="200" height="200" />
   <h1>Mercury Editor</h1>
 </div>
 
