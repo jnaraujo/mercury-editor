@@ -15,7 +15,7 @@ export default function Home() {
   const notes = useNotes();
 
   const filter =
-    (searchParams.get("filter") as "lastest" | "archive") ?? "lastest";
+    (searchParams.get("filter") as "latest" | "archive") ?? "latest";
 
   useEffect(() => {
     setTitle(`Mercury`);
@@ -33,8 +33,10 @@ export default function Home() {
     return !note.isArchived;
   });
 
-  const hasNoArchivedNotes = filter === "archive" && filteredNotes.length === 0;
-  const hasNoLastestNotes = filter === "lastest" && filteredNotes.length === 0;
+  const showEmptyArchivedNotesMessage =
+    filter === "archive" && filteredNotes.length === 0;
+  const showEmptyLatestNotesMessage =
+    filter === "latest" && filteredNotes.length === 0;
 
   return (
     <main className="container flex h-full max-w-screen-md flex-col space-y-4 overflow-auto pt-4">
@@ -49,11 +51,11 @@ export default function Home() {
 
       <div className="flex gap-4 border-b pb-1 dark:border-zinc-800">
         <button
-          onClick={() => setSearchParams({ filter: "lastest" })}
+          onClick={() => setSearchParams({ filter: "latest" })}
           className={cn(
             "rounded-md px-1.5 py-[1px] text-sm text-zinc-700 dark:text-zinc-400",
             {
-              "bg-zinc-200/80 dark:bg-zinc-800/60": filter === "lastest",
+              "bg-zinc-200/80 dark:bg-zinc-800/60": filter === "latest",
             },
           )}
         >
@@ -85,7 +87,7 @@ export default function Home() {
           />
         ))}
 
-        {hasNoArchivedNotes && (
+        {showEmptyArchivedNotesMessage && (
           <div className="flex h-60 flex-col items-center justify-center gap-4">
             <div className="flex flex-col items-center justify-center">
               <h2 className="text-lg font-medium text-zinc-700 dark:text-zinc-300">
@@ -99,7 +101,7 @@ export default function Home() {
           </div>
         )}
 
-        {hasNoLastestNotes && <EmptyNotes />}
+        {showEmptyLatestNotesMessage && <EmptyNotes />}
       </ScrollArea>
     </main>
   );
