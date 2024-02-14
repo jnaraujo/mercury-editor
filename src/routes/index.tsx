@@ -33,8 +33,10 @@ export default function Home() {
     return !note.isArchived;
   });
 
-  const hasNoArchivedNotes = filter === "archive" && filteredNotes.length === 0;
-  const hasNoLastestNotes = filter === "lastest" && filteredNotes.length === 0;
+  const showEmptyArchivedNotesMessage =
+    filter === "archive" && filteredNotes.length === 0;
+  const showEmptyLatestNotesMessage =
+    filter === "lastest" && filteredNotes.length === 0;
 
   return (
     <main className="container flex h-full max-w-screen-md flex-col space-y-4 overflow-auto pt-4">
@@ -85,7 +87,7 @@ export default function Home() {
           />
         ))}
 
-        {hasNoArchivedNotes && (
+        {showEmptyArchivedNotesMessage && (
           <div className="flex h-60 flex-col items-center justify-center gap-4">
             <div className="flex flex-col items-center justify-center">
               <h2 className="text-lg font-medium text-zinc-700 dark:text-zinc-300">
@@ -99,7 +101,7 @@ export default function Home() {
           </div>
         )}
 
-        {hasNoLastestNotes && <EmptyNotes />}
+        {showEmptyLatestNotesMessage && <EmptyNotes />}
       </ScrollArea>
     </main>
   );
