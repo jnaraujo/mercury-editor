@@ -33,8 +33,6 @@ export default function Home() {
     return !note.isArchived;
   });
 
-  console.log(filter);
-
   const hasNoArchivedNotes = filter === "archive" && filteredNotes.length === 0;
   const hasNoLastestNotes = filter === "lastest" && filteredNotes.length === 0;
 
