@@ -40,7 +40,7 @@ export default function Home() {
 
   return (
     <main className="container flex h-full max-w-screen-md flex-col space-y-4 overflow-auto pt-4">
-      <header className="flex h-10 items-center justify-between">
+      <header className="flex h-10 shrink-0 items-center justify-between">
         <h1 className="text-sm text-zinc-700 dark:text-zinc-400">Suas notas</h1>
 
         <div className="space-x-2">
