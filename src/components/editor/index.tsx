@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import BubbleMenu from "./bubble-menu";
 import styles from "./editor.module.css";
 import { extensions } from "./extensions";
-import FloatingMenu from "./floating-menu";
+import { FloatingMenu } from "./floating-menu";
 
 interface Props {
   content: string;
@@ -38,7 +38,7 @@ export default function Editor({ content, onChange, focus }: Props) {
   }, [focus, editor]);
 
   return (
-    <section className="flex justify-center">
+    <section className="flex h-fit justify-center overflow-hidden">
       <EditorContent
         editor={editor}
         className={`${styles.editor} prose prose-sm prose-violet w-full max-w-full resize-none dark:prose-invert`}
