@@ -16,7 +16,7 @@ interface Props {
   editor: Editor;
 }
 
-export default function FloatingMenu({ editor }: Props) {
+export function FloatingMenu({ editor }: Props) {
   const [open, setOpen] = useState(false);
 
   const runCommand = useCallback(
@@ -53,7 +53,7 @@ export default function FloatingMenu({ editor }: Props) {
     <Popover.Root open={open} defaultOpen={false}>
       <Popover.Anchor asChild>
         <div
-          className="fixed z-50"
+          className="absolute z-[1000]"
           style={{
             top: getPosition(editor).top,
             left: getPosition(editor).left,
@@ -62,9 +62,8 @@ export default function FloatingMenu({ editor }: Props) {
       </Popover.Anchor>
       <Popover.Portal>
         <Popover.Content
-          align="start"
+          align="center"
           side="bottom"
-          sideOffset={32}
           onEscapeKeyDown={handleClose}
           onPointerDownOutside={handleClose}
         >

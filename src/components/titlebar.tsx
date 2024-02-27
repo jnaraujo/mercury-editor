@@ -22,7 +22,7 @@ export default function Titlebar({ isFullscreen }: Props) {
     <section
       data-tauri-drag-region
       className={cn(
-        "flex h-7 select-none items-center justify-between bg-zinc-900 shadow-md",
+        "z-[999999] flex h-7 select-none items-center justify-between bg-zinc-900 shadow-md",
         {
           hidden: isFullscreen,
         },
